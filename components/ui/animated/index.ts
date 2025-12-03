@@ -1,1 +1,8 @@
-export { FadeIn } from './FadeIn';\nexport { ScaleIn } from './ScaleIn';\nexport { SlideIn } from './SlideIn';\nexport { Tilt3D } from './Tilt3D';\nexport { AnimatedGradient } from './AnimatedGradient';\nexport { FloatingBlob } from './FloatingBlob';\nexport { ParticleField } from './ParticleField';\nexport { RippleButton } from './RippleButton';
+export { FadeIn } from './FadeIn';
+export { ScaleIn } from './ScaleIn';
+export { SlideIn } from './SlideIn';
+export { Tilt3D } from './Tilt3D';
+export { AnimatedGradient } from './AnimatedGradient';
+export { FloatingBlob } from './FloatingBlob';
+export { ParticleField } from './ParticleField';
+export { RippleButton } from './RippleButton';

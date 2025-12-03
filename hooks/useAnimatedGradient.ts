@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useEffect, useState } from 'react';
 
@@ -13,7 +13,6 @@ export function useAnimatedGradient() {
       if (!startTime) startTime = timestamp;
       const elapsed = timestamp - startTime;
       
-      // Animate gradient position over 10 seconds
       const position = (elapsed / 10000) * 200;
       setGradientPosition(position % 200);
 
