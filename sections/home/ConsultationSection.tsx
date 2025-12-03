@@ -32,13 +32,11 @@ export default function ConsultationSection() {
 
   return (
     <Section className="relative overflow-hidden">
-      {/* Consultation/Communication gradient */}
-      <div className="absolute inset-0 bg-gradient-to-bl from-orange-50/50 via-transparent to-red-50/30 pointer-events-none" />
       
-      {/* Communication themed floating elements */}
-      <FloatingBlob color={theme.colors.primary} size={350} top="-5%" left="-8%" delay={0} duration={33} />
-      <FloatingBlob color="#F97316" size={240} bottom="-8%" right="-6%" delay={2.5} duration={29} />
-      <FloatingBlob color="#FB923C" size={180} top="40%" right="8%" delay={5} duration={26} />
+      {/* Red blobs positioned around red CTA panel (left side) and form */}
+      <FloatingBlob color={theme.colors.primary} size={500} top="20%" left="-15%" delay={0} duration={35} />
+      <FloatingBlob color="#FF4500" size={380} top="10%" left="5%" delay={1} duration={30} />
+      <FloatingBlob color="#DC2626" size={320} bottom="-5%" right="-12%" delay={3} duration={28} />
 
       <Container>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">

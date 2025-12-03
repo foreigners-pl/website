@@ -54,13 +54,11 @@ export default function OfficesSection() {
 
   return (
     <Section className="relative overflow-hidden">
-      {/* Location/Map themed gradient */}
-      <div className="absolute inset-0 bg-gradient-to-tr from-emerald-50/40 via-transparent to-teal-50/40 pointer-events-none" />
       
-      {/* Map pin / location themed floating elements */}
-      <FloatingBlob color="#10B981" size={280} top="15%" left="-6%" delay={1} duration={32} />
-      <FloatingBlob color="#14B8A6" size={220} bottom="10%" right="-7%" delay={3} duration={27} />
-      <FloatingBlob color="#34D399" size={160} top="50%" right="5%" delay={5} duration={25} />
+      {/* Red blobs positioned around tabs (red when active) and contact links (red) */}
+      <FloatingBlob color={theme.colors.primary} size={380} top="5%" left="15%" delay={0} duration={30} />
+      <FloatingBlob color="#FF4500" size={320} bottom="15%" right="-8%" delay={2} duration={26} />
+      <FloatingBlob color="#DC2626" size={250} top="50%" left="-10%" delay={4} duration={28} />
 
       <Container>
         {/* Tabs */}

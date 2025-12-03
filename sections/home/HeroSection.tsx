@@ -12,10 +12,10 @@ export default function HeroSection() {
       {/* Animated Background Gradient */}
       <AnimatedGradient />
 
-      {/* Floating Blobs */}
-      <FloatingBlob color={theme.colors.primary} size={400} top="-10%" right="-5%" delay={0} />
-      <FloatingBlob color="#FF4500" size={300} top="50%" left="-10%" delay={2} duration={25} />
-      <FloatingBlob color="#FF8C00" size={200} bottom="10%" right="30%" delay={4} duration={18} />
+      {/* Floating Blobs - positioned to bleed around red elements */}
+      <FloatingBlob color={theme.colors.primary} size={450} top="35%" left="-15%" delay={0} />
+      <FloatingBlob color="#FF4500" size={350} top="25%" left="5%" delay={2} duration={25} />
+      <FloatingBlob color="#FF8C00" size={250} bottom="5%" right="-10%" delay={4} duration={18} />
 
       {/* Particle Field */}
       <ParticleField count={15} color={theme.colors.primary} />

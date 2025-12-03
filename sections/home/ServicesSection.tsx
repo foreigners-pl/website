@@ -66,13 +66,12 @@ export default function ServicesSection() {
 
   return (
     <Section className="relative overflow-hidden">
-      {/* Subtle gradient overlay for services */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-50/30 via-transparent to-purple-50/30 pointer-events-none" />
+      {/* Remove gradient overlay, let blobs do the work */}
       
-      {/* Document/Service themed floating elements */}
-      <FloatingBlob color="#3B82F6" size={300} top="10%" right="-8%" delay={0} duration={35} />
-      <FloatingBlob color="#8B5CF6" size={200} bottom="20%" left="-5%" delay={2} duration={30} />
-      <FloatingBlob color="#06B6D4" size={150} top="60%" right="10%" delay={4} duration={28} />
+      {/* Red blobs positioned around service cards (which have red subtitles and links) */}
+      <FloatingBlob color={theme.colors.primary} size={400} top="15%" left="-12%" delay={0} duration={32} />
+      <FloatingBlob color="#FF4500" size={350} top="40%" right="-10%" delay={1.5} duration={28} />
+      <FloatingBlob color="#DC2626" size={300} bottom="10%" left="10%" delay={3} duration={30} />
 
       <Container>
         <FadeIn direction="up" delay={0.1}>
