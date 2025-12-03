@@ -1,7 +1,7 @@
 import Section from '@/components/layout/Section';
 import Container from '@/components/layout/Container';
 import SectionHeading from '@/components/ui/SectionHeading';
-import ServiceCard from '@/components/ui/ServiceCard';
+import { ServiceCard } from '@/components/ui/cards';
 
 export default function ServicesSection() {
   const services = [

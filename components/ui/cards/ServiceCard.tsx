@@ -1,6 +1,6 @@
 import { theme } from '@/lib/theme';
 import Card from './Card';
-import IconWrapper from './IconWrapper';
+import { IconWrapper } from '../icons';
 
 interface ServiceCardProps {
   icon: React.ReactNode;

@@ -1,12 +1,13 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
 import { theme } from '@/lib/theme';
-import Button from '../ui/Button';
+import { Button } from '@/components/ui/buttons';
+import { useMobileMenu, useScrollPosition } from '@/hooks';
 
 export default function Navbar() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { isOpen, toggle, close } = useMobileMenu();
+  const { isScrolled } = useScrollPosition();
 
   const navLinks = [
     { href: '/', label: 'Home' },
@@ -18,7 +19,7 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className={`bg-white ${theme.shadow.sm} sticky top-0 z-50`}>
+    <nav className={`bg-white sticky top-0 z-50 ${theme.transition.default} ${isScrolled ? theme.shadow.md : theme.shadow.sm}`}>
       <div className={theme.spacing.container}>
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
@@ -64,12 +65,13 @@ export default function Navbar() {
             </Button>
             <button
               type="button"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className={`text-gray-700 hover:text-[${theme.colors.primary}] focus:outline-none`}
+              onClick={toggle}
+              className={`text-gray-700 hover:text-[${theme.colors.primary}] focus:outline-none p-2`}
               aria-label="Toggle menu"
+              aria-expanded={isOpen}
             >
               <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                {mobileMenuOpen ? (
+                {isOpen ? (
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 ) : (
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
@@ -80,23 +82,63 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile menu */}
-      {mobileMenuOpen && (
-        <div className="md:hidden border-t border-gray-200">
-          <div className="px-2 pt-2 pb-3 space-y-1">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`block text-gray-700 hover:text-[${theme.colors.primary}] hover:bg-gray-50 px-3 py-2 ${theme.radius.md} ${theme.fontSize.base} ${theme.fontWeight.medium}`}
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                {link.label}
-              </Link>
-            ))}
+      {/* Mobile menu - Full screen overlay */}
+      {isOpen && (
+        <>
+          {/* Backdrop */}
+          <div 
+            className="fixed inset-0 bg-black bg-opacity-50 md:hidden z-40"
+            onClick={close}
+            aria-hidden="true"
+          />
+          
+          {/* Menu Panel */}
+          <div className="fixed inset-y-0 right-0 w-full max-w-sm bg-white md:hidden z-50 shadow-2xl transform transition-transform duration-300 ease-in-out">
+            <div className="flex flex-col h-full">
+              {/* Menu Header */}
+              <div className="flex items-center justify-between p-4 border-b">
+                <span className={`${theme.fontSize.lg} ${theme.fontWeight.bold}`}>Menu</span>
+                <button
+                  onClick={close}
+                  className="p-2 text-gray-500 hover:text-gray-700"
+                  aria-label="Close menu"
+                >
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+
+              {/* Menu Items */}
+              <div className="flex-1 overflow-y-auto p-4">
+                <nav className="space-y-2">
+                  {navLinks.map((link) => (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      className={`block text-gray-700 hover:text-[${theme.colors.primary}] hover:bg-gray-50 px-4 py-3 ${theme.radius.md} ${theme.fontSize.base} ${theme.fontWeight.medium} ${theme.transition.default}`}
+                      onClick={close}
+                    >
+                      {link.label}
+                    </Link>
+                  ))}
+                </nav>
+              </div>
+
+              {/* Menu Footer - CTA */}
+              <div className="p-4 border-t">
+                <Button href="https://wa.me/1234567890" variant="primary" size="lg" className="w-full">
+                  <div className={`w-5 h-5 bg-white ${theme.radius.full} flex items-center justify-center`}>
+                    <span className={`text-[${theme.colors.primary}] ${theme.fontSize.xs} ${theme.fontWeight.bold}`}>W</span>
+                  </div>
+                  Contact via WhatsApp
+                </Button>
+              </div>
+            </div>
           </div>
-        </div>
+        </>
       )}
     </nav>
   );
 }
+

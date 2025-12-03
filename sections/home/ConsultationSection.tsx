@@ -3,11 +3,9 @@
 import { useState } from 'react';
 import Section from '@/components/layout/Section';
 import Container from '@/components/layout/Container';
-import Card from '@/components/ui/Card';
-import Input from '@/components/ui/Input';
-import Select from '@/components/ui/Select';
-import Checkbox from '@/components/ui/Checkbox';
-import Button from '@/components/ui/Button';
+import { Card } from '@/components/ui/cards';
+import { Input, Select, Checkbox } from '@/components/ui/inputs';
+import { Button } from '@/components/ui/buttons';
 import { theme } from '@/lib/theme';
 
 export default function ConsultationSection() {

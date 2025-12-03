@@ -1,6 +1,21 @@
 # Project Structure
 
-This project follows a clean, component-based architecture with a centralized theme system.
+This project follows a clean, component-based architecture with a centralized theme system and organized folder structure.
+
+## 📱 Responsive Design
+
+The website is **fully responsive** and adapts automatically based on screen width:
+
+- **Mobile First**: Base styles target phones (< 768px)
+- **Tablet**: `md:` prefix (≥ 768px)
+- **Desktop**: `lg:` prefix (≥ 1024px)
+- **Large Desktop**: `xl:` prefix (≥ 1280px)
+
+**How it works:**
+- Uses CSS media queries (via Tailwind breakpoints)
+- Detects **viewport width**, not device type
+- Automatically adjusts layout, typography, spacing
+- Touch-friendly on mobile, hover effects on desktop
 
 ## 🎨 Theme Configuration
 
@@ -42,23 +57,64 @@ foreigners-website/
 │       └── ConsultationSection.tsx # Consultation form
 ├── components/
 │   ├── layout/                     # Layout components
-│   │   ├── Navbar.tsx             # Site navigation
+│   │   ├── Navbar.tsx             # Site navigation (responsive)
 │   │   ├── Footer.tsx             # Site footer
 │   │   ├── Container.tsx          # Max-width container
 │   │   └── Section.tsx            # Section wrapper
 │   └── ui/                        # Reusable UI elements
-│       ├── Button.tsx             # Button variants
-│       ├── Card.tsx               # Card container
-│       ├── Input.tsx              # Form input
-│       ├── Select.tsx             # Form select
-│       ├── Checkbox.tsx           # Form checkbox
-│       ├── Tab.tsx                # Tab button
-│       ├── IconWrapper.tsx        # Icon container
-│       ├── SocialIcon.tsx         # Social media icon
-│       ├── ServiceCard.tsx        # Service display card
-│       └── SectionHeading.tsx     # Section title/subtitle
+│       ├── buttons/               # Button components
+│       │   ├── Button.tsx
+│       │   └── index.ts
+│       ├── inputs/                # Form inputs
+│       │   ├── Input.tsx
+│       │   ├── Select.tsx
+│       │   ├── Checkbox.tsx
+│       │   └── index.ts
+│       ├── cards/                 # Card components
+│       │   ├── Card.tsx
+│       │   ├── ServiceCard.tsx
+│       │   └── index.ts
+│       ├── icons/                 # Icon components
+│       │   ├── IconWrapper.tsx
+│       │   ├── SocialIcon.tsx
+│       │   └── index.ts
+│       ├── Tab.tsx
+│       └── SectionHeading.tsx
+├── hooks/                          # Custom React hooks
+│   ├── useMediaQuery.ts           # Detect screen size
+│   ├── useMobileMenu.ts           # Mobile menu state
+│   ├── useScrollPosition.ts       # Track scroll position
+│   └── index.ts                   # Barrel exports
 └── lib/
     └── theme.ts                   # Centralized theme config
+```
+
+## 🎣 Custom Hooks
+
+### `useMediaQuery(query)`
+Detect screen size breakpoints:
+```tsx
+const isMobile = useMediaQuery('(max-width: 767px)');
+```
+
+**Predefined hooks:**
+- `useIsMobile()` - Max width 767px
+- `useIsTablet()` - 768px to 1023px
+- `useIsDesktop()` - Min width 1024px
+
+### `useMobileMenu()`
+Manage mobile menu state:
+```tsx
+const { isOpen, open, close, toggle } = useMobileMenu();
+// Automatically closes on resize to desktop
+// Prevents body scroll when open
+```
+
+### `useScrollPosition()`
+Track scroll position:
+```tsx
+const { scrollY, scrollDirection, isScrolled } = useScrollPosition();
+// Perfect for sticky headers, scroll animations
 ```
 
 ## 🧩 Component Architecture
@@ -105,6 +161,30 @@ export default function Home() {
 }
 ```
 
+## 📱 Mobile-Specific Features
+
+### Enhanced Mobile Navigation
+- **Full-screen slide-out menu** on mobile
+- **Backdrop overlay** with click-to-close
+- **Smooth animations** and transitions
+- **Scroll lock** when menu is open
+- **Auto-close** when resizing to desktop
+
+### Responsive Patterns
+```tsx
+// Stack on mobile, grid on desktop
+className="grid grid-cols-1 lg:grid-cols-2"
+
+// Hide on mobile, show on desktop
+className="hidden md:flex"
+
+// Different sizes per breakpoint
+className="text-2xl md:text-4xl lg:text-6xl"
+
+// Mobile-first padding
+className="px-4 md:px-6 lg:px-8"
+```
+
 ## 🎯 Design Principles
 
 1. **Single Source of Truth**: All styles in `lib/theme.ts`
@@ -112,6 +192,8 @@ export default function Home() {
 3. **Component Composition**: Sections compose UI components
 4. **Reusability**: UI components work across all pages
 5. **Type Safety**: TypeScript for all components
+6. **Mobile First**: Design for small screens, enhance for large
+7. **Progressive Enhancement**: Works on all devices
 
 ## 🚀 Adding New Features
 
@@ -122,46 +204,53 @@ export default function Home() {
 4. Import in page file
 
 ### Add a New UI Component:
-1. Create in `components/ui/ComponentName.tsx`
+1. Create in appropriate `components/ui/[category]/`
 2. Import and use theme: `import { theme } from '@/lib/theme'`
-3. Accept props for customization
-4. Export for use in sections
+3. Add to category's `index.ts` for barrel export
+4. Accept props for customization
+
+### Add a Custom Hook:
+1. Create in `hooks/useCustomHook.ts`
+2. Export from `hooks/index.ts`
+3. Use 'use client' if it uses browser APIs
 
 ### Modify Theme:
 1. Edit `lib/theme.ts`
 2. Changes cascade throughout entire app
 3. No need to touch individual components
 
-## 📝 Example: Creating a New Component
+## 📝 Import Patterns
+
+**Cleaner imports with barrel exports:**
 
 ```tsx
-// components/ui/Badge.tsx
-import { theme } from '@/lib/theme';
+// ✅ Good - Using barrel exports
+import { Button } from '@/components/ui/buttons';
+import { Input, Select } from '@/components/ui/inputs';
+import { useIsMobile, useMobileMenu } from '@/hooks';
 
-interface BadgeProps {
-  children: React.ReactNode;
-  variant?: 'primary' | 'secondary';
-}
-
-export default function Badge({ children, variant = 'primary' }: BadgeProps) {
-  const variantClasses = {
-    primary: `bg-[${theme.colors.primary}] text-white`,
-    secondary: `bg-gray-200 text-gray-800`,
-  };
-
-  return (
-    <span className={`${variantClasses[variant]} px-3 py-1 ${theme.radius.full} ${theme.fontSize.sm}`}>
-      {children}
-    </span>
-  );
-}
+// ❌ Avoid - Direct file imports
+import Button from '@/components/ui/buttons/Button';
 ```
 
 ## 🔧 Development Workflow
 
 1. **Design Changes**: Update `lib/theme.ts`
-2. **New Components**: Add to `components/ui/`
-3. **New Sections**: Add to `sections/[page]/`
-4. **Page Updates**: Import sections in `app/page.tsx`
+2. **New Components**: Add to appropriate `components/ui/[category]/`
+3. **New Hooks**: Add to `hooks/`
+4. **New Sections**: Add to `sections/[page]/`
+5. **Page Updates**: Import sections in `app/page.tsx`
 
-All changes automatically benefit from the centralized theme system!
+## 📱 Testing Responsiveness
+
+**In Browser DevTools:**
+1. Press `F12` to open DevTools
+2. Click device icon (Ctrl+Shift+M)
+3. Test different screen sizes:
+   - iPhone SE (375px) - Mobile
+   - iPad (768px) - Tablet
+   - Desktop (1920px) - Large screen
+
+**The site automatically adapts!**
+
+All changes automatically benefit from the centralized theme system and responsive design patterns!

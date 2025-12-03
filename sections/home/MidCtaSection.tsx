@@ -1,6 +1,6 @@
 import Section from '@/components/layout/Section';
 import Container from '@/components/layout/Container';
-import Button from '@/components/ui/Button';
+import { Button } from '@/components/ui/buttons';
 import { theme } from '@/lib/theme';
 
 export default function MidCtaSection() {

@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { theme } from '@/lib/theme';
-import SocialIcon from '../ui/SocialIcon';
+import { SocialIcon } from '@/components/ui/icons';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
