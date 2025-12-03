@@ -31,13 +31,14 @@ export default function ConsultationSection() {
   ];
 
   return (
-    <Section background="white" className="relative overflow-hidden">
-      {/* Animated Background */}
-      <AnimatedGradient />
+    <Section className="relative overflow-hidden">
+      {/* Consultation/Communication gradient */}
+      <div className="absolute inset-0 bg-gradient-to-bl from-orange-50/50 via-transparent to-red-50/30 pointer-events-none" />
       
-      {/* Floating Blobs */}
-      <FloatingBlob color={theme.colors.primary} size={400} top="-5%" left="-10%" delay={0} duration={32} />
-      <FloatingBlob color="#FF4500" size={250} bottom="-5%" right="-5%" delay={3} duration={26} />
+      {/* Communication themed floating elements */}
+      <FloatingBlob color={theme.colors.primary} size={350} top="-5%" left="-8%" delay={0} duration={33} />
+      <FloatingBlob color="#F97316" size={240} bottom="-8%" right="-6%" delay={2.5} duration={29} />
+      <FloatingBlob color="#FB923C" size={180} top="40%" right="8%" delay={5} duration={26} />
 
       <Container>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">

@@ -8,7 +8,7 @@ import { theme } from '@/lib/theme';
 
 export default function HeroSection() {
   return (
-    <Section background="white" className="relative overflow-hidden">
+    <Section className="relative overflow-hidden">
       {/* Animated Background Gradient */}
       <AnimatedGradient />
 

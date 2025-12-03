@@ -8,10 +8,13 @@ import { theme } from '@/lib/theme';
 
 export default function MidCtaSection() {
   return (
-    <Section background="white" className="relative overflow-hidden">
-      {/* Floating Blobs */}
-      <FloatingBlob color={theme.colors.primary} size={350} top="50%" left="-10%" delay={1} duration={30} />
-      <FloatingBlob color="#FF6B35" size={250} top="20%" right="-5%" delay={2} duration={24} />
+    <Section className="relative overflow-hidden">
+      {/* Business/Corporate gradient */}
+      <div className="absolute inset-0 bg-gradient-to-r from-indigo-50/40 via-transparent to-violet-50/40 pointer-events-none" />
+      
+      {/* Corporate themed floating elements */}
+      <FloatingBlob color="#6366F1" size={320} top="20%" left="-10%" delay={0} duration={30} />
+      <FloatingBlob color="#8B5CF6" size={240} top="40%" right="-8%" delay={2} duration={26} />
 
       <Container className="text-center">
         <FadeIn direction="up" delay={0.1}>
