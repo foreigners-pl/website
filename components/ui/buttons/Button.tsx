@@ -36,9 +36,15 @@ export default function Button({
   const baseClasses = `inline-flex items-center justify-center gap-2 ${theme.fontWeight.semibold} ${theme.transition.default} relative overflow-hidden`;
   
   const variantClasses = {
-    primary: `bg-[${theme.colors.primary}] text-white hover:bg-[${theme.colors.primaryHover}] ${theme.shadow.lg}`,
-    secondary: `bg-white text-[${theme.colors.primary}] border-2 border-gray-300 hover:border-[${theme.colors.primary}]`,
-    outline: `bg-transparent border-2 border-dashed border-[${theme.colors.primary}] text-[${theme.colors.primary}] hover:bg-[${theme.colors.primaryLight}]`,
+    primary: `text-white ${theme.shadow.lg}`,
+    secondary: `bg-white border-2 border-gray-300`,
+    outline: `bg-transparent border-2 border-dashed`,
+  };
+
+  const variantStyles = {
+    primary: { backgroundColor: theme.colors.primary },
+    secondary: { color: theme.colors.primary, borderColor: theme.colors.primary },
+    outline: { color: theme.colors.primary, borderColor: theme.colors.primary, backgroundColor: 'transparent' },
   };
 
   const sizeClasses = {
@@ -99,6 +105,7 @@ export default function Button({
       <motion.a
         href={href}
         className={classes}
+        style={variantStyles[variant]}
         onClick={handleClick}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
@@ -115,6 +122,7 @@ export default function Button({
       type={type}
       onClick={handleClick}
       className={classes}
+      style={variantStyles[variant]}
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
       transition={theme.animation.spring.default}

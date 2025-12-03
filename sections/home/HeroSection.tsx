@@ -34,7 +34,7 @@ export default function HeroSection() {
             </FadeIn>
             
             <FadeIn direction="up" delay={0.2}>
-              <h2 className={`${theme.fontSize.xl} md:${theme.fontSize['2xl']} ${theme.fontWeight.semibold} text-[${theme.colors.primary}]`}>
+              <h2 className={`${theme.fontSize.xl} md:${theme.fontSize['2xl']} ${theme.fontWeight.semibold}`} style={{ color: theme.colors.primary }}>
                 Solution for Foreigners
               </h2>
             </FadeIn>
