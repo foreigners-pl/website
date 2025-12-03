@@ -7,8 +7,6 @@ import { FadeIn, SlideIn, ScaleIn, AnimatedGradient, FloatingBlob, ParticleField
 import { theme } from '@/lib/theme';
 
 export default function HeroSection() {
-  const avatars = ['JD', 'MK', 'AS'];
-
   return (
     <Section background="white" className="relative overflow-hidden">
       {/* Animated Background Gradient */}
@@ -34,7 +32,7 @@ export default function HeroSection() {
             </FadeIn>
             
             <FadeIn direction="up" delay={0.2}>
-              <h2 className={`${theme.fontSize.xl} md:${theme.fontSize['2xl']} ${theme.fontWeight.semibold}`} style={{ color: theme.colors.primary }}>
+              <h2 className={`text-brand-primary ${theme.fontSize.xl} md:${theme.fontSize['2xl']} ${theme.fontWeight.semibold}`}>
                 Solution for Foreigners
               </h2>
             </FadeIn>
@@ -65,14 +63,15 @@ export default function HeroSection() {
             <FadeIn direction="up" delay={0.5}>
               <div className="flex items-center gap-4 pt-6">
                 <div className="flex -space-x-2">
-                  {avatars.map((initials, index) => (
-                    <div
-                      key={initials}
-                      className={`w-10 h-10 ${theme.radius.full} bg-gray-${300 + index * 100} border-2 border-white flex items-center justify-center ${theme.fontSize.sm} ${theme.fontWeight.semibold} text-gray-700`}
-                    >
-                      {initials}
-                    </div>
-                  ))}
+                  <div className={`w-10 h-10 ${theme.radius.full} bg-gray-300 border-2 border-white flex items-center justify-center ${theme.fontSize.sm} ${theme.fontWeight.semibold} text-gray-700`}>
+                    JD
+                  </div>
+                  <div className={`w-10 h-10 ${theme.radius.full} bg-gray-400 border-2 border-white flex items-center justify-center ${theme.fontSize.sm} ${theme.fontWeight.semibold} text-gray-700`}>
+                    MK
+                  </div>
+                  <div className={`w-10 h-10 ${theme.radius.full} bg-gray-500 border-2 border-white flex items-center justify-center ${theme.fontSize.sm} ${theme.fontWeight.semibold} text-white`}>
+                    AS
+                  </div>
                 </div>
                 <p className={`${theme.fontSize.sm} text-gray-600`}>
                   <span className={`${theme.fontWeight.bold} text-gray-900`}>1000+</span> clients trusted us this year
@@ -89,7 +88,7 @@ export default function HeroSection() {
                   <div className={`bg-white ${theme.radius.xl} ${theme.shadow['2xl']} p-8 border border-gray-100 transform hover:scale-105 ${theme.transition.transform}`}>
                     {/* Card Header */}
                     <div className="flex items-center gap-4 mb-6">
-                      <div className={`w-16 h-16 ${theme.radius.lg} bg-[${theme.colors.primary}] flex items-center justify-center`}>
+                      <div className={`w-16 h-16 ${theme.radius.lg} bg-brand-primary flex items-center justify-center`}>
                         <span className={`text-white ${theme.fontSize['2xl']} ${theme.fontWeight.bold}`}>ID</span>
                       </div>
                       <div className="flex-1">
@@ -108,8 +107,8 @@ export default function HeroSection() {
 
                     {/* Card Footer */}
                     <div className="flex items-center justify-between">
-                      <div className={`h-12 bg-[${theme.colors.primaryLight}] ${theme.radius.md} flex-1 mr-4`}></div>
-                      <div className={`w-12 h-12 ${theme.radius.full} bg-[${theme.colors.primary}] flex items-center justify-center`}>
+                      <div className={`h-12 bg-brand-primary-light ${theme.radius.md} flex-1 mr-4`}></div>
+                      <div className={`w-12 h-12 ${theme.radius.full} bg-brand-primary flex items-center justify-center`}>
                         <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>

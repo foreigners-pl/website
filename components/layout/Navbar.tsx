@@ -49,7 +49,7 @@ export default function Navbar() {
           <div className="hidden md:flex">
             <Button href="https://wa.me/1234567890" variant="primary" size="md">
               <div className={`w-5 h-5 bg-white ${theme.radius.full} flex items-center justify-center`}>
-                <span className={`text-[${theme.colors.primary}] ${theme.fontSize.xs} ${theme.fontWeight.bold}`}>W</span>
+                <span className={`text-brand-primary ${theme.fontSize.xs} ${theme.fontWeight.bold}`}>W</span>
               </div>
               WhatsApp
             </Button>
@@ -59,14 +59,14 @@ export default function Navbar() {
           <div className="md:hidden flex items-center gap-2">
             <Button href="https://wa.me/1234567890" variant="primary" size="sm">
               <div className={`w-4 h-4 bg-white ${theme.radius.full} flex items-center justify-center`}>
-                <span className={`text-[${theme.colors.primary}] ${theme.fontSize.xs} ${theme.fontWeight.bold}`}>W</span>
+                <span className={`text-brand-primary ${theme.fontSize.xs} ${theme.fontWeight.bold}`}>W</span>
               </div>
               <span className="hidden sm:inline">WhatsApp</span>
             </Button>
             <button
               type="button"
               onClick={toggle}
-              className={`text-gray-700 hover:text-[${theme.colors.primary}] focus:outline-none p-2`}
+              className={`text-gray-700 hover:text-brand-primary focus:outline-none p-2`}
               aria-label="Toggle menu"
               aria-expanded={isOpen}
             >

@@ -36,15 +36,9 @@ export default function Button({
   const baseClasses = `inline-flex items-center justify-center gap-2 ${theme.fontWeight.semibold} ${theme.transition.default} relative overflow-hidden`;
   
   const variantClasses = {
-    primary: `text-white ${theme.shadow.lg}`,
-    secondary: `bg-white border-2 border-gray-300`,
-    outline: `bg-transparent border-2 border-dashed`,
-  };
-
-  const variantStyles = {
-    primary: { backgroundColor: theme.colors.primary },
-    secondary: { color: theme.colors.primary, borderColor: theme.colors.primary },
-    outline: { color: theme.colors.primary, borderColor: theme.colors.primary, backgroundColor: 'transparent' },
+    primary: `bg-brand-primary text-white hover:bg-brand-primary-hover ${theme.shadow.lg}`,
+    secondary: `bg-white text-brand-primary border-2 border-gray-300 hover:border-brand-primary`,
+    outline: `bg-transparent border-2 border-dashed border-brand-primary text-brand-primary hover:bg-brand-primary-light`,
   };
 
   const sizeClasses = {
@@ -105,7 +99,6 @@ export default function Button({
       <motion.a
         href={href}
         className={classes}
-        style={variantStyles[variant]}
         onClick={handleClick}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
@@ -122,7 +115,6 @@ export default function Button({
       type={type}
       onClick={handleClick}
       className={classes}
-      style={variantStyles[variant]}
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
       transition={theme.animation.spring.default}

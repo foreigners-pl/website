@@ -78,7 +78,7 @@ export default function OfficesSection() {
               </p>
 
               <p className="text-gray-600">
-                <a href="/consultation" className={`${theme.fontWeight.semibold} hover:underline`} style={{ color: theme.colors.primary }}>
+                <a href="/consultation" className={`text-brand-primary ${theme.fontWeight.semibold} hover:underline`}>
                   Schedule an appointment
                 </a>
               </p>
@@ -93,8 +93,7 @@ export default function OfficesSection() {
                   <h4 className={`${theme.fontWeight.semibold} text-gray-900 mb-1`}>Number (WhatsApp)</h4>
                   <a
                     href={`https://wa.me/${currentOffice.phone.replace(/\s/g, '')}`}
-                    className="hover:underline"
-                    style={{ color: theme.colors.primary }}
+                    className="text-brand-primary hover:underline"
                   >
                     {currentOffice.phone}
                   </a>
@@ -104,8 +103,7 @@ export default function OfficesSection() {
                   <h4 className={`${theme.fontWeight.semibold} text-gray-900 mb-1`}>Email</h4>
                   <a
                     href={`mailto:${currentOffice.email}`}
-                    className="hover:underline"
-                    style={{ color: theme.colors.primary }}
+                    className="text-brand-primary hover:underline"
                   >
                     {currentOffice.email}
                   </a>
