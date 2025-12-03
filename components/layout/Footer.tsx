@@ -64,7 +64,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="bg-gray-100 border-t border-gray-200">
+    <footer className="bg-gray-100">
       <div className={`${theme.spacing.container} py-12 md:py-16`}>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 mb-8">
           {/* Service Links */}
