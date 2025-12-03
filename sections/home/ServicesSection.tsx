@@ -1,3 +1,8 @@
+import Section from '@/components/layout/Section';
+import Container from '@/components/layout/Container';
+import SectionHeading from '@/components/ui/SectionHeading';
+import ServiceCard from '@/components/ui/ServiceCard';
+
 export default function ServicesSection() {
   const services = [
     {
@@ -9,6 +14,7 @@ export default function ServicesSection() {
       title: 'Immigration',
       subtitle: 'Make Poland your home – legally and smoothly',
       description: 'Complete assistance with work permits, residence cards, visa applications, and citizenship processes. We handle all documentation and liaise with authorities on your behalf.',
+      link: '/services/immigration',
     },
     {
       icon: (
@@ -19,6 +25,7 @@ export default function ServicesSection() {
       title: 'Driving',
       subtitle: 'Get on the road with confidence',
       description: 'Help with Polish driving license exchange, international driving permits, and understanding local traffic regulations. Drive legally and safely in Poland.',
+      link: '/services/driving',
     },
     {
       icon: (
@@ -29,6 +36,7 @@ export default function ServicesSection() {
       title: 'Language',
       subtitle: 'Communicate effectively in Polish',
       description: 'Polish language courses and translation services for all your documents. From beginner to advanced levels, we help you integrate into Polish society.',
+      link: '/services/language',
     },
     {
       icon: (
@@ -39,6 +47,7 @@ export default function ServicesSection() {
       title: 'Business',
       subtitle: 'Start and grow your business in Poland',
       description: 'Company registration, tax setup, accounting services, and business consulting. We guide you through Polish business regulations and help you succeed.',
+      link: '/services/business',
     },
     {
       icon: (
@@ -49,60 +58,30 @@ export default function ServicesSection() {
       title: 'Studies',
       subtitle: 'Navigate your educational journey',
       description: 'University admissions, student visa applications, and academic guidance. Get accepted to Polish universities and manage all documentation seamlessly.',
+      link: '/services/studies',
     },
   ];
 
   return (
-    <section className="bg-gradient-to-b from-gray-50 to-white py-16 md:py-24">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="text-center mb-12 md:mb-16">
-          <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            Solution in every aspect of your life as a foreigner in Poland. From A to Z.
-          </p>
-        </div>
+    <Section background="gradient">
+      <Container>
+        <SectionHeading
+          description="Solution in every aspect of your life as a foreigner in Poland. From A to Z."
+        />
 
-        {/* Services Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
           {services.map((service, index) => (
-            <div
+            <ServiceCard
               key={index}
-              className="bg-white rounded-2xl border border-gray-200 p-8 shadow-md hover:shadow-xl transition-shadow duration-300"
-            >
-              {/* Icon */}
-              <div className="w-14 h-14 rounded-xl border-2 border-[#AB1604] flex items-center justify-center text-[#AB1604] mb-6">
-                {service.icon}
-              </div>
-
-              {/* Title */}
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">
-                {service.title}
-              </h3>
-
-              {/* Subtitle */}
-              <p className="text-[#AB1604] font-medium mb-4">
-                {service.subtitle}
-              </p>
-
-              {/* Description */}
-              <p className="text-gray-600 mb-6 leading-relaxed">
-                {service.description}
-              </p>
-
-              {/* Link */}
-              <a
-                href={`/services/${service.title.toLowerCase()}`}
-                className="inline-flex items-center gap-2 text-[#AB1604] font-semibold hover:gap-3 transition-all"
-              >
-                View Services
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </a>
-            </div>
+              icon={service.icon}
+              title={service.title}
+              subtitle={service.subtitle}
+              description={service.description}
+              link={service.link}
+            />
           ))}
         </div>
-      </div>
-    </section>
+      </Container>
+    </Section>
   );
 }

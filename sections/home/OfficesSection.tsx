@@ -1,6 +1,10 @@
 'use client';
 
 import { useState } from 'react';
+import Section from '@/components/layout/Section';
+import Container from '@/components/layout/Container';
+import Tab from '@/components/ui/Tab';
+import { theme } from '@/lib/theme';
 
 type Office = {
   name: string;
@@ -48,81 +52,54 @@ export default function OfficesSection() {
   const currentOffice = offices[activeTab];
 
   return (
-    <section className="bg-gray-50 py-16 md:py-24">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <Section background="gray">
+      <Container>
         {/* Tabs */}
         <div className="flex flex-wrap gap-4 justify-center mb-12">
-          <button
-            onClick={() => setActiveTab('warsaw')}
-            className={`px-8 py-3 rounded-full font-semibold transition-all ${
-              activeTab === 'warsaw'
-                ? 'bg-[#AB1604] text-white shadow-lg'
-                : 'bg-transparent border-2 border-dashed border-[#AB1604] text-[#AB1604] hover:bg-[#AB1604] hover:bg-opacity-10'
-            }`}
-          >
-            Warsaw
-          </button>
-          <button
-            onClick={() => setActiveTab('katowice')}
-            className={`px-8 py-3 rounded-full font-semibold transition-all ${
-              activeTab === 'katowice'
-                ? 'bg-[#AB1604] text-white shadow-lg'
-                : 'bg-transparent border-2 border-dashed border-[#AB1604] text-[#AB1604] hover:bg-[#AB1604] hover:bg-opacity-10'
-            }`}
-          >
-            Katowice
-          </button>
-          <button
-            onClick={() => setActiveTab('other')}
-            className={`px-8 py-3 rounded-full font-semibold transition-all ${
-              activeTab === 'other'
-                ? 'bg-[#AB1604] text-white shadow-lg'
-                : 'bg-transparent border-2 border-dashed border-[#AB1604] text-[#AB1604] hover:bg-[#AB1604] hover:bg-opacity-10'
-            }`}
-          >
-            Other
-          </button>
+          <Tab label="Warsaw" active={activeTab === 'warsaw'} onClick={() => setActiveTab('warsaw')} />
+          <Tab label="Katowice" active={activeTab === 'katowice'} onClick={() => setActiveTab('katowice')} />
+          <Tab label="Other" active={activeTab === 'other'} onClick={() => setActiveTab('other')} />
         </div>
 
         {/* Office Content */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
           {/* Left Column - Office Info */}
           <div className="space-y-6">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
+            <h2 className={`${theme.fontSize['3xl']} md:${theme.fontSize['4xl']} ${theme.fontWeight.bold} text-gray-900`}>
               {currentOffice.heading}
             </h2>
             
-            <p className="text-lg text-gray-600 leading-relaxed">
+            <p className={`${theme.fontSize.lg} text-gray-600 leading-relaxed`}>
               {currentOffice.description}
             </p>
 
             <p className="text-gray-600">
-              <a href="/consultation" className="text-[#AB1604] font-semibold hover:underline">
+              <a href="/consultation" className={`text-[${theme.colors.primary}] ${theme.fontWeight.semibold} hover:underline`}>
                 Schedule an appointment
               </a>
             </p>
 
             <div className="space-y-4 pt-4">
               <div>
-                <h4 className="font-semibold text-gray-900 mb-1">Location</h4>
+                <h4 className={`${theme.fontWeight.semibold} text-gray-900 mb-1`}>Location</h4>
                 <p className="text-gray-600">{currentOffice.address}</p>
               </div>
 
               <div>
-                <h4 className="font-semibold text-gray-900 mb-1">Number (WhatsApp)</h4>
+                <h4 className={`${theme.fontWeight.semibold} text-gray-900 mb-1`}>Number (WhatsApp)</h4>
                 <a
                   href={`https://wa.me/${currentOffice.phone.replace(/\s/g, '')}`}
-                  className="text-[#AB1604] hover:underline"
+                  className={`text-[${theme.colors.primary}] hover:underline`}
                 >
                   {currentOffice.phone}
                 </a>
               </div>
 
               <div>
-                <h4 className="font-semibold text-gray-900 mb-1">Email</h4>
+                <h4 className={`${theme.fontWeight.semibold} text-gray-900 mb-1`}>Email</h4>
                 <a
                   href={`mailto:${currentOffice.email}`}
-                  className="text-[#AB1604] hover:underline"
+                  className={`text-[${theme.colors.primary}] hover:underline`}
                 >
                   {currentOffice.email}
                 </a>
@@ -131,7 +108,7 @@ export default function OfficesSection() {
           </div>
 
           {/* Right Column - Map */}
-          <div className="w-full h-96 bg-gray-200 rounded-2xl overflow-hidden shadow-lg">
+          <div className={`w-full h-96 bg-gray-200 ${theme.radius.lg} overflow-hidden ${theme.shadow.lg}`}>
             <iframe
               src={currentOffice.mapEmbed}
               width="100%"
@@ -144,7 +121,7 @@ export default function OfficesSection() {
             ></iframe>
           </div>
         </div>
-      </div>
-    </section>
+      </Container>
+    </Section>
   );
 }
