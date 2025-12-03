@@ -2,7 +2,8 @@ import Section from '@/components/layout/Section';
 import Container from '@/components/layout/Container';
 import SectionHeading from '@/components/ui/SectionHeading';
 import { ServiceCard } from '@/components/ui/cards';
-import { FadeIn } from '@/components/ui/animated';
+import { FadeIn, AnimatedGradient, FloatingBlob } from '@/components/ui/animated';
+import { theme } from '@/lib/theme';
 
 export default function ServicesSection() {
   const services = [
@@ -64,7 +65,14 @@ export default function ServicesSection() {
   ];
 
   return (
-    <Section background="gradient">
+    <Section background="white" className="relative overflow-hidden">
+      {/* Animated Background Gradient */}
+      <AnimatedGradient />
+      
+      {/* Floating Blobs */}
+      <FloatingBlob color={theme.colors.primary} size={350} top="5%" left="-5%" delay={1} duration={30} />
+      <FloatingBlob color="#FF6B35" size={250} bottom="10%" right="-5%" delay={3} duration={25} />
+
       <Container>
         <FadeIn direction="up" delay={0.1}>
           <SectionHeading

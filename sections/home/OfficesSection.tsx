@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Section from '@/components/layout/Section';
 import Container from '@/components/layout/Container';
 import Tab from '@/components/ui/Tab';
-import { FadeIn, SlideIn } from '@/components/ui/animated';
+import { FadeIn, SlideIn, AnimatedGradient, FloatingBlob } from '@/components/ui/animated';
 import { theme } from '@/lib/theme';
 
 type Office = {
@@ -53,7 +53,14 @@ export default function OfficesSection() {
   const currentOffice = offices[activeTab];
 
   return (
-    <Section background="gray">
+    <Section background="white" className="relative overflow-hidden">
+      {/* Animated Background */}
+      <AnimatedGradient />
+      
+      {/* Floating Blobs */}
+      <FloatingBlob color={theme.colors.primary} size={300} top="10%" right="5%" delay={2} duration={28} />
+      <FloatingBlob color="#FF8C00" size={200} bottom="15%" left="10%" delay={4} duration={22} />
+
       <Container>
         {/* Tabs */}
         <FadeIn direction="up" delay={0.1}>

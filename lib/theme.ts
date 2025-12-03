@@ -76,6 +76,14 @@ export const theme = {
     '2xl': 'shadow-2xl',
   },
 
+  // Glass/Frosted effects
+  glass: {
+    light: 'bg-white/80 backdrop-blur-md border border-white/20',
+    medium: 'bg-white/60 backdrop-blur-lg border border-white/30',
+    card: 'bg-white/95 backdrop-blur-sm border border-gray-100/50',
+    overlay: 'bg-gray-900/10 backdrop-blur-sm',
+  },
+
   // Transitions
   transition: {
     default: 'transition-colors duration-200',

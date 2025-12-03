@@ -19,7 +19,7 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className={`bg-white sticky top-0 z-50 ${theme.transition.default} ${isScrolled ? theme.shadow.md : theme.shadow.sm}`}>
+    <nav className={`${theme.glass.light} sticky top-0 z-50 ${theme.transition.default} ${isScrolled ? theme.shadow.lg : theme.shadow.sm}`}>
       <div className={theme.spacing.container}>
         <div className="flex justify-between items-center h-16">
           {/* Logo */}

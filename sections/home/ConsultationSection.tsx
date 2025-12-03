@@ -6,7 +6,7 @@ import Container from '@/components/layout/Container';
 import { Card } from '@/components/ui/cards';
 import { Input, Select, Checkbox } from '@/components/ui/inputs';
 import { Button } from '@/components/ui/buttons';
-import { FadeIn, ScaleIn } from '@/components/ui/animated';
+import { FadeIn, ScaleIn, AnimatedGradient, FloatingBlob } from '@/components/ui/animated';
 import { theme } from '@/lib/theme';
 
 export default function ConsultationSection() {
@@ -31,13 +31,20 @@ export default function ConsultationSection() {
   ];
 
   return (
-    <Section background="white">
+    <Section background="white" className="relative overflow-hidden">
+      {/* Animated Background */}
+      <AnimatedGradient />
+      
+      {/* Floating Blobs */}
+      <FloatingBlob color={theme.colors.primary} size={400} top="-5%" left="-10%" delay={0} duration={32} />
+      <FloatingBlob color="#FF4500" size={250} bottom="-5%" right="-5%" delay={3} duration={26} />
+
       <Container>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Left Column - Text */}
           <FadeIn direction="left" delay={0.1}>
             <div className="lg:pr-12">
-              <div className={`bg-primary text-white p-12 ${theme.radius.xl}`}>
+              <div className={`bg-primary text-white p-12 ${theme.radius.xl} ${theme.shadow['2xl']} backdrop-blur-sm`}>
                 <h2 className={`${theme.fontSize['3xl']} md:${theme.fontSize['4xl']} ${theme.fontWeight.bold} mb-6`}>
                   Ready to Start Your Immigration Journey?
                 </h2>
@@ -53,7 +60,7 @@ export default function ConsultationSection() {
           {/* Right Column - Form Card */}
           <ScaleIn delay={0.3}>
             <div className="relative">
-              <Card padding="lg" className={theme.shadow['2xl']}>
+              <Card padding="lg">
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <Input
                     id="fullName"
