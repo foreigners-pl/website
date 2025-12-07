@@ -13,7 +13,7 @@ export default function BenefitsSection() {
         <SectionHeading
           title={companiesContent.benefits.title}
           subtitle={companiesContent.benefits.subtitle}
-          centered
+          align="center"
         />
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
