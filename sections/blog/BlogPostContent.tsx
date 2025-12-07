@@ -12,12 +12,18 @@ interface BlogPostContentProps {
 }
 
 export default function BlogPostContent({ post }: BlogPostContentProps) {
-  // Convert literal \n sequences to actual newlines
+  // Convert literal \n sequences to actual newlines and ensure proper paragraph spacing
   let cleanContent = post.content;
   
   // Handle escaped newlines in various forms
   cleanContent = cleanContent.replace(/\\n\\n/g, '\n\n');
   cleanContent = cleanContent.replace(/\\n/g, '\n');
+  
+  // Ensure double newlines after paragraphs and headings for proper Markdown rendering
+  cleanContent = cleanContent.replace(/\n(##)/g, '\n\n$1'); // Add space before headings
+  cleanContent = cleanContent.replace(/(##[^\n]+)\n([^#\n])/g, '$1\n\n$2'); // Add space after headings
+  cleanContent = cleanContent.replace(/([.!?])\n([A-Z##])/g, '$1\n\n$2'); // Add space between paragraphs
+  cleanContent = cleanContent.replace(/\n{3,}/g, '\n\n'); // Clean up excessive newlines
 
   return (
     <article className="bg-white rounded-lg shadow-sm p-8 md:p-12 mb-8">
