@@ -28,7 +28,7 @@ export default function FAQPage() {
               </p>
             </div>
 
-            <FAQTabs categories={faqContent.categories} />
+            <FAQTabs categories={faqContent.categories as any} />
 
             <div className="max-w-4xl mx-auto mt-16 p-8 bg-white border border-gray-200 rounded-xl text-center">
               <h3 className={`${theme.fontSize['2xl']} ${theme.fontWeight.bold} text-gray-900 mb-3`}>
