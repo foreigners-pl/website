@@ -89,7 +89,7 @@ export default function BlogPostContent({ post }: BlogPostContentProps) {
               ),
               img: ({ src, alt }) => {
                 // Fix broken Unsplash URLs
-                let fixedSrc = src || '';
+                let fixedSrc = (typeof src === 'string' ? src : '') || '';
                 if (fixedSrc.includes('images.unsplash.com/photo-') && !fixedSrc.includes('?')) {
                   // If it's a broken Unsplash URL without query params, add them
                   fixedSrc = `${fixedSrc}?w=1200&auto=format&fit=crop`;
