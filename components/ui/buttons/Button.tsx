@@ -13,6 +13,7 @@ interface ButtonProps {
   onClick?: () => void;
   type?: 'button' | 'submit';
   enableRipple?: boolean;
+  disabled?: boolean;
 }
 
 interface Ripple {
@@ -30,10 +31,11 @@ export default function Button({
   onClick,
   type = 'button',
   enableRipple = true,
+  disabled = false,
 }: ButtonProps) {
   const [ripples, setRipples] = useState<Ripple[]>([]);
 
-  const baseClasses = `inline-flex items-center justify-center gap-2 ${theme.fontWeight.semibold} ${theme.transition.default} relative overflow-hidden`;
+  const baseClasses = `inline-flex items-center justify-center gap-2 ${theme.fontWeight.semibold} ${theme.transition.default} relative overflow-hidden ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`;
   
   const variantClasses = {
     primary: `bg-primary text-white hover:bg-primary-hover ${theme.shadow.lg}`,
@@ -115,8 +117,9 @@ export default function Button({
       type={type}
       onClick={handleClick}
       className={classes}
-      whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 0.95 }}
+      disabled={disabled}
+      whileHover={{ scale: disabled ? 1 : 1.05 }}
+      whileTap={{ scale: disabled ? 1 : 0.95 }}
       transition={theme.animation.spring.default}
     >
       {children}
