@@ -1,6 +1,7 @@
--- Fix line breaks in the TRC processing time blog post
+-- Fix escaped newlines and formatting in all blog posts
+-- This converts escaped newline characters (\\n) to actual newlines
 -- Run this in Supabase SQL Editor to fix the formatting
 
 UPDATE blog_posts
-SET content = REPLACE(content, E'\\n\\n', E'\n\n')
-WHERE slug = 'poland-trc-processing-time-how-long-2025';
+SET content = REPLACE(REPLACE(content, E'\\\\n', E'\n'), '\n\n\n', '\n\n')
+WHERE content LIKE '%\\n%';
