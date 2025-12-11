@@ -24,25 +24,34 @@ export default function Navbar() {
   };
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    // Check if it's a section anchor link
-    if (href.startsWith('/#')) {
-      e.preventDefault();
-      const sectionId = href.substring(2); // Remove '/#'
-      
-      // If we're already on home page, just scroll
-      if (window.location.pathname === '/') {
-        const element = document.getElementById(sectionId);
-        element?.scrollIntoView({ behavior: 'smooth' });
-      } else {
-        // Navigate to home page first, then scroll
-        router.push('/');
-        setTimeout(() => {
+    e.preventDefault();
+    
+    // Start closing animation
+    handleClose();
+    
+    // Handle navigation after animation starts
+    setTimeout(() => {
+      // Check if it's a section anchor link
+      if (href.startsWith('/#')) {
+        const sectionId = href.substring(2); // Remove '/#'
+        
+        // If we're already on home page, just scroll
+        if (window.location.pathname === '/') {
           const element = document.getElementById(sectionId);
           element?.scrollIntoView({ behavior: 'smooth' });
-        }, 100);
+        } else {
+          // Navigate to home page first, then scroll
+          router.push('/');
+          setTimeout(() => {
+            const element = document.getElementById(sectionId);
+            element?.scrollIntoView({ behavior: 'smooth' });
+          }, 100);
+        }
+      } else {
+        // Regular navigation
+        router.push(href);
       }
-      handleClose();
-    }
+    }, 150); // Start navigation halfway through closing animation
   };
 
   return (
@@ -90,7 +99,7 @@ export default function Navbar() {
             </Button>
             <button
               type="button"
-              onClick={toggle}
+              onClick={isOpen ? handleClose : toggle}
               className={`text-gray-700 hover:text-primary focus:outline-none p-2`}
               aria-label="Toggle menu"
               aria-expanded={isOpen}
@@ -138,10 +147,7 @@ export default function Navbar() {
                   <Link
                     key={link.href}
                     href={link.href}
-                    onClick={(e) => {
-                      handleNavClick(e, link.href);
-                      handleClose();
-                    }}
+                    onClick={(e) => handleNavClick(e, link.href)}
                     className="block px-5 py-4 text-lg font-medium text-gray-700 hover:bg-red-50 hover:text-primary rounded-xl transition-all duration-200 hover:translate-x-1"
                     style={{ animationDelay: `${index * 50}ms` }}
                   >
