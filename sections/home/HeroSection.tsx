@@ -1,21 +1,13 @@
 'use client';
 
-import { useState } from 'react';
 import Section from '@/components/layout/Section';
 import Container from '@/components/layout/Container';
 import { Button } from '@/components/ui/buttons';
-import { FadeIn, SlideIn, ScaleIn, AnimatedGradient, GlassBlob } from '@/components/ui/animated';
+import { FadeIn, AnimatedGradient, GlassBlob } from '@/components/ui/animated';
 import { theme } from '@/lib/theme';
 import { heroContent } from '@/lib/content';
 
-interface HeroSectionProps {
-  isJourneyActive: boolean;
-  onJourneyToggle: () => void;
-}
-
-export default function HeroSection({ isJourneyActive, onJourneyToggle }: HeroSectionProps) {
-  const [isCardFlipped, setIsCardFlipped] = useState(false);
-
+export default function HeroSection() {
   return (
     <Section className="relative overflow-hidden bg-gradient-to-br from-gray-50 via-white to-red-50/30">
       {/* Glass Blobs - Apple-inspired glassmorphism effect */}
@@ -34,8 +26,8 @@ export default function HeroSection({ isJourneyActive, onJourneyToggle }: HeroSe
       <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-white/95 via-white/50 to-transparent pointer-events-none z-0" />
 
       <Container className="relative z-10">
-        <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          {/* Left Column - Text Content */}
+        <div className="relative max-w-4xl mx-auto text-center">
+          {/* Text Content */}
           <div className="space-y-6">
             <FadeIn direction="up" delay={0.1}>
               <h1 className={`${theme.fontSize['4xl']} md:${theme.fontSize['5xl']} lg:${theme.fontSize['6xl']} ${theme.fontWeight.bold} text-gray-900 leading-tight`}>
@@ -51,14 +43,14 @@ export default function HeroSection({ isJourneyActive, onJourneyToggle }: HeroSe
             </FadeIn>
             
             <FadeIn direction="up" delay={0.3}>
-              <p className={`${theme.fontSize.lg} text-gray-600 leading-relaxed`}>
+              <p className={`${theme.fontSize.lg} text-gray-600 leading-relaxed max-w-2xl mx-auto`}>
                 {heroContent.description}
               </p>
             </FadeIn>
 
             {/* CTA Buttons */}
             <FadeIn direction="up" delay={0.4}>
-              <div className="flex flex-col sm:flex-row gap-4 pt-4">
+              <div className="flex flex-col sm:flex-row gap-4 pt-4 justify-center">
                 <Button 
                   variant="primary" 
                   size="lg"
@@ -87,7 +79,7 @@ export default function HeroSection({ isJourneyActive, onJourneyToggle }: HeroSe
 
             {/* Social Proof */}
             <FadeIn direction="up" delay={0.5}>
-              <div className="flex items-center gap-4 pt-6">
+              <div className="flex items-center gap-4 pt-6 justify-center">
                 <div className="flex -space-x-2">
                   <div className={`w-10 h-10 ${theme.radius.full} bg-gray-300 border-2 border-white flex items-center justify-center ${theme.fontSize.sm} ${theme.fontWeight.semibold} text-gray-700`}>
                     JD
@@ -105,124 +97,9 @@ export default function HeroSection({ isJourneyActive, onJourneyToggle }: HeroSe
               </div>
             </FadeIn>
           </div>
-
-          {/* Right Column - Floating Card - Hidden on mobile */}
-          <SlideIn direction="right" delay={0.3} duration={0.8}>
-            <div className="hidden lg:flex justify-center lg:justify-end">
-              <div className="relative w-full max-w-md">
-                {/* Glass layers behind the card for depth */}
-                <div className="absolute inset-0 bg-gradient-to-br from-red-100/40 to-red-50/20 rounded-xl blur-3xl transform scale-110" />
-                <div className="absolute inset-0 bg-gradient-to-tl from-red-50/30 to-transparent rounded-xl blur-2xl transform scale-105 translate-x-4 translate-y-4" />
-                
-                <ScaleIn delay={0.5}>
-                  {/* Flip card container */}
-                  <div 
-                    data-journey-card="true"
-                    className="relative h-[450px] cursor-pointer"
-                    style={{ perspective: '1000px' }}
-                    onMouseEnter={() => setIsCardFlipped(true)}
-                    onMouseLeave={() => setIsCardFlipped(false)}
-                  >
-                    <div
-                      className={`relative w-full h-full transition-transform duration-700 ${theme.transition.all}`}
-                      style={{
-                        transformStyle: 'preserve-3d',
-                        transform: isCardFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)'
-                      }}
-                    >
-                      {/* Front of card - ID mockup */}
-                      <div
-                        className="absolute inset-0"
-                        style={{ backfaceVisibility: 'hidden' }}
-                      >
-                        <div className={`relative bg-white/80 backdrop-blur-xl ${theme.radius.xl} ${theme.shadow['2xl']} p-8 border border-white/20 transform hover:scale-105 ${theme.transition.transform} h-full`}>
-                          {/* Card Header */}
-                          <div className="flex items-center gap-4 mb-6">
-                            <div className={`w-16 h-16 ${theme.radius.lg} bg-primary flex items-center justify-center`}>
-                              <span className={`text-white ${theme.fontSize['2xl']} ${theme.fontWeight.bold}`}>ID</span>
-                            </div>
-                            <div className="flex-1">
-                              <div className={`h-3 bg-gray-200 ${theme.radius.full} w-3/4 mb-2`}></div>
-                              <div className={`h-3 bg-gray-200 ${theme.radius.full} w-1/2`}></div>
-                            </div>
-                          </div>
-
-                          {/* Card Body - Form Fields */}
-                          <div className="space-y-4 mb-6">
-                            <div className={`h-12 bg-gray-100 ${theme.radius.md}`}></div>
-                            <div className={`h-12 bg-gray-100 ${theme.radius.md}`}></div>
-                            <div className={`h-12 bg-gray-100 ${theme.radius.md}`}></div>
-                            <div className={`h-12 bg-gray-100 ${theme.radius.md}`}></div>
-                          </div>
-
-                          {/* Card Footer */}
-                          <div className="flex items-center justify-between">
-                            <div className={`h-12 bg-primary-light ${theme.radius.md} flex-1 mr-4`}></div>
-                            <div className={`w-12 h-12 ${theme.radius.full} bg-primary flex items-center justify-center`}>
-                              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                              </svg>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Back of card - Journey invitation */}
-                      <div
-                        className="absolute inset-0"
-                        style={{
-                          backfaceVisibility: 'hidden',
-                          transform: 'rotateY(180deg)'
-                        }}
-                      >
-                        <div className={`relative bg-gradient-to-br from-primary to-red-800 ${theme.radius.xl} ${theme.shadow['2xl']} p-8 border border-red-700/50 h-full flex flex-col items-center justify-center text-center`}>
-                          {/* Footsteps icon */}
-                          <div className="mb-6">
-                            <svg className="w-16 h-16 text-white/90" fill="currentColor" viewBox="0 0 24 24">
-                              <path d="M18 16c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm0-8c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm-6 1c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm-6 5c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm0-8c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2z" />
-                            </svg>
-                          </div>
-                          
-                          <h3 className={`${theme.fontSize.xl} ${theme.fontWeight.bold} text-white mb-3`}>
-                            This is what the average
-                          </h3>
-                          <h3 className={`${theme.fontSize['2xl']} ${theme.fontWeight.bold} text-white mb-6`}>
-                            TRC Process feels like
-                          </h3>
-
-                          {/* Animated arrow pointing down */}
-                          <div className="mb-4">
-                            <svg 
-                              className="w-8 h-8 text-white/70 animate-bounce" 
-                              fill="none" 
-                              stroke="currentColor" 
-                              viewBox="0 0 24 24"
-                            >
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-                            </svg>
-                          </div>
-
-                          {/* Start/Stop Button */}
-                          <button
-                            onClick={onJourneyToggle}
-                            className={`${theme.radius.lg} px-8 py-3 ${theme.fontSize.base} ${theme.fontWeight.semibold} ${theme.transition.all} ${
-                              isJourneyActive
-                                ? 'bg-white text-primary hover:bg-gray-100'
-                                : 'bg-white text-primary hover:bg-gray-100'
-                            }`}
-                          >
-                            {isJourneyActive ? 'Stop' : 'Start'}
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </ScaleIn>
-              </div>
-            </div>
-          </SlideIn>
         </div>
       </Container>
     </Section>
   );
 }
+
