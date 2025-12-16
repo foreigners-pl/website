@@ -25,7 +25,7 @@ export default function HeroSection() {
       {/* Gradient fade to white at bottom */}
       <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-white/95 via-white/50 to-transparent pointer-events-none z-0" />
 
-      <Container className="relative z-10">
+      <div className="max-w-7xl mx-auto pl-0 pr-4 sm:px-6 lg:px-8 relative z-10">
         <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Left Column - Text Content */}
           <div className="space-y-6">
@@ -142,7 +142,7 @@ export default function HeroSection() {
             </div>
           </SlideIn>
         </div>
-      </Container>
+      </div>
     </Section>
   );
 }
