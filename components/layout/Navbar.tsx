@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/buttons';
 import { useMobileMenu, useScrollPosition } from '@/hooks';
 import { navContent } from '@/lib/content';
 import Logo from '@/components/ui/Logo';
+import Container from '@/components/layout/Container';
 
 export default function Navbar() {
   const { isOpen, toggle, close } = useMobileMenu();
@@ -57,7 +58,7 @@ export default function Navbar() {
   return (
     <>
       <nav className={`${theme.glass.light} sticky top-0 z-[100] ${theme.transition.default} ${isScrolled ? theme.shadow.lg : theme.shadow.sm}`}>
-        <div className={theme.spacing.container}>
+        <Container>
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
             <div className="flex-shrink-0">
@@ -115,7 +116,7 @@ export default function Navbar() {
               </button>
             </div>
           </div>
-        </div>
+        </Container>
       </nav>
 
       {/* Mobile menu - Full screen overlay (outside nav for proper z-index stacking) */}
