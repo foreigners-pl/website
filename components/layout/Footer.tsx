@@ -143,10 +143,7 @@ export default function Footer() {
         {/* Bottom Legal Line */}
         <div className="border-t border-gray-300 pt-8 text-center">
           <p className={`${theme.fontSize.sm} text-gray-500`}>
-            &copy; {currentYear} FOREIGNERS.pl Sp. z o.o. | NIP: 1234567890 | KRS: 0000123456 | REGON: 123456789
-            <br className="md:hidden" />
-            <span className="hidden md:inline"> | </span>
-            ul. Marszałkowska 123, 00-001 Warsaw, Poland
+            &copy; 2025/2026 FOREIGNERS.pl Sp. z o.o. | NIP: 6343044313 | KRS: 0001124675 | REGON: 529550774
           </p>
         </div>
       </div>
