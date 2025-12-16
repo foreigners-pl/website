@@ -8,7 +8,6 @@ import { Button } from '@/components/ui/buttons';
 import { useMobileMenu, useScrollPosition } from '@/hooks';
 import { navContent } from '@/lib/content';
 import Logo from '@/components/ui/Logo';
-import Container from '@/components/layout/Container';
 
 export default function Navbar() {
   const { isOpen, toggle, close } = useMobileMenu();
