@@ -209,7 +209,7 @@ export default function LeadForm({
               />
 
               <div className="space-y-2">
-                <label htmlFor="description" className={`block ${theme.fontSize.sm} ${theme.fontWeight.medium} text-gray-700`}>
+                <label htmlFor="description" className={`block ${theme.fontSize.sm} ${theme.fontWeight.semibold} text-gray-700`}>
                   Description <span className="text-red-600">*</span>
                 </label>
                 <textarea
@@ -219,7 +219,7 @@ export default function LeadForm({
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                   rows={4}
-                  className={`w-full px-4 py-3 ${theme.radius.lg} border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all ${theme.fontSize.base}`}
+                  className={`w-full px-4 py-3 ${theme.radius.md} border border-gray-100/50 bg-white/95 backdrop-blur-sm focus:border-primary focus:ring-2 focus:ring-primary-light outline-none ${theme.transition.default}`}
                 />
               </div>
 
