@@ -5,7 +5,7 @@ interface AdminEmailProps {
   email: string;
   phone: string;
   phoneCountryCode?: string;
-  contactMethod: string;
+  description: string;
   source: string;
   tracking?: TrackingData;
   ipAddress?: string;
@@ -22,7 +22,7 @@ export function AdminNotificationEmail({
   email,
   phone,
   phoneCountryCode,
-  contactMethod,
+  description,
   source,
   tracking,
   ipAddress,
@@ -62,8 +62,8 @@ export function AdminNotificationEmail({
           <td style="padding: 8px 0;"><a href="tel:${fullPhone.replace(/\s/g, '')}" style="color: #AB1604; text-decoration: none;">${fullPhone}</a></td>
         </tr>
         <tr>
-          <td style="padding: 8px 0; font-weight: 600; color: #666;">Preferred Contact:</td>
-          <td style="padding: 8px 0; text-transform: capitalize;">${contactMethod}</td>
+          <td style="padding: 8px 0; font-weight: 600; color: #666;">Description:</td>
+          <td style="padding: 8px 0; white-space: pre-wrap;">${description}</td>
         </tr>
         <tr>
           <td style="padding: 8px 0; font-weight: 600; color: #666;">Form Source:</td>
@@ -150,7 +150,6 @@ export function AdminNotificationEmail({
 
 interface ClientEmailProps {
   fullName: string;
-  contactMethod: string;
   source: string;
 }
 
@@ -170,7 +169,6 @@ function getServiceName(source: string): string {
 
 export function ClientConfirmationEmail({
   fullName,
-  contactMethod,
   source,
 }: ClientEmailProps) {
   const firstName = fullName.split(' ')[0];

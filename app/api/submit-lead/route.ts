@@ -180,7 +180,7 @@ async function sendEmailNotifications(
             email: leadData.email,
             phone: leadData.phone,
             phoneCountryCode: leadData.phone_country_code,
-            contactMethod: leadData.contact_method,
+            description: leadData.description,
             source: leadData.source,
             tracking: {
               referrer: leadData.referrer,
@@ -216,7 +216,6 @@ async function sendEmailNotifications(
         subject: 'Thank you for contacting us!',
         html: ClientConfirmationEmail({
           fullName: leadData.full_name,
-          contactMethod: leadData.contact_method,
           source: leadData.source,
         }),
       });
