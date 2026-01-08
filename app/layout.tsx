@@ -20,6 +20,11 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "FOREIGNERS.pl - Your Trusted Partner in Poland",
   description: "Professional immigration and legal services for foreigners in Poland. Work permits, residence cards, business setup, and more.",
+  icons: [
+    { rel: "icon", url: "/logofavicon32x32.ico", sizes: "32x32" },
+    { rel: "icon", url: "/logofavicon16x16.ico", sizes: "16x16" },
+    { rel: "shortcut icon", url: "/logofavicon32x32.ico" },
+  ],
 };
 
 export default function RootLayout({
