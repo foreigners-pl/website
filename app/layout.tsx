@@ -21,7 +21,8 @@ export const metadata: Metadata = {
   title: "FOREIGNERS.pl - Your Trusted Partner in Poland",
   description: "Professional immigration and legal services for foreigners in Poland. Work permits, residence cards, business setup, and more.",
   icons: {
-    icon: '/icon.svg',
+    icon: '/logofavicon.png',
+    apple: '/logofavicon.png',
   },
 };
 
