@@ -17,12 +17,12 @@ export default function Home() {
       
       <div className="relative min-h-screen">
         <HeroSection />
-        <PartnersSection />
         <ServicesSection />
         <MidCtaSection />
         <OfficesSection />
         {/* <GoogleReviewsSection /> */}
         <ConsultationSection />
+        <PartnersSection />
       </div>
       <Footer />
     </>

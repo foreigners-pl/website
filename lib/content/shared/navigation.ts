@@ -7,6 +7,7 @@ export const navContent = {
     { label: 'Services', href: '/#services' },
     { label: 'Offices', href: '/#offices' },
     { label: 'Consultation', href: '/#consultation' },
+    { label: 'Partners', href: '/#partners' },
     { label: 'For Companies', href: '/companies' },
   ],
   mobileLinks: [
