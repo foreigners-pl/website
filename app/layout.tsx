@@ -4,6 +4,7 @@ import "./globals.css";
 // import CustomCursor from "@/components/ui/CustomCursor";
 import CookieConsent from "@/components/CookieConsent";
 import SessionTracker from "@/components/SessionTracker";
+import { Analytics } from "@vercel/analytics/next";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,6 +35,7 @@ export default function RootLayout({
         <SessionTracker />
         {children}
         <CookieConsent />
+        <Analytics />
       </body>
     </html>
   );
