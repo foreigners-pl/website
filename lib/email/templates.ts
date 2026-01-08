@@ -202,7 +202,7 @@ export function ClientConfirmationEmail({
       <div style="background: #f8f9fa; border-left: 4px solid #AB1604; padding: 20px; border-radius: 4px; margin: 30px 0;">
         <h2 style="color: #AB1604; margin: 0 0 15px 0; font-size: 18px;">What happens next?</h2>
         <ul style="margin: 0; padding-left: 20px; color: #555;">
-          <li style="margin-bottom: 10px;">We will reach out to you via <strong>${contactMethod}</strong></li>
+          <li style="margin-bottom: 10px;">We will reach out to you shortly</li>
           <li style="margin-bottom: 10px;">You will receive a detailed process overview and transparent pricing</li>
           <li style="margin-bottom: 10px;">We will start working on your case as soon as you confirm</li>
         </ul>
