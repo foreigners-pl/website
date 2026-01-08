@@ -13,18 +13,24 @@ let RESEND_API_KEY_CACHED: string | undefined;
 let BUSINESS_EMAIL_CACHED: string | undefined;
 
 function getEnvValue(key: string): string | undefined {
-  // For non-NEXT_PUBLIC_ variables, always read from .env.local directly
-  // This bypasses Turbopack caching issues
+  // In production (Vercel), always use process.env
+  if (process.env.NODE_ENV === 'production') {
+    const envValue = process.env[key];
+    // Optionally log only if undefined
+    if (envValue === undefined) {
+      console.warn(`[ENV] ${key} is undefined in process.env (production)`);
+    }
+    return envValue;
+  }
+  // In development, try to read from .env.local for non-NEXT_PUBLIC_ variables
   try {
     const envPath = join(process.cwd(), '.env.local');
     const envContent = readFileSync(envPath, 'utf8');
-    
     const lines = envContent.split(/\r?\n/);
     const keyLine = lines.find(line => {
       const trimmed = line.trim();
       return trimmed.startsWith(`${key}=`);
     });
-    
     if (keyLine) {
       const value = keyLine.substring(keyLine.indexOf('=') + 1).trim();
       console.log(`[ENV] ${key} from file:`, value);
@@ -33,10 +39,11 @@ function getEnvValue(key: string): string | undefined {
   } catch (error) {
     console.error(`Failed to read ${key} from .env.local:`, error);
   }
-  
-  // Fallback to process.env (for production where file may not exist)
+  // Fallback to process.env in development
   const envValue = process.env[key];
-  console.log(`[ENV] ${key} from process.env:`, envValue);
+  if (envValue === undefined) {
+    console.warn(`[ENV] ${key} is undefined in process.env (development)`);
+  }
   return envValue;
 }
 
