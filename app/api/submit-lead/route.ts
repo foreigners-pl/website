@@ -275,58 +275,73 @@ async function sendToCRM(leadData: any) {
       }
     }, null, 2));
 
-    const response = await fetch(crmUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${crmSecret}`,
-      },
-      body: JSON.stringify({
-        full_name: leadData.full_name,
-        email: leadData.email,
-        phone_country_code: leadData.phone_country_code,
-        phone: leadData.phone,
-        description: leadData.description,
-        source: leadData.source,
-        privacy_accepted: leadData.privacy_accepted,
-        tracking: {
-          ip: leadData.ip,
-          city: leadData.city,
-          country: leadData.country_name,
-          userAgent: leadData.user_agent,
-          referrer: leadData.referrer,
-          utm_campaign: leadData.utm_campaign,
-          utm_source: leadData.utm_source,
-          utm_medium: leadData.utm_medium,
-        }
-      }),
-    });
-
-    // Log full response for debugging
-    const responseStatus = response.status;
-    const responseHeaders = Object.fromEntries(response.headers.entries());
-    let responseText;
+    console.log('[CRM] About to send fetch request...');
+    let response, responseStatus, responseHeaders, responseText;
     try {
-      responseText = await response.text();
-    } catch (e) {
-      responseText = '[Error reading response body]';
-    }
-    console.log('CRM Response Status:', responseStatus);
-    console.log('CRM Response Headers:', responseHeaders);
-    console.log('CRM Response Body:', responseText);
+      response = await fetch(crmUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${crmSecret}`,
+        },
+        body: JSON.stringify({
+          full_name: leadData.full_name,
+          email: leadData.email,
+          phone_country_code: leadData.phone_country_code,
+          phone: leadData.phone,
+          description: leadData.description,
+          source: leadData.source,
+          privacy_accepted: leadData.privacy_accepted,
+          tracking: {
+            ip: leadData.ip,
+            city: leadData.city,
+            country: leadData.country_name,
+            userAgent: leadData.user_agent,
+            referrer: leadData.referrer,
+            utm_campaign: leadData.utm_campaign,
+            utm_source: leadData.utm_source,
+            utm_medium: leadData.utm_medium,
+          }
+        }),
+      });
+      console.log('[CRM] Fetch request completed.');
+      responseStatus = response.status;
+      responseHeaders = Object.fromEntries(response.headers.entries());
+      try {
+        responseText = await response.text();
+      } catch (e) {
+        responseText = '[Error reading response body]';
+      }
+      console.log('CRM Response Status:', responseStatus);
+      console.log('CRM Response Headers:', responseHeaders);
+      console.log('CRM Response Body:', responseText);
 
-    if (!response.ok) {
-      throw new Error(`CRM webhook error: ${responseStatus} - ${responseText}`);
-    }
+      if (!response.ok) {
+        throw new Error(`CRM webhook error: ${responseStatus} - ${responseText}`);
+      }
 
-    let result = null;
-    try {
-      result = JSON.parse(responseText);
-    } catch (e) {
-      result = responseText;
+      let result = null;
+      try {
+        result = JSON.parse(responseText);
+      } catch (e) {
+        result = responseText;
+      }
+      console.log('✅ CRM sync successful:', result);
+      return { success: true, result };
+    } catch (error) {
+      console.error('[CRM] Fetch request failed or threw:', error);
+      if (responseStatus !== undefined) {
+        console.error('CRM Response Status (error):', responseStatus);
+      }
+      if (responseHeaders !== undefined) {
+        console.error('CRM Response Headers (error):', responseHeaders);
+      }
+      if (responseText !== undefined) {
+        console.error('CRM Response Body (error):', responseText);
+      }
+      // Don't throw - we don't want to fail the form submission
+      return { success: false, error };
     }
-    console.log('✅ CRM sync successful:', result);
-    return { success: true, result };
 
   } catch (error) {
     console.error('❌ CRM sync failed:', error);
