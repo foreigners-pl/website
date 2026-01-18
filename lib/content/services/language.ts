@@ -25,7 +25,20 @@ export const languageContent = {
     items: [
       {
         question: 'What do our language services include?',
-        answer: 'We don\'t teach languages - but we handle the situations where accurate communication really matters. This includes, but is not limited to: Polish Language Courses, Sworn Translation, Remote Assistance, and Court Interpretation.',
+        answer: `Our language services cover a wide range of needs for foreigners in Poland. This includes, but is not limited to:
+
+• Polish Language Courses
+• Sworn Translation
+• Remote Assistance
+• Court Interpretation
+
+We focus on providing practical help where accurate communication is essential.`,
+      },
+      {
+        question: 'Polish Language Course',
+        answer: `Polish language is essential for everyday life in Poland. Knowing Polish helps with communication at work, understanding official documents, handling matters in offices, and integrating into daily and social life. It is also useful for long-term stay, professional development, and meeting requirements related to residence, employment, or citizenship applications.
+
+We assist by helping you choose the right course based on your current level and goals, whether you need basic everyday communication, workplace Polish, or more advanced language skills. We handle the organization and enrollment process, connect you with suitable instructors or schools, and guide you throughout the course selection to ensure everything is clear, practical, and tailored to your needs.`,
       },
       {
         question: 'Polish Language Courses',
