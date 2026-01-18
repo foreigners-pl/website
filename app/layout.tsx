@@ -25,6 +25,28 @@ export const metadata: Metadata = {
     { rel: "icon", url: "/logofavicon16x16.ico", sizes: "16x16" },
     { rel: "shortcut icon", url: "/logofavicon32x32.ico" },
   ],
+  openGraph: {
+    title: "FOREIGNERS.pl - Your Trusted Partner in Poland",
+    description: "Professional immigration and legal services for foreigners in Poland. Work permits, residence cards, business setup, and more.",
+    url: "https://foreigners.pl",
+    siteName: "FOREIGNERS.pl",
+    images: [
+      {
+        url: "/fulllogo.png",
+        width: 1200,
+        height: 630,
+        alt: "FOREIGNERS.pl - Your Trusted Partner in Poland",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "FOREIGNERS.pl - Your Trusted Partner in Poland",
+    description: "Professional immigration and legal services for foreigners in Poland. Work permits, residence cards, business setup, and more.",
+    images: ["/fulllogo.png"],
+  },
 };
 
 export default function RootLayout({
