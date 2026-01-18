@@ -40,10 +40,7 @@ We focus on providing practical help where accurate communication is essential.`
 
 We assist by helping you choose the right course based on your current level and goals, whether you need basic everyday communication, workplace Polish, or more advanced language skills. We handle the organization and enrollment process, connect you with suitable instructors or schools, and guide you throughout the course selection to ensure everything is clear, practical, and tailored to your needs.`,
       },
-      {
-        question: 'Polish Language Courses',
-        answer: 'Learning Polish can be challenging, especially when navigating everyday life, work, or official matters in Poland.\n\nOur Polish Language Courses are designed specifically for foreigners living in Poland who need practical, real-life communication skills—not just textbook theory. We offer structured programs from A0 (complete beginner) to B1, taught by qualified teachers experienced in working with international students. Whether you want to improve your daily conversation, prepare for work, or build a solid foundation for long-term life in Poland, our courses guide you step by step.',
-      },
+      // ...existing code...
       {
         question: 'Sworn Translation',
         answer: 'Sworn translations (tłumaczenia przysięgłe) are legally certified translations required for official documents in Poland - such as birth certificates, diplomas, court documents, contracts, or immigration paperwork. They can only be done by translators registered with the Ministry of Justice.\n\nWe work with certified sworn translators in multiple languages and handle the entire process for you. Just send us your document (scan or original), and we\'ll return a legally valid translation accepted by courts, offices, and institutions across Poland.',
