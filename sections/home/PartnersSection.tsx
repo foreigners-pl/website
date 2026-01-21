@@ -10,7 +10,7 @@ const partners = [
   {
     name: 'Consensus',
     logo: '/PartnersLogos/consensus.png',
-    url: 'https://consensus.com'
+    url: 'https://www.consensus.nieruchomosci.pl/'
   },
   {
     name: 'CREATE',
@@ -20,12 +20,12 @@ const partners = [
   {
     name: 'Easy Learning Complex Cien',
     logo: '/PartnersLogos/easy-learning.png',
-    url: 'https://easylearning.com'
+    url: 'https://easylekcje.pl/en/about-us-english/'
   },
   {
     name: 'KTW Internationals',
     logo: '/PartnersLogos/ktw-internationals.png',
-    url: 'https://ktw-internationals.com'
+    url: 'https://www.katowiceinternationals.org/'
   }
 ];
 
