@@ -494,15 +494,23 @@ export async function POST(request: NextRequest) {
     
     console.log('Successfully inserted:', data);
     
-    // Send email notifications (non-blocking - don't fail submission if emails fail)
-    sendEmailNotifications(leadData, ip_address, geoData).catch(error => {
+    // Send email notifications and CRM sync - MUST await in serverless environment
+    // Otherwise the function terminates before these complete
+    try {
+      console.log('Starting email notifications...');
+      const emailResult = await sendEmailNotifications(leadData, ip_address, geoData);
+      console.log('Email notifications completed:', emailResult);
+    } catch (error) {
       console.error('Email notification error (non-critical):', error);
-    });
+    }
 
-    // Send to CRM (non-blocking - don't fail submission if CRM is down)
-    sendToCRM(leadData).catch(error => {
+    try {
+      console.log('Starting CRM sync...');
+      const crmResult = await sendToCRM(leadData);
+      console.log('CRM sync completed:', crmResult);
+    } catch (error) {
       console.error('CRM sync error (non-critical):', error);
-    });
+    }
     
     return NextResponse.json(
       { success: true, data },
