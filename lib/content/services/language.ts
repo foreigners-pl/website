@@ -3,8 +3,8 @@
 export const languageContent = {
   hero: {
     title: 'Language',
-    subtitle: 'Be understood - in offices, shops and life',
-    description: 'Need help with sworn translations, remote assistance, or court interpretation? Fill out the form and our specialists will be in touch with you as soon as possible.',
+    subtitle: 'Polish courses, translations and interpretation',
+    description: 'Need help with Polish language courses, sworn translations, remote assistance, or court interpretation? Fill out the form and our specialists will be in touch with you as soon as possible.',
     ctaButton: 'Our Services',
     formTitle: 'Language Consultation',
     formSource: 'language-service',
