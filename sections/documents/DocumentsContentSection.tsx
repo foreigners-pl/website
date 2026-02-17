@@ -158,6 +158,12 @@ export default function DocumentsContentSection() {
             <li><a href="https://przybysz.duw.pl/fileadmin/user_upload/zalacznik_do_rozporzadzenia.pdf" target="_blank" rel="noopener noreferrer" className="text-primary relative group transition-all">Rozporządzenie w sprawie kryteriów wydawania zezwoleń na pracę oraz na pobyt tymczasowy i pracę dla cudzoziemców, obowiązujących w województwie dolnośląskim<span className="absolute left-0 right-0 bottom-0 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span></a></li>
           </ul>
 
+          <h2 className="text-2xl font-bold text-gray-900 mb-4 mt-12">Business registration</h2>
+          <ul className="space-y-2 mb-8">
+            <li><a href="/documents/business-registration.pdf" target="_blank" rel="noopener noreferrer" className="text-primary relative group transition-all">Wniosek o wpis do centralnej ewidencji i informacji o działalności gospodarczej<span className="absolute left-0 right-0 bottom-0 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span></a></li>
+            <li><a href="https://ekrs.ms.gov.pl/" target="_blank" rel="noopener noreferrer" className="text-primary relative group transition-all">Krajowy Rejestr Sądowy - Portal Rejestrów Sądowych <span className="text-gray-500 text-sm">(for businesses other than sole proprietorships)</span><span className="absolute left-0 right-0 bottom-0 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span></a></li>
+          </ul>
+
         </div>
       </Container>
     </Section>
