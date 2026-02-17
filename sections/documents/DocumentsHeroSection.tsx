@@ -63,7 +63,7 @@ export default function DocumentsHeroSection() {
 
             <FadeIn direction="up" delay={0.3}>
               <a 
-                href="https://przybysz.duw.pl/en/documents-to-download/?tx_web2pdf_pi1%5Bargument%5D=printPage&tx_web2pdf_pi1%5Baction%5D=&tx_web2pdf_pi1%5Bcontroller%5D=Pdf&cHash=3b9dfed62a26a00c1a605ed31240e418" 
+                href="/documents/documents-list.pdf" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-6 py-3 bg-primary hover:bg-red-700 text-white font-semibold rounded-lg transition-colors duration-200"
