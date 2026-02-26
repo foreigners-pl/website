@@ -213,6 +213,8 @@ async function sendEmailNotifications(
           }),
         });
         console.log('✅ Admin email result:', adminResult);
+        // Delay between emails to avoid rate limiting (Resend allows 2/sec)
+        await new Promise(resolve => setTimeout(resolve, 600));
       } catch (adminError) {
         console.error('❌ Admin email error:', adminError);
       }

@@ -115,7 +115,7 @@ async function sendEmailNotifications(leadData: {
   const resend = new Resend(resendKey);
   
   try {
-    // Send to each admin email individually
+    // Send to each admin email individually with delay to avoid rate limiting
     for (const adminEmail of adminEmails) {
       console.log('[META] Sending admin email to:', adminEmail);
       const adminResult = await resend.emails.send({
@@ -138,6 +138,8 @@ async function sendEmailNotifications(leadData: {
         }),
       });
       console.log('[META] Admin email result:', adminResult);
+      // Delay between emails to avoid Resend rate limiting (2/sec)
+      await new Promise(resolve => setTimeout(resolve, 600));
     }
     
     await new Promise(resolve => setTimeout(resolve, 500));
