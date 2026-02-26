@@ -159,9 +159,14 @@ async function sendEmailNotifications(
 ) {
   const resendKey = getResendApiKey();
   // Read fresh every time to avoid caching issues
-  const adminEmail = getEnvValue('BUSINESS_EMAIL');
+  const adminEmailEnv = getEnvValue('BUSINESS_EMAIL');
   
-  console.log('📧 Sending emails - Admin to:', adminEmail, '| Client to:', leadData.email);
+  // Support multiple emails separated by comma
+  const adminEmails = adminEmailEnv 
+    ? adminEmailEnv.split(',').map(email => email.trim()).filter(Boolean)
+    : [];
+  
+  console.log('📧 Sending emails - Admin to:', adminEmails, '| Client to:', leadData.email);
   
   if (!resendKey) {
     console.log('⚠️ RESEND_API_KEY not configured - skipping email notifications');
@@ -170,17 +175,17 @@ async function sendEmailNotifications(
   
   const resend = new Resend(resendKey);
   
-  if (!adminEmail) {
+  if (adminEmails.length === 0) {
     console.warn('⚠️ BUSINESS_EMAIL not configured - skipping admin notification');
   }
   
   try {
-    // Send admin notification email first
-    if (adminEmail) {
+    // Send admin notification email to all recipients
+    if (adminEmails.length > 0) {
       try {
         const adminResult = await resend.emails.send({
           from: 'Website Leads <noreply@foreigners.pl>',
-          to: adminEmail,
+          to: adminEmails,
           subject: `New Lead: ${leadData.full_name}`,
           html: AdminNotificationEmail({
             fullName: leadData.full_name,
