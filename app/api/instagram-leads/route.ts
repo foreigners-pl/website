@@ -105,7 +105,7 @@ async function sendEmailNotifications(leadData: {
     ? adminEmailEnv.split(',').map(email => email.trim()).filter(Boolean)
     : [];
   
-  console.log('[META] Sending emails - Admin to:', adminEmails, '| Client to:', leadData.email);
+  console.log('[META] Sending emails - Admin to:', JSON.stringify(adminEmails), '| Client to:', leadData.email);
   
   if (!resendKey) {
     console.log('[META] RESEND_API_KEY not configured - skipping');
@@ -115,10 +115,12 @@ async function sendEmailNotifications(leadData: {
   const resend = new Resend(resendKey);
   
   try {
-    if (adminEmails.length > 0) {
+    // Send to each admin email individually
+    for (const adminEmail of adminEmails) {
+      console.log('[META] Sending admin email to:', adminEmail);
       const adminResult = await resend.emails.send({
         from: 'Instagram Leads <noreply@foreigners.pl>',
-        to: adminEmails,
+        to: adminEmail,
         subject: `[Instagram] New Lead: ${leadData.full_name}`,
         html: AdminNotificationEmail({
           fullName: leadData.full_name,

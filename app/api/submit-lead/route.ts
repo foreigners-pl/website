@@ -166,7 +166,7 @@ async function sendEmailNotifications(
     ? adminEmailEnv.split(',').map(email => email.trim()).filter(Boolean)
     : [];
   
-  console.log('📧 Sending emails - Admin to:', adminEmails, '| Client to:', leadData.email);
+  console.log('📧 Sending emails - Admin to:', JSON.stringify(adminEmails), '| Client to:', leadData.email);
   
   if (!resendKey) {
     console.log('⚠️ RESEND_API_KEY not configured - skipping email notifications');
@@ -180,12 +180,13 @@ async function sendEmailNotifications(
   }
   
   try {
-    // Send admin notification email to all recipients
-    if (adminEmails.length > 0) {
+    // Send admin notification email to each recipient individually
+    for (const adminEmail of adminEmails) {
       try {
+        console.log('📧 Sending admin email to:', adminEmail);
         const adminResult = await resend.emails.send({
           from: 'Website Leads <noreply@foreigners.pl>',
-          to: adminEmails,
+          to: adminEmail,
           subject: `New Lead: ${leadData.full_name}`,
           html: AdminNotificationEmail({
             fullName: leadData.full_name,
