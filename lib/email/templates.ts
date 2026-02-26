@@ -48,83 +48,92 @@ export function AdminNotificationEmail({
     
     <div style="background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
       <h2 style="color: #AB1604; margin-top: 0; border-bottom: 2px solid #AB1604; padding-bottom: 10px;">Contact Information</h2>
-      <table style="width: 100%; border-collapse: collapse;">
-        <tr>
-          <td style="padding: 8px 0; font-weight: 600; color: #666;">Name:</td>
-          <td style="padding: 8px 0;">${fullName}</td>
-        </tr>
-        <tr>
-          <td style="padding: 8px 0; font-weight: 600; color: #666;">Email:</td>
-          <td style="padding: 8px 0;"><a href="mailto:${email}" style="color: #AB1604; text-decoration: none;">${email}</a></td>
-        </tr>
-        <tr>
-          <td style="padding: 8px 0; font-weight: 600; color: #666;">Phone:</td>
-          <td style="padding: 8px 0;"><a href="tel:${fullPhone.replace(/\s/g, '')}" style="color: #AB1604; text-decoration: none;">${fullPhone}</a></td>
-        </tr>
-        <tr>
-          <td style="padding: 8px 0; font-weight: 600; color: #666;">Description:</td>
-          <td style="padding: 8px 0; white-space: pre-wrap;">${description}</td>
-        </tr>
-        <tr>
-          <td style="padding: 8px 0; font-weight: 600; color: #666;">Form Source:</td>
-          <td style="padding: 8px 0;"><span style="background: #AB1604; color: white; padding: 4px 12px; border-radius: 20px; font-size: 12px;">${source}</span></td>
-        </tr>
-      </table>
+      
+      <div style="margin-bottom: 16px;">
+        <div style="font-weight: 600; color: #666; font-size: 12px; text-transform: uppercase; margin-bottom: 4px;">Name</div>
+        <div style="font-size: 16px; color: #333;">${fullName}</div>
+      </div>
+      
+      <div style="margin-bottom: 16px;">
+        <div style="font-weight: 600; color: #666; font-size: 12px; text-transform: uppercase; margin-bottom: 4px;">Email</div>
+        <div style="font-size: 16px;"><a href="mailto:${email}" style="color: #AB1604; text-decoration: none; word-break: break-all;">${email}</a></div>
+      </div>
+      
+      <div style="margin-bottom: 16px;">
+        <div style="font-weight: 600; color: #666; font-size: 12px; text-transform: uppercase; margin-bottom: 4px;">Phone</div>
+        <div style="font-size: 16px;"><a href="tel:${fullPhone.replace(/\s/g, '')}" style="color: #AB1604; text-decoration: none;">${fullPhone}</a></div>
+      </div>
+      
+      <div style="margin-bottom: 16px;">
+        <div style="font-weight: 600; color: #666; font-size: 12px; text-transform: uppercase; margin-bottom: 4px;">Description</div>
+        <div style="font-size: 16px; color: #333; white-space: pre-wrap; word-wrap: break-word;">${description}</div>
+      </div>
+      
+      <div>
+        <div style="font-weight: 600; color: #666; font-size: 12px; text-transform: uppercase; margin-bottom: 4px;">Form Source</div>
+        <div><span style="background: #AB1604; color: white; padding: 4px 12px; border-radius: 20px; font-size: 12px; display: inline-block;">${source}</span></div>
+      </div>
     </div>
     
     ${tracking || ipAddress || location ? `
     <div style="background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
       <h2 style="color: #AB1604; margin-top: 0; border-bottom: 2px solid #AB1604; padding-bottom: 10px;">Tracking Information</h2>
-      <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
-        ${ipAddress ? `
-        <tr>
-          <td style="padding: 6px 0; font-weight: 600; color: #666;">IP Address:</td>
-          <td style="padding: 6px 0;">${ipAddress}</td>
-        </tr>
-        ` : ''}
-        ${location?.city || location?.region || location?.country_name ? `
-        <tr>
-          <td style="padding: 6px 0; font-weight: 600; color: #666;">Location:</td>
-          <td style="padding: 6px 0;">${[location.city, location.region, location.country_name].filter(Boolean).join(', ')}</td>
-        </tr>
-        ` : ''}
-        ${tracking?.referrer ? `
-        <tr>
-          <td style="padding: 6px 0; font-weight: 600; color: #666;">Referrer:</td>
-          <td style="padding: 6px 0; word-break: break-all;">${tracking.referrer}</td>
-        </tr>
-        ` : ''}
-        ${tracking?.utm_source ? `
-        <tr>
-          <td style="padding: 6px 0; font-weight: 600; color: #666;">UTM Source:</td>
-          <td style="padding: 6px 0;">${tracking.utm_source}</td>
-        </tr>
-        ` : ''}
-        ${tracking?.utm_medium ? `
-        <tr>
-          <td style="padding: 6px 0; font-weight: 600; color: #666;">UTM Medium:</td>
-          <td style="padding: 6px 0;">${tracking.utm_medium}</td>
-        </tr>
-        ` : ''}
-        ${tracking?.utm_campaign ? `
-        <tr>
-          <td style="padding: 6px 0; font-weight: 600; color: #666;">UTM Campaign:</td>
-          <td style="padding: 6px 0;">${tracking.utm_campaign}</td>
-        </tr>
-        ` : ''}
-        ${tracking?.device_type ? `
-        <tr>
-          <td style="padding: 6px 0; font-weight: 600; color: #666;">Device:</td>
-          <td style="padding: 6px 0;">${tracking.device_type}</td>
-        </tr>
-        ` : ''}
-        ${tracking?.browser_name ? `
-        <tr>
-          <td style="padding: 6px 0; font-weight: 600; color: #666;">Browser:</td>
-          <td style="padding: 6px 0;">${tracking.browser_name}</td>
-        </tr>
-        ` : ''}
-      </table>
+      
+      ${ipAddress ? `
+      <div style="margin-bottom: 12px;">
+        <div style="font-weight: 600; color: #666; font-size: 11px; text-transform: uppercase; margin-bottom: 2px;">IP Address</div>
+        <div style="font-size: 14px; color: #333;">${ipAddress}</div>
+      </div>
+      ` : ''}
+      
+      ${location?.city || location?.region || location?.country_name ? `
+      <div style="margin-bottom: 12px;">
+        <div style="font-weight: 600; color: #666; font-size: 11px; text-transform: uppercase; margin-bottom: 2px;">Location</div>
+        <div style="font-size: 14px; color: #333;">${[location.city, location.region, location.country_name].filter(Boolean).join(', ')}</div>
+      </div>
+      ` : ''}
+      
+      ${tracking?.referrer ? `
+      <div style="margin-bottom: 12px;">
+        <div style="font-weight: 600; color: #666; font-size: 11px; text-transform: uppercase; margin-bottom: 2px;">Referrer</div>
+        <div style="font-size: 14px; color: #333; word-break: break-all;">${tracking.referrer}</div>
+      </div>
+      ` : ''}
+      
+      ${tracking?.utm_source ? `
+      <div style="margin-bottom: 12px;">
+        <div style="font-weight: 600; color: #666; font-size: 11px; text-transform: uppercase; margin-bottom: 2px;">UTM Source</div>
+        <div style="font-size: 14px; color: #333;">${tracking.utm_source}</div>
+      </div>
+      ` : ''}
+      
+      ${tracking?.utm_medium ? `
+      <div style="margin-bottom: 12px;">
+        <div style="font-weight: 600; color: #666; font-size: 11px; text-transform: uppercase; margin-bottom: 2px;">UTM Medium</div>
+        <div style="font-size: 14px; color: #333;">${tracking.utm_medium}</div>
+      </div>
+      ` : ''}
+      
+      ${tracking?.utm_campaign ? `
+      <div style="margin-bottom: 12px;">
+        <div style="font-weight: 600; color: #666; font-size: 11px; text-transform: uppercase; margin-bottom: 2px;">UTM Campaign</div>
+        <div style="font-size: 14px; color: #333;">${tracking.utm_campaign}</div>
+      </div>
+      ` : ''}
+      
+      ${tracking?.device_type ? `
+      <div style="margin-bottom: 12px;">
+        <div style="font-weight: 600; color: #666; font-size: 11px; text-transform: uppercase; margin-bottom: 2px;">Device</div>
+        <div style="font-size: 14px; color: #333;">${tracking.device_type}</div>
+      </div>
+      ` : ''}
+      
+      ${tracking?.browser_name ? `
+      <div style="margin-bottom: 0;">
+        <div style="font-weight: 600; color: #666; font-size: 11px; text-transform: uppercase; margin-bottom: 2px;">Browser</div>
+        <div style="font-size: 14px; color: #333;">${tracking.browser_name}</div>
+      </div>
+      ` : ''}
     </div>
     ` : ''}
     
