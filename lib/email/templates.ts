@@ -223,7 +223,7 @@ export function ClientConfirmationEmail({
         </p>
         <p style="margin: 0; font-size: 14px; color: #555;">
           Skip the wait and contact us directly<br>
-          <a href="https://wa.me/48538215997" style="color: #AB1604; text-decoration: none; font-weight: 600;">WhatsApp: +48 538 215 997</a><br>
+          <a href="https://wa.me/48736286264" style="color: #AB1604; text-decoration: none; font-weight: 600;">WhatsApp: +48 736 286 264</a><br>
           or<br>
           <a href="mailto:connect@foreigners.pl" style="color: #AB1604; text-decoration: none; font-weight: 600;">connect@foreigners.pl</a>
         </p>
