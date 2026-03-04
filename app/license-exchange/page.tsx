@@ -189,7 +189,7 @@ export default function LicenseExchangePage() {
         </div>
       )}
 
-      <main className="flex-1 py-6 sm:py-10 md:py-16">
+      <main className="flex-1 py-8 sm:py-14 md:py-20">
         <div className="max-w-2xl mx-auto px-3 sm:px-4">
           <AnimatePresence mode="wait">
             
@@ -631,7 +631,7 @@ export default function LicenseExchangePage() {
                     `- Sworn translation: ${stepData.hasTranslation ? 'Yes, I have it' : 'No, I need one'}\n\n` +
                     `Quote: ${calculatePrice().total} PLN`
                   )}>
-                    Yes, contact me on WhatsApp
+                    Continue on WhatsApp
                   </WhatsAppButton>
                   <SecondaryButton onClick={() => setCurrentStep('start')}>
                     Start over
@@ -735,7 +735,7 @@ function PrimaryButton({ children, onClick }: { children: React.ReactNode; onCli
 }
 
 function SecondaryButton({ children, onClick, as }: { children: React.ReactNode; onClick?: () => void; as?: string }) {
-  const className = "w-full py-3 sm:py-4 px-4 sm:px-6 bg-gray-100 text-gray-700 text-sm sm:text-base font-semibold rounded-lg sm:rounded-xl hover:bg-gray-200 active:scale-[0.98] transition-all duration-200";
+  const className = "w-full py-3 sm:py-4 px-4 sm:px-6 bg-gray-100 text-gray-700 text-sm sm:text-base font-semibold rounded-lg sm:rounded-xl hover:bg-gray-200 active:scale-[0.98] transition-all duration-200 text-center";
   
   if (as === 'div') {
     return <div className={className}>{children}</div>;
