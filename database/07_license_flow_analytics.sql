@@ -42,15 +42,12 @@ CREATE TABLE IF NOT EXISTS license_flow_analytics (
   exit_step TEXT, -- Last step before leaving
   
   -- Timestamps
-  created_at TIMESTAMPTZ DEFAULT NOW(),
-  
-  -- For efficient querying
-  visit_date DATE GENERATED ALWAYS AS (DATE(created_at)) STORED
+  created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
 -- Indexes for common queries
 CREATE INDEX IF NOT EXISTS idx_license_flow_session ON license_flow_analytics(session_id);
-CREATE INDEX IF NOT EXISTS idx_license_flow_date ON license_flow_analytics(visit_date);
+CREATE INDEX IF NOT EXISTS idx_license_flow_date ON license_flow_analytics(created_at);
 CREATE INDEX IF NOT EXISTS idx_license_flow_event ON license_flow_analytics(event_type);
 CREATE INDEX IF NOT EXISTS idx_license_flow_step ON license_flow_analytics(step_name);
 CREATE INDEX IF NOT EXISTS idx_license_flow_country ON license_flow_analytics(country);
@@ -73,10 +70,10 @@ CREATE POLICY "Allow authenticated reads" ON license_flow_analytics
 -- ============================================
 
 -- 1. Daily visitor count
--- SELECT visit_date, COUNT(DISTINCT session_id) as visitors
+-- SELECT DATE(created_at) as visit_date, COUNT(DISTINCT session_id) as visitors
 -- FROM license_flow_analytics
 -- WHERE event_type = 'page_view'
--- GROUP BY visit_date
+-- GROUP BY DATE(created_at)
 -- ORDER BY visit_date DESC;
 
 -- 2. Funnel analysis - drop-off at each step
