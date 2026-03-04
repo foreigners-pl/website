@@ -106,6 +106,69 @@ function getClientIP(request: NextRequest): string {
   return '';
 }
 
+// Rate limiting configuration
+const RATE_LIMIT = {
+  IP_MAX_SUBMISSIONS: 3,      // Max submissions per IP
+  IP_WINDOW_HOURS: 1,         // Time window for IP limit (1 hour)
+  EMAIL_MAX_SUBMISSIONS: 2,   // Max submissions per email
+  EMAIL_WINDOW_HOURS: 24,     // Time window for email limit (24 hours)
+};
+
+// Check rate limits before allowing submission
+async function checkRateLimit(
+  supabaseAdmin: ReturnType<typeof createClient>,
+  ip: string,
+  email: string
+): Promise<{ allowed: boolean; reason?: string }> {
+  const now = new Date();
+  
+  // Check IP rate limit (last hour)
+  const ipWindowStart = new Date(now.getTime() - RATE_LIMIT.IP_WINDOW_HOURS * 60 * 60 * 1000);
+  const { count: ipCount, error: ipError } = await supabaseAdmin
+    .from('lead_submissions')
+    .select('*', { count: 'exact', head: true })
+    .eq('ip_address', ip)
+    .gte('created_at', ipWindowStart.toISOString());
+  
+  if (ipError) {
+    console.error('Rate limit check failed (IP):', ipError);
+    // Allow submission if rate limit check fails (fail open)
+    return { allowed: true };
+  }
+  
+  if (ipCount !== null && ipCount >= RATE_LIMIT.IP_MAX_SUBMISSIONS) {
+    console.log(`⚠️ Rate limit exceeded for IP ${ip}: ${ipCount} submissions in last ${RATE_LIMIT.IP_WINDOW_HOURS} hour(s)`);
+    return { 
+      allowed: false, 
+      reason: `Too many submissions. Please try again in ${RATE_LIMIT.IP_WINDOW_HOURS} hour.` 
+    };
+  }
+  
+  // Check email rate limit (last 24 hours)
+  const emailWindowStart = new Date(now.getTime() - RATE_LIMIT.EMAIL_WINDOW_HOURS * 60 * 60 * 1000);
+  const { count: emailCount, error: emailError } = await supabaseAdmin
+    .from('lead_submissions')
+    .select('*', { count: 'exact', head: true })
+    .eq('email', email.toLowerCase())
+    .gte('created_at', emailWindowStart.toISOString());
+  
+  if (emailError) {
+    console.error('Rate limit check failed (email):', emailError);
+    // Allow submission if rate limit check fails (fail open)
+    return { allowed: true };
+  }
+  
+  if (emailCount !== null && emailCount >= RATE_LIMIT.EMAIL_MAX_SUBMISSIONS) {
+    console.log(`⚠️ Rate limit exceeded for email ${email}: ${emailCount} submissions in last ${RATE_LIMIT.EMAIL_WINDOW_HOURS} hours`);
+    return { 
+      allowed: false, 
+      reason: `You've already submitted a request. We'll contact you soon.` 
+    };
+  }
+  
+  return { allowed: true };
+}
+
 // Get geolocation data from IP using ipapi.co (free tier)
 async function getGeolocation(ip: string) {
   if (!ip || ip === '127.0.0.1' || ip === '::1' || ip.startsWith('192.168.')) {
@@ -486,6 +549,16 @@ export async function POST(request: NextRequest) {
         }
       }
     );
+    
+    // Check rate limits before allowing submission
+    const rateLimitCheck = await checkRateLimit(supabaseAdmin, ip_address, body.email);
+    if (!rateLimitCheck.allowed) {
+      console.log('🚫 Rate limit blocked submission');
+      return NextResponse.json(
+        { error: rateLimitCheck.reason || 'Too many submissions. Please try again later.' },
+        { status: 429 }
+      );
+    }
     
     const { data, error } = await supabaseAdmin
       .from('lead_submissions')
