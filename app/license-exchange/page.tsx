@@ -1,0 +1,803 @@
+'use client';
+
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import Link from 'next/link';
+import { theme } from '@/lib/theme';
+
+// Flow step types
+type Step = 
+  | 'start'
+  | 'new-license-interest'
+  | 'new-license-location'
+  | 'new-license-pricing'
+  | 'new-license-not-available'
+  | 'license-valid'
+  | 'document-type'
+  | 'residency-check'
+  | 'not-eligible-invalid'
+  | 'not-eligible-no-documents'
+  | 'trc-help-offer'
+  | 'not-eligible-residency'
+  | 'eligible-medical'
+  | 'eligible-translation'
+  | 'final-pricing'
+  | 'end-no-interest';
+
+interface StepData {
+  hasMedicalCert?: boolean;
+  hasTranslation?: boolean;
+  documentType?: string;
+}
+
+const WHATSAPP_NUMBER = '48736286264';
+
+export default function LicenseExchangePage() {
+  const [currentStep, setCurrentStep] = useState<Step>('start');
+  const [stepData, setStepData] = useState<StepData>({});
+  const [history, setHistory] = useState<Step[]>([]);
+
+  const goToStep = (step: Step) => {
+    setHistory(prev => [...prev, currentStep]);
+    setCurrentStep(step);
+  };
+
+  const goBack = () => {
+    if (history.length > 0) {
+      const newHistory = [...history];
+      const previousStep = newHistory.pop()!;
+      setHistory(newHistory);
+      setCurrentStep(previousStep);
+    }
+  };
+
+  const calculatePrice = () => {
+    let base = 699;
+    let translation = stepData.hasTranslation ? 0 : 249;
+    let medical = stepData.hasMedicalCert ? 0 : 200;
+    let medicalNote = stepData.hasMedicalCert ? '' : ' (clinic fee - we waive our handling charge)';
+    
+    return {
+      base,
+      translation,
+      medical,
+      medicalNote,
+      total: base + translation,
+      totalWithMedical: base + translation + medical,
+    };
+  };
+
+  const getWhatsAppLink = (message: string) => {
+    return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+  };
+
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: 'easeOut' } },
+    exit: { opacity: 0, y: -20, transition: { duration: 0.3 } }
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100">
+      {/* Header */}
+      <header className="bg-white border-b border-gray-200">
+        <div className={theme.spacing.container}>
+          <div className="py-4 flex items-center justify-between">
+            <Link href="/" className="flex items-center gap-2">
+              <img src="/fulllogo.png" alt="Foreigners.pl" className="h-10" />
+            </Link>
+            {history.length > 0 && (
+              <button
+                onClick={goBack}
+                className="flex items-center gap-2 text-gray-600 hover:text-primary transition-colors"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+                Back
+              </button>
+            )}
+          </div>
+        </div>
+      </header>
+
+      {/* Main Content */}
+      <main className="py-12 md:py-20">
+        <div className="max-w-2xl mx-auto px-4">
+          <AnimatePresence mode="wait">
+            {/* START */}
+            {currentStep === 'start' && (
+              <StepContainer key="start" variants={containerVariants}>
+                <StepIcon>🚗</StepIcon>
+                <StepTitle>Driving License Exchange</StepTitle>
+                <StepDescription>
+                  Let's find out if you're eligible to exchange your foreign driving license for a Polish one.
+                </StepDescription>
+                <StepQuestion>
+                  Do you already have a driving license from another country?
+                </StepQuestion>
+                <ButtonGroup>
+                  <PrimaryButton onClick={() => goToStep('license-valid')}>
+                    Yes, I have a foreign license
+                  </PrimaryButton>
+                  <SecondaryButton onClick={() => goToStep('new-license-interest')}>
+                    No, I need a new license
+                  </SecondaryButton>
+                </ButtonGroup>
+              </StepContainer>
+            )}
+
+            {/* NEW LICENSE - Interest */}
+            {currentStep === 'new-license-interest' && (
+              <StepContainer key="new-license-interest" variants={containerVariants}>
+                <StepIcon>📝</StepIcon>
+                <StepTitle>Start Fresh</StepTitle>
+                <StepDescription>
+                  We can help you obtain a brand new Polish driving license from scratch.
+                </StepDescription>
+                <StepQuestion>
+                  Would you like to start the process for a brand new license?
+                </StepQuestion>
+                <ButtonGroup>
+                  <PrimaryButton onClick={() => goToStep('new-license-location')}>
+                    Yes, I'm interested
+                  </PrimaryButton>
+                  <SecondaryButton onClick={() => goToStep('end-no-interest')}>
+                    No, not right now
+                  </SecondaryButton>
+                </ButtonGroup>
+              </StepContainer>
+            )}
+
+            {/* NEW LICENSE - Location */}
+            {currentStep === 'new-license-location' && (
+              <StepContainer key="new-license-location" variants={containerVariants}>
+                <StepIcon>📍</StepIcon>
+                <StepTitle>Location Check</StepTitle>
+                <StepDescription>
+                  Our driving school services are currently available in the Katowice area.
+                </StepDescription>
+                <StepQuestion>
+                  Are you located in or near Katowice?
+                </StepQuestion>
+                <ButtonGroup>
+                  <PrimaryButton onClick={() => goToStep('new-license-pricing')}>
+                    Yes, I'm in/near Katowice
+                  </PrimaryButton>
+                  <SecondaryButton onClick={() => goToStep('new-license-not-available')}>
+                    No, I'm elsewhere
+                  </SecondaryButton>
+                </ButtonGroup>
+              </StepContainer>
+            )}
+
+            {/* NEW LICENSE - Pricing */}
+            {currentStep === 'new-license-pricing' && (
+              <StepContainer key="new-license-pricing" variants={containerVariants}>
+                <StepIcon>💰</StepIcon>
+                <StepTitle>New License Package</StepTitle>
+                <StepDescription>
+                  Great! Here's what we offer for obtaining a new Polish driving license:
+                </StepDescription>
+                <PricingBox>
+                  <PricingTotal>4,500 PLN</PricingTotal>
+                  <PricingSubtext>Total package price</PricingSubtext>
+                  <PricingBreakdown>
+                    <PricingItem>
+                      <span>Upfront payment</span>
+                      <span className="font-semibold">1,000 PLN</span>
+                    </PricingItem>
+                    <PricingNote>For starting and handling the administrative part</PricingNote>
+                    <PricingItem>
+                      <span>Remaining balance</span>
+                      <span className="font-semibold">3,500 PLN</span>
+                    </PricingItem>
+                    <PricingNote>Can be paid in installments</PricingNote>
+                  </PricingBreakdown>
+                </PricingBox>
+                <StepQuestion>
+                  Would you like to talk about starting this service?
+                </StepQuestion>
+                <ButtonGroup>
+                  <WhatsAppButton href={getWhatsAppLink("Hi! I'm interested in getting a new driving license in Katowice. I saw the package for 4,500 PLN and would like to discuss starting the process.")}>
+                    Yes, let's talk on WhatsApp
+                  </WhatsAppButton>
+                  <SecondaryButton onClick={() => goToStep('end-no-interest')}>
+                    Maybe later
+                  </SecondaryButton>
+                </ButtonGroup>
+              </StepContainer>
+            )}
+
+            {/* NEW LICENSE - Not Available */}
+            {currentStep === 'new-license-not-available' && (
+              <StepContainer key="new-license-not-available" variants={containerVariants}>
+                <StepIcon>😔</StepIcon>
+                <StepTitle>Not Available in Your Area</StepTitle>
+                <StepDescription>
+                  Unfortunately, our driving school services are currently only available in the Katowice area.
+                </StepDescription>
+                <InfoBox variant="warning">
+                  <p>We're working on expanding to other cities. Feel free to reach out and we'll let you know when we're available in your area.</p>
+                </InfoBox>
+                <ButtonGroup>
+                  <WhatsAppButton href={getWhatsAppLink("Hi! I'm interested in getting a new driving license but I'm not in Katowice. Can you let me know when you expand to other areas?")}>
+                    Contact us anyway
+                  </WhatsAppButton>
+                  <SecondaryButton onClick={() => setCurrentStep('start')}>
+                    Start over
+                  </SecondaryButton>
+                </ButtonGroup>
+              </StepContainer>
+            )}
+
+            {/* LICENSE VALID CHECK */}
+            {currentStep === 'license-valid' && (
+              <StepContainer key="license-valid" variants={containerVariants}>
+                <StepIcon>✅</StepIcon>
+                <StepTitle>License Validity</StepTitle>
+                <StepDescription>
+                  To exchange your license, it must currently be valid (not expired).
+                </StepDescription>
+                <StepQuestion>
+                  Is your foreign driving license still valid?
+                </StepQuestion>
+                <ButtonGroup>
+                  <PrimaryButton onClick={() => goToStep('document-type')}>
+                    Yes, it's valid
+                  </PrimaryButton>
+                  <SecondaryButton onClick={() => goToStep('not-eligible-invalid')}>
+                    No, it has expired
+                  </SecondaryButton>
+                </ButtonGroup>
+              </StepContainer>
+            )}
+
+            {/* NOT ELIGIBLE - Invalid License */}
+            {currentStep === 'not-eligible-invalid' && (
+              <StepContainer key="not-eligible-invalid" variants={containerVariants}>
+                <StepIcon>❌</StepIcon>
+                <StepTitle>License Must Be Valid</StepTitle>
+                <StepDescription>
+                  Unfortunately, you cannot exchange an expired license.
+                </StepDescription>
+                <InfoBox variant="error">
+                  <p><strong>What you can do:</strong></p>
+                  <p>Renew your license in your home country first, then come back to us for the exchange process.</p>
+                </InfoBox>
+                <ButtonGroup>
+                  <SecondaryButton onClick={() => setCurrentStep('start')}>
+                    Start over
+                  </SecondaryButton>
+                </ButtonGroup>
+              </StepContainer>
+            )}
+
+            {/* DOCUMENT TYPE CHECK */}
+            {currentStep === 'document-type' && (
+              <StepContainer key="document-type" variants={containerVariants}>
+                <StepIcon>📄</StepIcon>
+                <StepTitle>Residency Documents</StepTitle>
+                <StepDescription>
+                  To exchange your license, you need a valid document proving your legal stay in Poland.
+                </StepDescription>
+                <StepQuestion>
+                  Do you have any of the following?
+                </StepQuestion>
+                <OptionList>
+                  <OptionButton 
+                    onClick={() => {
+                      setStepData(prev => ({ ...prev, documentType: 'visa' }));
+                      goToStep('residency-check');
+                    }}
+                  >
+                    <OptionIcon>🛂</OptionIcon>
+                    <OptionText>
+                      <OptionTitle>Active Polish Visa</OptionTitle>
+                      <OptionDesc>Valid visa in your passport</OptionDesc>
+                    </OptionText>
+                  </OptionButton>
+                  <OptionButton 
+                    onClick={() => {
+                      setStepData(prev => ({ ...prev, documentType: 'trc' }));
+                      goToStep('residency-check');
+                    }}
+                  >
+                    <OptionIcon>💳</OptionIcon>
+                    <OptionText>
+                      <OptionTitle>Active TRC</OptionTitle>
+                      <OptionDesc>Temporary Residence Card (Karta Pobytu)</OptionDesc>
+                    </OptionText>
+                  </OptionButton>
+                  <OptionButton 
+                    onClick={() => {
+                      setStepData(prev => ({ ...prev, documentType: 'stamp' }));
+                      goToStep('residency-check');
+                    }}
+                  >
+                    <OptionIcon>📕</OptionIcon>
+                    <OptionText>
+                      <OptionTitle>Red Stamp in Passport</OptionTitle>
+                      <OptionDesc>While waiting for new TRC</OptionDesc>
+                    </OptionText>
+                  </OptionButton>
+                  <OptionButton onClick={() => goToStep('not-eligible-no-documents')} variant="none">
+                    <OptionIcon>❓</OptionIcon>
+                    <OptionText>
+                      <OptionTitle>None of the above</OptionTitle>
+                      <OptionDesc>I don't have these documents</OptionDesc>
+                    </OptionText>
+                  </OptionButton>
+                </OptionList>
+              </StepContainer>
+            )}
+
+            {/* NOT ELIGIBLE - No Documents */}
+            {currentStep === 'not-eligible-no-documents' && (
+              <StepContainer key="not-eligible-no-documents" variants={containerVariants}>
+                <StepIcon>📋</StepIcon>
+                <StepTitle>Documents Required</StepTitle>
+                <StepDescription>
+                  You need one of the required documents to be eligible for a license exchange.
+                </StepDescription>
+                <InfoBox variant="info">
+                  <p><strong>Good news!</strong></p>
+                  <p>We can help you speed up the TRC (Temporary Residence Card) process, and then exchange your license once it's completed.</p>
+                </InfoBox>
+                <StepQuestion>
+                  Would you like to talk to us about speeding up your TRC process?
+                </StepQuestion>
+                <ButtonGroup>
+                  <WhatsAppButton href={getWhatsAppLink("Hi! I'm interested in exchanging my driving license but I don't have the required documents yet. I'd like to learn about speeding up the TRC process.")}>
+                    Yes, tell me more
+                  </WhatsAppButton>
+                  <SecondaryButton onClick={() => goToStep('trc-help-offer')}>
+                    No, I'll wait
+                  </SecondaryButton>
+                </ButtonGroup>
+              </StepContainer>
+            )}
+
+            {/* TRC Help - Will wait */}
+            {currentStep === 'trc-help-offer' && (
+              <StepContainer key="trc-help-offer" variants={containerVariants}>
+                <StepIcon>👋</StepIcon>
+                <StepTitle>Come Back Later</StepTitle>
+                <StepDescription>
+                  No problem! Please reach back to us once you have one of the valid documents needed.
+                </StepDescription>
+                <InfoBox variant="info">
+                  <p>Required documents:</p>
+                  <ul className="list-disc list-inside mt-2 space-y-1">
+                    <li>Active Polish Visa</li>
+                    <li>Temporary Residence Card (TRC)</li>
+                    <li>Red stamp in passport (while waiting for TRC)</li>
+                  </ul>
+                </InfoBox>
+                <ButtonGroup>
+                  <SecondaryButton onClick={() => setCurrentStep('start')}>
+                    Start over
+                  </SecondaryButton>
+                </ButtonGroup>
+              </StepContainer>
+            )}
+
+            {/* RESIDENCY CHECK */}
+            {currentStep === 'residency-check' && (
+              <StepContainer key="residency-check" variants={containerVariants}>
+                <StepIcon>🏠</StepIcon>
+                <StepTitle>Residency Requirement</StepTitle>
+                <StepDescription>
+                  Polish law requires you to be a resident for at least 6 months to exchange your license.
+                </StepDescription>
+                <StepQuestion>
+                  Have you been living in Poland for at least 6 months?
+                </StepQuestion>
+                <ButtonGroup>
+                  <PrimaryButton onClick={() => goToStep('eligible-medical')}>
+                    Yes, 6 months or more
+                  </PrimaryButton>
+                  <SecondaryButton onClick={() => goToStep('not-eligible-residency')}>
+                    No, less than 6 months
+                  </SecondaryButton>
+                </ButtonGroup>
+              </StepContainer>
+            )}
+
+            {/* NOT ELIGIBLE - Residency */}
+            {currentStep === 'not-eligible-residency' && (
+              <StepContainer key="not-eligible-residency" variants={containerVariants}>
+                <StepIcon>⏳</StepIcon>
+                <StepTitle>Need More Time in Poland</StepTitle>
+                <StepDescription>
+                  You need to be a resident of Poland for at least 6 months before you can exchange your license.
+                </StepDescription>
+                <InfoBox variant="warning">
+                  <p>Please reach out to us once you've been in Poland for 6 months. We'll be happy to help you then!</p>
+                </InfoBox>
+                <ButtonGroup>
+                  <SecondaryButton onClick={() => setCurrentStep('start')}>
+                    Start over
+                  </SecondaryButton>
+                </ButtonGroup>
+              </StepContainer>
+            )}
+
+            {/* ELIGIBLE - Medical Certificate */}
+            {currentStep === 'eligible-medical' && (
+              <StepContainer key="eligible-medical" variants={containerVariants}>
+                <SuccessBadge>✓ You're eligible for exchange!</SuccessBadge>
+                <StepIcon>🏥</StepIcon>
+                <StepTitle>Medical Certificate</StepTitle>
+                <StepDescription>
+                  You'll need a medical certificate stating that you're fit to drive.
+                </StepDescription>
+                <StepQuestion>
+                  Do you already have a valid medical certificate for driving?
+                </StepQuestion>
+                <ButtonGroup>
+                  <PrimaryButton onClick={() => {
+                    setStepData(prev => ({ ...prev, hasMedicalCert: true }));
+                    goToStep('eligible-translation');
+                  }}>
+                    Yes, I have one
+                  </PrimaryButton>
+                  <SecondaryButton onClick={() => {
+                    setStepData(prev => ({ ...prev, hasMedicalCert: false }));
+                    goToStep('eligible-translation');
+                  }}>
+                    No, I don't have it yet
+                  </SecondaryButton>
+                </ButtonGroup>
+                <InfoNote>
+                  {stepData.hasMedicalCert === false && "Don't worry - we can arrange a visit to the clinic for you."}
+                </InfoNote>
+              </StepContainer>
+            )}
+
+            {/* ELIGIBLE - Translation */}
+            {currentStep === 'eligible-translation' && (
+              <StepContainer key="eligible-translation" variants={containerVariants}>
+                <SuccessBadge>✓ You're eligible for exchange!</SuccessBadge>
+                <StepIcon>📜</StepIcon>
+                <StepTitle>Sworn Translation</StepTitle>
+                <StepDescription>
+                  Your foreign license needs to be translated into Polish by a sworn translator.
+                </StepDescription>
+                <StepQuestion>
+                  Do you already have a sworn translation of your license?
+                </StepQuestion>
+                <ButtonGroup>
+                  <PrimaryButton onClick={() => {
+                    setStepData(prev => ({ ...prev, hasTranslation: true }));
+                    goToStep('final-pricing');
+                  }}>
+                    Yes, I have it
+                  </PrimaryButton>
+                  <SecondaryButton onClick={() => {
+                    setStepData(prev => ({ ...prev, hasTranslation: false }));
+                    goToStep('final-pricing');
+                  }}>
+                    No, I need one
+                  </SecondaryButton>
+                </ButtonGroup>
+              </StepContainer>
+            )}
+
+            {/* FINAL PRICING */}
+            {currentStep === 'final-pricing' && (
+              <StepContainer key="final-pricing" variants={containerVariants}>
+                <SuccessBadge>✓ You're eligible for exchange!</SuccessBadge>
+                <StepIcon>🎉</StepIcon>
+                <StepTitle>Your Quote</StepTitle>
+                <StepDescription>
+                  Great news! Here's your personalized pricing for the license exchange:
+                </StepDescription>
+                <PricingBox>
+                  <PricingBreakdown>
+                    <PricingItem>
+                      <span>License exchange service</span>
+                      <span className="font-semibold">{calculatePrice().base} PLN</span>
+                    </PricingItem>
+                    {!stepData.hasTranslation && (
+                      <PricingItem>
+                        <span>Sworn translation</span>
+                        <span className="font-semibold">+{calculatePrice().translation} PLN</span>
+                      </PricingItem>
+                    )}
+                    {!stepData.hasMedicalCert && (
+                      <>
+                        <PricingItem className="text-gray-500">
+                          <span>Medical certificate (clinic fee)</span>
+                          <span className="font-semibold">+{calculatePrice().medical} PLN</span>
+                        </PricingItem>
+                        <PricingNote>We waive our handling charge and assist with the clinic visit</PricingNote>
+                      </>
+                    )}
+                  </PricingBreakdown>
+                  <PricingDivider />
+                  <PricingTotal>
+                    {stepData.hasMedicalCert 
+                      ? `${calculatePrice().total} PLN`
+                      : `${calculatePrice().total} PLN + ${calculatePrice().medical} PLN clinic`
+                    }
+                  </PricingTotal>
+                  <PricingSubtext>
+                    {stepData.hasMedicalCert 
+                      ? 'Total service fee'
+                      : `${calculatePrice().total} PLN to us + ${calculatePrice().medical} PLN to clinic`
+                    }
+                  </PricingSubtext>
+                </PricingBox>
+                <StepQuestion>
+                  Ready to proceed with your license exchange?
+                </StepQuestion>
+                <ButtonGroup>
+                  <WhatsAppButton href={getWhatsAppLink(
+                    `Hi! I completed the license exchange eligibility check and I'm ready to proceed.\n\n` +
+                    `My details:\n` +
+                    `- Document type: ${stepData.documentType || 'Valid document'}\n` +
+                    `- Medical certificate: ${stepData.hasMedicalCert ? 'Yes, I have it' : 'No, I need one'}\n` +
+                    `- Sworn translation: ${stepData.hasTranslation ? 'Yes, I have it' : 'No, I need one'}\n\n` +
+                    `Quote: ${calculatePrice().total} PLN${!stepData.hasMedicalCert ? ` + ${calculatePrice().medical} PLN clinic fee` : ''}`
+                  )}>
+                    Yes, contact me on WhatsApp
+                  </WhatsAppButton>
+                  <SecondaryButton onClick={() => setCurrentStep('start')}>
+                    Start over
+                  </SecondaryButton>
+                </ButtonGroup>
+              </StepContainer>
+            )}
+
+            {/* END - No Interest */}
+            {currentStep === 'end-no-interest' && (
+              <StepContainer key="end-no-interest" variants={containerVariants}>
+                <StepIcon>👋</StepIcon>
+                <StepTitle>No Problem!</StepTitle>
+                <StepDescription>
+                  Feel free to come back whenever you're ready. We're here to help.
+                </StepDescription>
+                <ButtonGroup>
+                  <PrimaryButton onClick={() => setCurrentStep('start')}>
+                    Start over
+                  </PrimaryButton>
+                  <Link href="/" className="block">
+                    <SecondaryButton as="div">
+                      Back to homepage
+                    </SecondaryButton>
+                  </Link>
+                </ButtonGroup>
+              </StepContainer>
+            )}
+          </AnimatePresence>
+        </div>
+      </main>
+
+      {/* Footer */}
+      <footer className="py-6 border-t border-gray-200 bg-white">
+        <div className={theme.spacing.container}>
+          <p className="text-center text-gray-500 text-sm">
+            © {new Date().getFullYear()} Foreigners.pl - All rights reserved
+          </p>
+        </div>
+      </footer>
+    </div>
+  );
+}
+
+// Styled Components
+function StepContainer({ children, variants }: { children: React.ReactNode; variants: any }) {
+  return (
+    <motion.div
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+      variants={variants}
+      className="bg-white rounded-2xl shadow-xl p-8 md:p-12"
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+function StepIcon({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="text-5xl mb-6 text-center">{children}</div>
+  );
+}
+
+function StepTitle({ children }: { children: React.ReactNode }) {
+  return (
+    <h1 className="text-2xl md:text-3xl font-bold text-gray-900 text-center mb-4">
+      {children}
+    </h1>
+  );
+}
+
+function StepDescription({ children }: { children: React.ReactNode }) {
+  return (
+    <p className="text-gray-600 text-center mb-8 text-lg">
+      {children}
+    </p>
+  );
+}
+
+function StepQuestion({ children }: { children: React.ReactNode }) {
+  return (
+    <p className="text-gray-900 font-semibold text-center mb-6 text-lg">
+      {children}
+    </p>
+  );
+}
+
+function ButtonGroup({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="space-y-3">
+      {children}
+    </div>
+  );
+}
+
+function PrimaryButton({ children, onClick }: { children: React.ReactNode; onClick: () => void }) {
+  return (
+    <button
+      onClick={onClick}
+      className="w-full py-4 px-6 bg-primary text-white font-semibold rounded-xl hover:bg-red-800 transition-all duration-200 shadow-lg hover:shadow-xl"
+    >
+      {children}
+    </button>
+  );
+}
+
+function SecondaryButton({ children, onClick, as }: { children: React.ReactNode; onClick?: () => void; as?: string }) {
+  const className = "w-full py-4 px-6 bg-gray-100 text-gray-700 font-semibold rounded-xl hover:bg-gray-200 transition-all duration-200";
+  
+  if (as === 'div') {
+    return <div className={className}>{children}</div>;
+  }
+  
+  return (
+    <button onClick={onClick} className={className}>
+      {children}
+    </button>
+  );
+}
+
+function WhatsAppButton({ children, href }: { children: React.ReactNode; href: string }) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="w-full py-4 px-6 bg-green-600 text-white font-semibold rounded-xl hover:bg-green-700 transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
+    >
+      <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+      </svg>
+      {children}
+    </a>
+  );
+}
+
+function InfoBox({ children, variant }: { children: React.ReactNode; variant: 'info' | 'warning' | 'error' }) {
+  const variants = {
+    info: 'bg-blue-50 border-blue-200 text-blue-800',
+    warning: 'bg-amber-50 border-amber-200 text-amber-800',
+    error: 'bg-red-50 border-red-200 text-red-800',
+  };
+  
+  return (
+    <div className={`p-4 rounded-xl border mb-6 ${variants[variant]}`}>
+      {children}
+    </div>
+  );
+}
+
+function InfoNote({ children }: { children: React.ReactNode }) {
+  return children ? (
+    <p className="text-gray-500 text-sm text-center mt-4">{children}</p>
+  ) : null;
+}
+
+function SuccessBadge({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="flex justify-center mb-4">
+      <span className="bg-green-100 text-green-800 px-4 py-2 rounded-full text-sm font-semibold">
+        {children}
+      </span>
+    </div>
+  );
+}
+
+function OptionList({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="space-y-3">
+      {children}
+    </div>
+  );
+}
+
+function OptionButton({ children, onClick, variant }: { children: React.ReactNode; onClick: () => void; variant?: 'none' }) {
+  return (
+    <button
+      onClick={onClick}
+      className={`w-full p-4 rounded-xl border-2 text-left flex items-center gap-4 transition-all duration-200 ${
+        variant === 'none'
+          ? 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
+          : 'border-primary/20 hover:border-primary hover:bg-primary/5'
+      }`}
+    >
+      {children}
+    </button>
+  );
+}
+
+function OptionIcon({ children }: { children: React.ReactNode }) {
+  return <span className="text-2xl">{children}</span>;
+}
+
+function OptionText({ children }: { children: React.ReactNode }) {
+  return <div className="flex-1">{children}</div>;
+}
+
+function OptionTitle({ children }: { children: React.ReactNode }) {
+  return <div className="font-semibold text-gray-900">{children}</div>;
+}
+
+function OptionDesc({ children }: { children: React.ReactNode }) {
+  return <div className="text-sm text-gray-500">{children}</div>;
+}
+
+function PricingBox({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="bg-gray-50 rounded-xl p-6 mb-6 border border-gray-200">
+      {children}
+    </div>
+  );
+}
+
+function PricingTotal({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="text-3xl font-bold text-primary text-center">
+      {children}
+    </div>
+  );
+}
+
+function PricingSubtext({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="text-gray-500 text-center text-sm mb-4">
+      {children}
+    </div>
+  );
+}
+
+function PricingBreakdown({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="space-y-2 mb-4">
+      {children}
+    </div>
+  );
+}
+
+function PricingItem({ children, className }: { children: React.ReactNode; className?: string }) {
+  return (
+    <div className={`flex justify-between items-center ${className || ''}`}>
+      {children}
+    </div>
+  );
+}
+
+function PricingNote({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="text-xs text-gray-500 italic ml-4">
+      {children}
+    </div>
+  );
+}
+
+function PricingDivider() {
+  return <div className="border-t border-gray-300 my-4" />;
+}

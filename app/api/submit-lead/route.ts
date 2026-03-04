@@ -116,7 +116,7 @@ const RATE_LIMIT = {
 
 // Check rate limits before allowing submission
 async function checkRateLimit(
-  supabaseAdmin: ReturnType<typeof createClient>,
+  supabaseAdmin: any,
   ip: string,
   email: string
 ): Promise<{ allowed: boolean; reason?: string }> {
