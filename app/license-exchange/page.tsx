@@ -87,9 +87,9 @@ const Icons = {
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
     </svg>
   ),
-  celebration: (
+  quote: (
     <svg className="w-12 h-12 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
     </svg>
   ),
   info: (
@@ -153,6 +153,23 @@ export default function LicenseExchangePage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 flex flex-col">
       <Navbar />
+      
+      {/* Persistent page title */}
+      <div className="bg-white border-b border-gray-200">
+        <div className="max-w-2xl mx-auto px-4 py-4">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
+              <svg className="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0" />
+              </svg>
+            </div>
+            <div>
+              <h1 className="text-lg font-semibold text-gray-900">License Exchange</h1>
+              <p className="text-sm text-gray-500">Check your eligibility</p>
+            </div>
+          </div>
+        </div>
+      </div>
       
       {/* Back button for flow navigation */}
       {history.length > 0 && (
@@ -569,7 +586,7 @@ export default function LicenseExchangePage() {
             {currentStep === 'final-pricing' && (
               <StepContainer key="final-pricing" variants={containerVariants}>
                 <SuccessBadge>You're eligible for exchange!</SuccessBadge>
-                <IconWrapper>{Icons.celebration}</IconWrapper>
+                <IconWrapper>{Icons.quote}</IconWrapper>
                 <StepTitle>Your Quote</StepTitle>
                 <StepDescription>
                   Great news! Here's your personalized pricing for the license exchange:
