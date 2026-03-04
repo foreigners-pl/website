@@ -33,72 +33,75 @@ interface StepData {
 
 const WHATSAPP_NUMBER = '48736286264';
 
+// Icon class for responsive sizing
+const iconClass = "w-10 h-10 md:w-12 md:h-12";
+
 // SVG Icons
 const Icons = {
   car: (
-    <svg className="w-12 h-12 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <svg className={`${iconClass} text-primary`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z" />
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0" />
     </svg>
   ),
   document: (
-    <svg className="w-12 h-12 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <svg className={`${iconClass} text-primary`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
     </svg>
   ),
   check: (
-    <svg className="w-12 h-12 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <svg className={`${iconClass} text-green-600`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
     </svg>
   ),
   x: (
-    <svg className="w-12 h-12 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <svg className={`${iconClass} text-red-500`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
     </svg>
   ),
   location: (
-    <svg className="w-12 h-12 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <svg className={`${iconClass} text-primary`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
     </svg>
   ),
   currency: (
-    <svg className="w-12 h-12 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <svg className={`${iconClass} text-primary`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
     </svg>
   ),
   home: (
-    <svg className="w-12 h-12 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <svg className={`${iconClass} text-primary`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
     </svg>
   ),
   clock: (
-    <svg className="w-12 h-12 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <svg className={`${iconClass} text-amber-500`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
     </svg>
   ),
   medical: (
-    <svg className="w-12 h-12 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <svg className={`${iconClass} text-primary`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
     </svg>
   ),
   translate: (
-    <svg className="w-12 h-12 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <svg className={`${iconClass} text-primary`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
     </svg>
   ),
   quote: (
-    <svg className="w-12 h-12 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <svg className={`${iconClass} text-green-600`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
     </svg>
   ),
   info: (
-    <svg className="w-12 h-12 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <svg className={`${iconClass} text-blue-500`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
     </svg>
   ),
   wave: (
-    <svg className="w-12 h-12 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <svg className={`${iconClass} text-primary`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a7.5 7.5 0 0015 0v-5a1.5 1.5 0 00-3 0m-6-3V11m0-5.5v-1a1.5 1.5 0 013 0v1m0 0V11m0-5.5a1.5 1.5 0 013 0v3m0 0V11" />
     </svg>
   ),
@@ -156,16 +159,16 @@ export default function LicenseExchangePage() {
       
       {/* Persistent page title */}
       <div className="bg-white border-b border-gray-200">
-        <div className="max-w-2xl mx-auto px-4 py-4">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
-              <svg className="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div className="max-w-2xl mx-auto px-3 sm:px-4 py-3 sm:py-4">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
+              <svg className="w-4 h-4 sm:w-5 sm:h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0" />
               </svg>
             </div>
             <div>
-              <h1 className="text-lg font-semibold text-gray-900">License Exchange</h1>
-              <p className="text-sm text-gray-500">Check your eligibility</p>
+              <h1 className="text-base sm:text-lg font-semibold text-gray-900">License Exchange</h1>
+              <p className="text-xs sm:text-sm text-gray-500">Check your eligibility</p>
             </div>
           </div>
         </div>
@@ -174,10 +177,10 @@ export default function LicenseExchangePage() {
       {/* Back button for flow navigation */}
       {history.length > 0 && (
         <div className="bg-white border-b border-gray-100">
-          <div className="max-w-2xl mx-auto px-4 py-3">
+          <div className="max-w-2xl mx-auto px-3 sm:px-4 py-2 sm:py-3">
             <button
               onClick={goBack}
-              className="flex items-center gap-2 text-gray-600 hover:text-primary transition-colors text-sm"
+              className="flex items-center gap-1.5 sm:gap-2 text-gray-600 hover:text-primary transition-colors text-xs sm:text-sm"
             >
               {Icons.back}
               Previous step
@@ -186,8 +189,8 @@ export default function LicenseExchangePage() {
         </div>
       )}
 
-      <main className="flex-1 py-12 md:py-16">
-        <div className="max-w-2xl mx-auto px-4">
+      <main className="flex-1 py-6 sm:py-10 md:py-16">
+        <div className="max-w-2xl mx-auto px-3 sm:px-4">
           <AnimatePresence mode="wait">
             
             {/* START */}
@@ -609,8 +612,8 @@ export default function LicenseExchangePage() {
                   <PricingSubtext>Our service fee</PricingSubtext>
                   
                   {!stepData.hasMedicalCert && (
-                    <div className="mt-4 pt-4 border-t border-gray-200">
-                      <p className="text-sm text-gray-600 text-center">
+                    <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-gray-200">
+                      <p className="text-xs sm:text-sm text-gray-600 text-center">
                         You'll also need a medical certificate. We'll arrange the clinic visit for you - clinic fee is around 200 PLN (paid directly to clinic).
                       </p>
                     </div>
@@ -675,7 +678,7 @@ function StepContainer({ children, variants }: { children: React.ReactNode; vari
       animate="visible"
       exit="exit"
       variants={variants}
-      className="bg-white rounded-2xl shadow-xl p-8 md:p-12"
+      className="bg-white rounded-xl sm:rounded-2xl shadow-lg sm:shadow-xl p-5 sm:p-8 md:p-10"
     >
       {children}
     </motion.div>
@@ -684,21 +687,21 @@ function StepContainer({ children, variants }: { children: React.ReactNode; vari
 
 function IconWrapper({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex justify-center mb-6">{children}</div>
+    <div className="flex justify-center mb-4 sm:mb-6">{children}</div>
   );
 }
 
 function StepTitle({ children }: { children: React.ReactNode }) {
   return (
-    <h1 className="text-2xl md:text-3xl font-bold text-gray-900 text-center mb-4">
+    <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 text-center mb-3 sm:mb-4">
       {children}
-    </h1>
+    </h2>
   );
 }
 
 function StepDescription({ children }: { children: React.ReactNode }) {
   return (
-    <p className="text-gray-600 text-center mb-8 text-lg">
+    <p className="text-gray-600 text-center mb-6 sm:mb-8 text-sm sm:text-base md:text-lg">
       {children}
     </p>
   );
@@ -706,7 +709,7 @@ function StepDescription({ children }: { children: React.ReactNode }) {
 
 function StepQuestion({ children }: { children: React.ReactNode }) {
   return (
-    <p className="text-gray-900 font-semibold text-center mb-6 text-lg">
+    <p className="text-gray-900 font-semibold text-center mb-4 sm:mb-6 text-sm sm:text-base md:text-lg">
       {children}
     </p>
   );
@@ -714,7 +717,7 @@ function StepQuestion({ children }: { children: React.ReactNode }) {
 
 function ButtonGroup({ children }: { children: React.ReactNode }) {
   return (
-    <div className="space-y-3">
+    <div className="space-y-2 sm:space-y-3">
       {children}
     </div>
   );
@@ -724,7 +727,7 @@ function PrimaryButton({ children, onClick }: { children: React.ReactNode; onCli
   return (
     <button
       onClick={onClick}
-      className="w-full py-4 px-6 bg-primary text-white font-semibold rounded-xl hover:bg-red-800 transition-all duration-200 shadow-lg hover:shadow-xl"
+      className="w-full py-3 sm:py-4 px-4 sm:px-6 bg-primary text-white text-sm sm:text-base font-semibold rounded-lg sm:rounded-xl hover:bg-red-800 active:scale-[0.98] transition-all duration-200 shadow-md sm:shadow-lg hover:shadow-xl"
     >
       {children}
     </button>
@@ -732,7 +735,7 @@ function PrimaryButton({ children, onClick }: { children: React.ReactNode; onCli
 }
 
 function SecondaryButton({ children, onClick, as }: { children: React.ReactNode; onClick?: () => void; as?: string }) {
-  const className = "w-full py-4 px-6 bg-gray-100 text-gray-700 font-semibold rounded-xl hover:bg-gray-200 transition-all duration-200";
+  const className = "w-full py-3 sm:py-4 px-4 sm:px-6 bg-gray-100 text-gray-700 text-sm sm:text-base font-semibold rounded-lg sm:rounded-xl hover:bg-gray-200 active:scale-[0.98] transition-all duration-200";
   
   if (as === 'div') {
     return <div className={className}>{children}</div>;
@@ -751,9 +754,9 @@ function WhatsAppButton({ children, href }: { children: React.ReactNode; href: s
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="w-full py-4 px-6 bg-green-600 text-white font-semibold rounded-xl hover:bg-green-700 transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
+      className="w-full py-3 sm:py-4 px-4 sm:px-6 bg-green-600 text-white text-sm sm:text-base font-semibold rounded-lg sm:rounded-xl hover:bg-green-700 active:scale-[0.98] transition-all duration-200 shadow-md sm:shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
     >
-      <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+      <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" viewBox="0 0 24 24">
         <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
       </svg>
       {children}
@@ -769,7 +772,7 @@ function InfoBox({ children, variant }: { children: React.ReactNode; variant: 'i
   };
   
   return (
-    <div className={`p-4 rounded-xl border mb-6 ${variants[variant]}`}>
+    <div className={`p-3 sm:p-4 rounded-lg sm:rounded-xl border mb-4 sm:mb-6 text-sm sm:text-base ${variants[variant]}`}>
       {children}
     </div>
   );
@@ -777,9 +780,9 @@ function InfoBox({ children, variant }: { children: React.ReactNode; variant: 'i
 
 function SuccessBadge({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex justify-center mb-4">
-      <span className="bg-green-100 text-green-800 px-4 py-2 rounded-full text-sm font-semibold flex items-center gap-2">
-        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <div className="flex justify-center mb-3 sm:mb-4">
+      <span className="bg-green-100 text-green-800 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-semibold flex items-center gap-1.5 sm:gap-2">
+        <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
         </svg>
         {children}
@@ -790,7 +793,7 @@ function SuccessBadge({ children }: { children: React.ReactNode }) {
 
 function OptionList({ children }: { children: React.ReactNode }) {
   return (
-    <div className="space-y-3">
+    <div className="space-y-2 sm:space-y-3">
       {children}
     </div>
   );
@@ -800,7 +803,7 @@ function OptionButton({ children, onClick, variant }: { children: React.ReactNod
   return (
     <button
       onClick={onClick}
-      className={`w-full p-4 rounded-xl border-2 text-left flex items-center gap-4 transition-all duration-200 ${
+      className={`w-full p-3 sm:p-4 rounded-lg sm:rounded-xl border-2 text-left flex items-center gap-3 sm:gap-4 active:scale-[0.98] transition-all duration-200 ${
         variant === 'none'
           ? 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
           : 'border-primary/20 hover:border-primary hover:bg-primary/5'
@@ -812,24 +815,24 @@ function OptionButton({ children, onClick, variant }: { children: React.ReactNod
 }
 
 function OptionIcon({ children }: { children: React.ReactNode }) {
-  return <span className="flex-shrink-0">{children}</span>;
+  return <span className="flex-shrink-0 [&>svg]:w-5 [&>svg]:h-5 sm:[&>svg]:w-6 sm:[&>svg]:h-6">{children}</span>;
 }
 
 function OptionText({ children }: { children: React.ReactNode }) {
-  return <div className="flex-1">{children}</div>;
+  return <div className="flex-1 min-w-0">{children}</div>;
 }
 
 function OptionTitle({ children }: { children: React.ReactNode }) {
-  return <div className="font-semibold text-gray-900">{children}</div>;
+  return <div className="font-semibold text-gray-900 text-sm sm:text-base">{children}</div>;
 }
 
 function OptionDesc({ children }: { children: React.ReactNode }) {
-  return <div className="text-sm text-gray-500">{children}</div>;
+  return <div className="text-xs sm:text-sm text-gray-500">{children}</div>;
 }
 
 function PricingBox({ children }: { children: React.ReactNode }) {
   return (
-    <div className="bg-gray-50 rounded-xl p-6 mb-6 border border-gray-200">
+    <div className="bg-gray-50 rounded-lg sm:rounded-xl p-4 sm:p-6 mb-4 sm:mb-6 border border-gray-200">
       {children}
     </div>
   );
@@ -837,7 +840,7 @@ function PricingBox({ children }: { children: React.ReactNode }) {
 
 function PricingTotal({ children }: { children: React.ReactNode }) {
   return (
-    <div className="text-3xl font-bold text-primary text-center">
+    <div className="text-2xl sm:text-3xl font-bold text-primary text-center">
       {children}
     </div>
   );
@@ -845,7 +848,7 @@ function PricingTotal({ children }: { children: React.ReactNode }) {
 
 function PricingSubtext({ children }: { children: React.ReactNode }) {
   return (
-    <div className="text-gray-500 text-center text-sm">
+    <div className="text-gray-500 text-center text-xs sm:text-sm">
       {children}
     </div>
   );
@@ -853,7 +856,7 @@ function PricingSubtext({ children }: { children: React.ReactNode }) {
 
 function PricingBreakdown({ children }: { children: React.ReactNode }) {
   return (
-    <div className="space-y-2 mb-4">
+    <div className="space-y-1.5 sm:space-y-2 mb-3 sm:mb-4">
       {children}
     </div>
   );
@@ -861,7 +864,7 @@ function PricingBreakdown({ children }: { children: React.ReactNode }) {
 
 function PricingItem({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex justify-between items-center">
+    <div className="flex justify-between items-center text-sm sm:text-base">
       {children}
     </div>
   );
@@ -869,7 +872,7 @@ function PricingItem({ children }: { children: React.ReactNode }) {
 
 function PricingNote({ children }: { children: React.ReactNode }) {
   return (
-    <div className="text-xs text-gray-500 italic ml-4">
+    <div className="text-[11px] sm:text-xs text-gray-500 italic ml-3 sm:ml-4">
       {children}
     </div>
   );
