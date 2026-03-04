@@ -189,7 +189,7 @@ export default function LicenseExchangePage() {
         </div>
       )}
 
-      <main className="flex-1 py-8 sm:py-14 md:py-20">
+      <main className="flex-1 py-10 sm:py-16 md:py-20">
         <div className="max-w-2xl mx-auto px-3 sm:px-4">
           <AnimatePresence mode="wait">
             
@@ -678,7 +678,7 @@ function StepContainer({ children, variants }: { children: React.ReactNode; vari
       animate="visible"
       exit="exit"
       variants={variants}
-      className="bg-white rounded-xl sm:rounded-2xl shadow-lg sm:shadow-xl p-5 sm:p-8 md:p-10"
+      className="bg-white rounded-xl sm:rounded-2xl shadow-lg sm:shadow-xl p-5 sm:p-8 md:p-10 my-4 sm:my-6"
     >
       {children}
     </motion.div>
