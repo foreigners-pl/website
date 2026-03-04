@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import Navbar from '@/components/layout/Navbar';
@@ -29,6 +29,71 @@ interface StepData {
   hasMedicalCert?: boolean;
   hasTranslation?: boolean;
   documentType?: string;
+}
+
+// Analytics tracking types
+interface TrackingData {
+  session_id: string;
+  event_type: 'page_view' | 'step_view' | 'button_click' | 'option_select' | 'whatsapp_click' | 'session_end';
+  step_name?: string;
+  action?: string;
+  action_value?: string;
+  flow_path?: string[];
+  answers?: Record<string, any>;
+  completed?: boolean;
+  exit_step?: string;
+  local_time?: string;
+  timezone?: string;
+  device_type?: string;
+  browser?: string;
+  os?: string;
+  screen_width?: number;
+  screen_height?: number;
+  referrer?: string;
+  utm_source?: string;
+  utm_medium?: string;
+  utm_campaign?: string;
+}
+
+// Utility functions for device detection
+function getDeviceType(): string {
+  if (typeof window === 'undefined') return 'unknown';
+  const width = window.innerWidth;
+  if (width < 768) return 'mobile';
+  if (width < 1024) return 'tablet';
+  return 'desktop';
+}
+
+function getBrowser(): string {
+  if (typeof navigator === 'undefined') return 'unknown';
+  const ua = navigator.userAgent;
+  if (ua.includes('Chrome') && !ua.includes('Edg')) return 'Chrome';
+  if (ua.includes('Safari') && !ua.includes('Chrome')) return 'Safari';
+  if (ua.includes('Firefox')) return 'Firefox';
+  if (ua.includes('Edg')) return 'Edge';
+  if (ua.includes('Opera') || ua.includes('OPR')) return 'Opera';
+  return 'Other';
+}
+
+function getOS(): string {
+  if (typeof navigator === 'undefined') return 'unknown';
+  const ua = navigator.userAgent;
+  if (ua.includes('Windows')) return 'Windows';
+  if (ua.includes('Mac')) return 'macOS';
+  if (ua.includes('Linux')) return 'Linux';
+  if (ua.includes('Android')) return 'Android';
+  if (ua.includes('iOS') || ua.includes('iPhone') || ua.includes('iPad')) return 'iOS';
+  return 'Other';
+}
+
+function getUTMParams(): { utm_source?: string; utm_medium?: string; utm_campaign?: string } {
+  if (typeof window === 'undefined') return {};
+  const params = new URLSearchParams(window.location.search);
+  return {
+    utm_source: params.get('utm_source') || undefined,
+    utm_medium: params.get('utm_medium') || undefined,
+    utm_campaign: params.get('utm_campaign') || undefined,
+  };
 }
 
 const WHATSAPP_NUMBER = '48736286264';
@@ -116,19 +181,119 @@ export default function LicenseExchangePage() {
   const [currentStep, setCurrentStep] = useState<Step>('start');
   const [stepData, setStepData] = useState<StepData>({});
   const [history, setHistory] = useState<Step[]>([]);
+  const [sessionId] = useState(() => 
+    typeof crypto !== 'undefined' ? crypto.randomUUID() : `session_${Date.now()}`
+  );
+  const flowPathRef = useRef<string[]>(['start']);
+  const hasTrackedPageView = useRef(false);
 
-  const goToStep = (step: Step) => {
+  // Analytics tracking function
+  const trackEvent = useCallback(async (
+    eventType: TrackingData['event_type'],
+    extras: Partial<TrackingData> = {}
+  ) => {
+    try {
+      const data: TrackingData = {
+        session_id: sessionId,
+        event_type: eventType,
+        step_name: currentStep,
+        flow_path: flowPathRef.current,
+        answers: stepData,
+        local_time: new Date().toISOString(),
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+        device_type: getDeviceType(),
+        browser: getBrowser(),
+        os: getOS(),
+        screen_width: typeof window !== 'undefined' ? window.innerWidth : undefined,
+        screen_height: typeof window !== 'undefined' ? window.innerHeight : undefined,
+        referrer: typeof document !== 'undefined' ? document.referrer : undefined,
+        ...getUTMParams(),
+        ...extras,
+      };
+
+      // Fire and forget - don't await to not slow down UX
+      fetch('/api/track-flow', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      }).catch(() => {}); // Silently fail
+    } catch {
+      // Analytics should never break the app
+    }
+  }, [sessionId, currentStep, stepData]);
+
+  // Track page view on mount
+  useEffect(() => {
+    if (!hasTrackedPageView.current) {
+      hasTrackedPageView.current = true;
+      trackEvent('page_view');
+    }
+  }, [trackEvent]);
+
+  // Track step changes
+  useEffect(() => {
+    if (hasTrackedPageView.current && currentStep !== 'start') {
+      flowPathRef.current = [...flowPathRef.current, currentStep];
+      trackEvent('step_view');
+    }
+  }, [currentStep, trackEvent]);
+
+  // Track session end on page leave
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      const isCompleted = currentStep === 'final-pricing' || 
+                          flowPathRef.current.some(s => s.includes('whatsapp'));
+      
+      // Use sendBeacon for reliable tracking on page leave
+      const data = {
+        session_id: sessionId,
+        event_type: 'session_end',
+        step_name: currentStep,
+        exit_step: currentStep,
+        flow_path: flowPathRef.current,
+        answers: stepData,
+        completed: isCompleted,
+        local_time: new Date().toISOString(),
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+      };
+      
+      navigator.sendBeacon('/api/track-flow', JSON.stringify(data));
+    };
+
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'hidden') {
+        handleBeforeUnload();
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, [sessionId, currentStep, stepData]);
+
+  const goToStep = (step: Step, action?: string, actionValue?: string) => {
+    // Track the button click
+    trackEvent('button_click', { action, action_value: actionValue });
     setHistory(prev => [...prev, currentStep]);
     setCurrentStep(step);
   };
 
   const goBack = () => {
     if (history.length > 0) {
+      trackEvent('button_click', { action: 'back' });
       const newHistory = [...history];
       const previousStep = newHistory.pop()!;
       setHistory(newHistory);
       setCurrentStep(previousStep);
     }
+  };
+
+  const trackWhatsAppClick = () => {
+    trackEvent('whatsapp_click', { completed: true });
   };
 
   const calculatePrice = () => {
@@ -287,7 +452,7 @@ export default function LicenseExchangePage() {
                   Would you like to talk about starting this service?
                 </StepQuestion>
                 <ButtonGroup>
-                  <WhatsAppButton href={getWhatsAppLink("Hi! I'm interested in getting a new driving license in Katowice. I saw the package for 4,500 PLN and would like to discuss starting the process.")}>
+                  <WhatsAppButton onClick={trackWhatsAppClick} href={getWhatsAppLink("Hi! I'm interested in getting a new driving license in Katowice. I saw the package for 4,500 PLN and would like to discuss starting the process.")}>
                     Yes, let's talk on WhatsApp
                   </WhatsAppButton>
                   <SecondaryButton onClick={() => goToStep('end-no-interest')}>
@@ -309,7 +474,7 @@ export default function LicenseExchangePage() {
                   <p>We're working on expanding to other cities. Feel free to reach out and we'll let you know when we're available in your area.</p>
                 </InfoBox>
                 <ButtonGroup>
-                  <WhatsAppButton href={getWhatsAppLink("Hi! I'm interested in getting a new driving license but I'm not in Katowice. Can you let me know when you expand to other areas?")}>
+                  <WhatsAppButton onClick={trackWhatsAppClick} href={getWhatsAppLink("Hi! I'm interested in getting a new driving license but I'm not in Katowice. Can you let me know when you expand to other areas?")}>
                     Contact us anyway
                   </WhatsAppButton>
                   <SecondaryButton onClick={() => setCurrentStep('start')}>
@@ -452,7 +617,7 @@ export default function LicenseExchangePage() {
                   Would you like to talk to us about speeding up your TRC process?
                 </StepQuestion>
                 <ButtonGroup>
-                  <WhatsAppButton href={getWhatsAppLink("Hi! I'm interested in exchanging my driving license but I don't have the required documents yet. I'd like to learn about speeding up the TRC process.")}>
+                  <WhatsAppButton onClick={trackWhatsAppClick} href={getWhatsAppLink("Hi! I'm interested in exchanging my driving license but I don't have the required documents yet. I'd like to learn about speeding up the TRC process.")}>
                     Yes, tell me more
                   </WhatsAppButton>
                   <SecondaryButton onClick={() => goToStep('trc-help-offer')}>
@@ -623,7 +788,7 @@ export default function LicenseExchangePage() {
                   Ready to proceed with your license exchange?
                 </StepQuestion>
                 <ButtonGroup>
-                  <WhatsAppButton href={getWhatsAppLink(
+                  <WhatsAppButton onClick={trackWhatsAppClick} href={getWhatsAppLink(
                     `Hi! I completed the license exchange eligibility check and I'm ready to proceed.\n\n` +
                     `My details:\n` +
                     `- Document type: ${stepData.documentType || 'Valid document'}\n` +
@@ -748,12 +913,17 @@ function SecondaryButton({ children, onClick, as }: { children: React.ReactNode;
   );
 }
 
-function WhatsAppButton({ children, href }: { children: React.ReactNode; href: string }) {
+function WhatsAppButton({ children, href, onClick }: { children: React.ReactNode; href: string; onClick?: () => void }) {
+  const handleClick = () => {
+    if (onClick) onClick();
+  };
+  
   return (
     <a
       href={href}
       target="_blank"
       rel="noopener noreferrer"
+      onClick={handleClick}
       className="w-full py-3 sm:py-4 px-4 sm:px-6 bg-green-600 text-white text-sm sm:text-base font-semibold rounded-lg sm:rounded-xl hover:bg-green-700 active:scale-[0.98] transition-all duration-200 shadow-md sm:shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
     >
       <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" viewBox="0 0 24 24">
