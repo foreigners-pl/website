@@ -3,7 +3,8 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
-import { theme } from '@/lib/theme';
+import Navbar from '@/components/layout/Navbar';
+import Footer from '@/components/layout/Footer';
 
 // Flow step types
 type Step = 
@@ -32,6 +33,82 @@ interface StepData {
 
 const WHATSAPP_NUMBER = '48736286264';
 
+// SVG Icons
+const Icons = {
+  car: (
+    <svg className="w-12 h-12 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z" />
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0" />
+    </svg>
+  ),
+  document: (
+    <svg className="w-12 h-12 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+    </svg>
+  ),
+  check: (
+    <svg className="w-12 h-12 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
+  ),
+  x: (
+    <svg className="w-12 h-12 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
+  ),
+  location: (
+    <svg className="w-12 h-12 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+    </svg>
+  ),
+  currency: (
+    <svg className="w-12 h-12 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
+  ),
+  home: (
+    <svg className="w-12 h-12 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+    </svg>
+  ),
+  clock: (
+    <svg className="w-12 h-12 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
+  ),
+  medical: (
+    <svg className="w-12 h-12 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+    </svg>
+  ),
+  translate: (
+    <svg className="w-12 h-12 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+    </svg>
+  ),
+  celebration: (
+    <svg className="w-12 h-12 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+    </svg>
+  ),
+  info: (
+    <svg className="w-12 h-12 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
+  ),
+  wave: (
+    <svg className="w-12 h-12 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a7.5 7.5 0 0015 0v-5a1.5 1.5 0 00-3 0m-6-3V11m0-5.5v-1a1.5 1.5 0 013 0v1m0 0V11m0-5.5a1.5 1.5 0 013 0v3m0 0V11" />
+    </svg>
+  ),
+  back: (
+    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+    </svg>
+  ),
+};
+
 export default function LicenseExchangePage() {
   const [currentStep, setCurrentStep] = useState<Step>('start');
   const [stepData, setStepData] = useState<StepData>({});
@@ -54,16 +131,12 @@ export default function LicenseExchangePage() {
   const calculatePrice = () => {
     let base = 699;
     let translation = stepData.hasTranslation ? 0 : 249;
-    let medical = stepData.hasMedicalCert ? 0 : 200;
-    let medicalNote = stepData.hasMedicalCert ? '' : ' (clinic fee - we waive our handling charge)';
     
     return {
       base,
       translation,
-      medical,
-      medicalNote,
       total: base + translation,
-      totalWithMedical: base + translation + medical,
+      needsMedical: !stepData.hasMedicalCert,
     };
   };
 
@@ -71,7 +144,6 @@ export default function LicenseExchangePage() {
     return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
   };
 
-  // Animation variants
   const containerVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: 'easeOut' } },
@@ -79,37 +151,32 @@ export default function LicenseExchangePage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100">
-      {/* Header */}
-      <header className="bg-white border-b border-gray-200">
-        <div className={theme.spacing.container}>
-          <div className="py-4 flex items-center justify-between">
-            <Link href="/" className="flex items-center gap-2">
-              <img src="/fulllogo.png" alt="Foreigners.pl" className="h-10" />
-            </Link>
-            {history.length > 0 && (
-              <button
-                onClick={goBack}
-                className="flex items-center gap-2 text-gray-600 hover:text-primary transition-colors"
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
-                Back
-              </button>
-            )}
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 flex flex-col">
+      <Navbar />
+      
+      {/* Back button for flow navigation */}
+      {history.length > 0 && (
+        <div className="bg-white border-b border-gray-100">
+          <div className="max-w-2xl mx-auto px-4 py-3">
+            <button
+              onClick={goBack}
+              className="flex items-center gap-2 text-gray-600 hover:text-primary transition-colors text-sm"
+            >
+              {Icons.back}
+              Previous step
+            </button>
           </div>
         </div>
-      </header>
+      )}
 
-      {/* Main Content */}
-      <main className="py-12 md:py-20">
+      <main className="flex-1 py-12 md:py-16">
         <div className="max-w-2xl mx-auto px-4">
           <AnimatePresence mode="wait">
+            
             {/* START */}
             {currentStep === 'start' && (
               <StepContainer key="start" variants={containerVariants}>
-                <StepIcon>🚗</StepIcon>
+                <IconWrapper>{Icons.car}</IconWrapper>
                 <StepTitle>Driving License Exchange</StepTitle>
                 <StepDescription>
                   Let's find out if you're eligible to exchange your foreign driving license for a Polish one.
@@ -131,7 +198,7 @@ export default function LicenseExchangePage() {
             {/* NEW LICENSE - Interest */}
             {currentStep === 'new-license-interest' && (
               <StepContainer key="new-license-interest" variants={containerVariants}>
-                <StepIcon>📝</StepIcon>
+                <IconWrapper>{Icons.document}</IconWrapper>
                 <StepTitle>Start Fresh</StepTitle>
                 <StepDescription>
                   We can help you obtain a brand new Polish driving license from scratch.
@@ -153,7 +220,7 @@ export default function LicenseExchangePage() {
             {/* NEW LICENSE - Location */}
             {currentStep === 'new-license-location' && (
               <StepContainer key="new-license-location" variants={containerVariants}>
-                <StepIcon>📍</StepIcon>
+                <IconWrapper>{Icons.location}</IconWrapper>
                 <StepTitle>Location Check</StepTitle>
                 <StepDescription>
                   Our driving school services are currently available in the Katowice area.
@@ -175,7 +242,7 @@ export default function LicenseExchangePage() {
             {/* NEW LICENSE - Pricing */}
             {currentStep === 'new-license-pricing' && (
               <StepContainer key="new-license-pricing" variants={containerVariants}>
-                <StepIcon>💰</StepIcon>
+                <IconWrapper>{Icons.currency}</IconWrapper>
                 <StepTitle>New License Package</StepTitle>
                 <StepDescription>
                   Great! Here's what we offer for obtaining a new Polish driving license:
@@ -213,7 +280,7 @@ export default function LicenseExchangePage() {
             {/* NEW LICENSE - Not Available */}
             {currentStep === 'new-license-not-available' && (
               <StepContainer key="new-license-not-available" variants={containerVariants}>
-                <StepIcon>😔</StepIcon>
+                <IconWrapper>{Icons.x}</IconWrapper>
                 <StepTitle>Not Available in Your Area</StepTitle>
                 <StepDescription>
                   Unfortunately, our driving school services are currently only available in the Katowice area.
@@ -235,7 +302,7 @@ export default function LicenseExchangePage() {
             {/* LICENSE VALID CHECK */}
             {currentStep === 'license-valid' && (
               <StepContainer key="license-valid" variants={containerVariants}>
-                <StepIcon>✅</StepIcon>
+                <IconWrapper>{Icons.check}</IconWrapper>
                 <StepTitle>License Validity</StepTitle>
                 <StepDescription>
                   To exchange your license, it must currently be valid (not expired).
@@ -257,7 +324,7 @@ export default function LicenseExchangePage() {
             {/* NOT ELIGIBLE - Invalid License */}
             {currentStep === 'not-eligible-invalid' && (
               <StepContainer key="not-eligible-invalid" variants={containerVariants}>
-                <StepIcon>❌</StepIcon>
+                <IconWrapper>{Icons.x}</IconWrapper>
                 <StepTitle>License Must Be Valid</StepTitle>
                 <StepDescription>
                   Unfortunately, you cannot exchange an expired license.
@@ -277,7 +344,7 @@ export default function LicenseExchangePage() {
             {/* DOCUMENT TYPE CHECK */}
             {currentStep === 'document-type' && (
               <StepContainer key="document-type" variants={containerVariants}>
-                <StepIcon>📄</StepIcon>
+                <IconWrapper>{Icons.document}</IconWrapper>
                 <StepTitle>Residency Documents</StepTitle>
                 <StepDescription>
                   To exchange your license, you need a valid document proving your legal stay in Poland.
@@ -292,7 +359,11 @@ export default function LicenseExchangePage() {
                       goToStep('residency-check');
                     }}
                   >
-                    <OptionIcon>🛂</OptionIcon>
+                    <OptionIcon>
+                      <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2" />
+                      </svg>
+                    </OptionIcon>
                     <OptionText>
                       <OptionTitle>Active Polish Visa</OptionTitle>
                       <OptionDesc>Valid visa in your passport</OptionDesc>
@@ -304,7 +375,11 @@ export default function LicenseExchangePage() {
                       goToStep('residency-check');
                     }}
                   >
-                    <OptionIcon>💳</OptionIcon>
+                    <OptionIcon>
+                      <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                      </svg>
+                    </OptionIcon>
                     <OptionText>
                       <OptionTitle>Active TRC</OptionTitle>
                       <OptionDesc>Temporary Residence Card (Karta Pobytu)</OptionDesc>
@@ -316,14 +391,22 @@ export default function LicenseExchangePage() {
                       goToStep('residency-check');
                     }}
                   >
-                    <OptionIcon>📕</OptionIcon>
+                    <OptionIcon>
+                      <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                      </svg>
+                    </OptionIcon>
                     <OptionText>
                       <OptionTitle>Red Stamp in Passport</OptionTitle>
                       <OptionDesc>While waiting for new TRC</OptionDesc>
                     </OptionText>
                   </OptionButton>
                   <OptionButton onClick={() => goToStep('not-eligible-no-documents')} variant="none">
-                    <OptionIcon>❓</OptionIcon>
+                    <OptionIcon>
+                      <svg className="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                    </OptionIcon>
                     <OptionText>
                       <OptionTitle>None of the above</OptionTitle>
                       <OptionDesc>I don't have these documents</OptionDesc>
@@ -336,7 +419,7 @@ export default function LicenseExchangePage() {
             {/* NOT ELIGIBLE - No Documents */}
             {currentStep === 'not-eligible-no-documents' && (
               <StepContainer key="not-eligible-no-documents" variants={containerVariants}>
-                <StepIcon>📋</StepIcon>
+                <IconWrapper>{Icons.info}</IconWrapper>
                 <StepTitle>Documents Required</StepTitle>
                 <StepDescription>
                   You need one of the required documents to be eligible for a license exchange.
@@ -362,7 +445,7 @@ export default function LicenseExchangePage() {
             {/* TRC Help - Will wait */}
             {currentStep === 'trc-help-offer' && (
               <StepContainer key="trc-help-offer" variants={containerVariants}>
-                <StepIcon>👋</StepIcon>
+                <IconWrapper>{Icons.wave}</IconWrapper>
                 <StepTitle>Come Back Later</StepTitle>
                 <StepDescription>
                   No problem! Please reach back to us once you have one of the valid documents needed.
@@ -386,7 +469,7 @@ export default function LicenseExchangePage() {
             {/* RESIDENCY CHECK */}
             {currentStep === 'residency-check' && (
               <StepContainer key="residency-check" variants={containerVariants}>
-                <StepIcon>🏠</StepIcon>
+                <IconWrapper>{Icons.home}</IconWrapper>
                 <StepTitle>Residency Requirement</StepTitle>
                 <StepDescription>
                   Polish law requires you to be a resident for at least 6 months to exchange your license.
@@ -408,7 +491,7 @@ export default function LicenseExchangePage() {
             {/* NOT ELIGIBLE - Residency */}
             {currentStep === 'not-eligible-residency' && (
               <StepContainer key="not-eligible-residency" variants={containerVariants}>
-                <StepIcon>⏳</StepIcon>
+                <IconWrapper>{Icons.clock}</IconWrapper>
                 <StepTitle>Need More Time in Poland</StepTitle>
                 <StepDescription>
                   You need to be a resident of Poland for at least 6 months before you can exchange your license.
@@ -427,8 +510,8 @@ export default function LicenseExchangePage() {
             {/* ELIGIBLE - Medical Certificate */}
             {currentStep === 'eligible-medical' && (
               <StepContainer key="eligible-medical" variants={containerVariants}>
-                <SuccessBadge>✓ You're eligible for exchange!</SuccessBadge>
-                <StepIcon>🏥</StepIcon>
+                <SuccessBadge>You're eligible for exchange!</SuccessBadge>
+                <IconWrapper>{Icons.medical}</IconWrapper>
                 <StepTitle>Medical Certificate</StepTitle>
                 <StepDescription>
                   You'll need a medical certificate stating that you're fit to drive.
@@ -450,17 +533,14 @@ export default function LicenseExchangePage() {
                     No, I don't have it yet
                   </SecondaryButton>
                 </ButtonGroup>
-                <InfoNote>
-                  {stepData.hasMedicalCert === false && "Don't worry - we can arrange a visit to the clinic for you."}
-                </InfoNote>
               </StepContainer>
             )}
 
             {/* ELIGIBLE - Translation */}
             {currentStep === 'eligible-translation' && (
               <StepContainer key="eligible-translation" variants={containerVariants}>
-                <SuccessBadge>✓ You're eligible for exchange!</SuccessBadge>
-                <StepIcon>📜</StepIcon>
+                <SuccessBadge>You're eligible for exchange!</SuccessBadge>
+                <IconWrapper>{Icons.translate}</IconWrapper>
                 <StepTitle>Sworn Translation</StepTitle>
                 <StepDescription>
                   Your foreign license needs to be translated into Polish by a sworn translator.
@@ -488,8 +568,8 @@ export default function LicenseExchangePage() {
             {/* FINAL PRICING */}
             {currentStep === 'final-pricing' && (
               <StepContainer key="final-pricing" variants={containerVariants}>
-                <SuccessBadge>✓ You're eligible for exchange!</SuccessBadge>
-                <StepIcon>🎉</StepIcon>
+                <SuccessBadge>You're eligible for exchange!</SuccessBadge>
+                <IconWrapper>{Icons.celebration}</IconWrapper>
                 <StepTitle>Your Quote</StepTitle>
                 <StepDescription>
                   Great news! Here's your personalized pricing for the license exchange:
@@ -506,29 +586,18 @@ export default function LicenseExchangePage() {
                         <span className="font-semibold">+{calculatePrice().translation} PLN</span>
                       </PricingItem>
                     )}
-                    {!stepData.hasMedicalCert && (
-                      <>
-                        <PricingItem className="text-gray-500">
-                          <span>Medical certificate (clinic fee)</span>
-                          <span className="font-semibold">+{calculatePrice().medical} PLN</span>
-                        </PricingItem>
-                        <PricingNote>We waive our handling charge and assist with the clinic visit</PricingNote>
-                      </>
-                    )}
                   </PricingBreakdown>
                   <PricingDivider />
-                  <PricingTotal>
-                    {stepData.hasMedicalCert 
-                      ? `${calculatePrice().total} PLN`
-                      : `${calculatePrice().total} PLN + ${calculatePrice().medical} PLN clinic`
-                    }
-                  </PricingTotal>
-                  <PricingSubtext>
-                    {stepData.hasMedicalCert 
-                      ? 'Total service fee'
-                      : `${calculatePrice().total} PLN to us + ${calculatePrice().medical} PLN to clinic`
-                    }
-                  </PricingSubtext>
+                  <PricingTotal>{calculatePrice().total} PLN</PricingTotal>
+                  <PricingSubtext>Our service fee</PricingSubtext>
+                  
+                  {!stepData.hasMedicalCert && (
+                    <div className="mt-4 pt-4 border-t border-gray-200">
+                      <p className="text-sm text-gray-600 text-center">
+                        You'll also need a medical certificate. We'll arrange the clinic visit for you - clinic fee is around 200 PLN (paid directly to clinic).
+                      </p>
+                    </div>
+                  )}
                 </PricingBox>
                 <StepQuestion>
                   Ready to proceed with your license exchange?
@@ -540,7 +609,7 @@ export default function LicenseExchangePage() {
                     `- Document type: ${stepData.documentType || 'Valid document'}\n` +
                     `- Medical certificate: ${stepData.hasMedicalCert ? 'Yes, I have it' : 'No, I need one'}\n` +
                     `- Sworn translation: ${stepData.hasTranslation ? 'Yes, I have it' : 'No, I need one'}\n\n` +
-                    `Quote: ${calculatePrice().total} PLN${!stepData.hasMedicalCert ? ` + ${calculatePrice().medical} PLN clinic fee` : ''}`
+                    `Quote: ${calculatePrice().total} PLN`
                   )}>
                     Yes, contact me on WhatsApp
                   </WhatsAppButton>
@@ -554,7 +623,7 @@ export default function LicenseExchangePage() {
             {/* END - No Interest */}
             {currentStep === 'end-no-interest' && (
               <StepContainer key="end-no-interest" variants={containerVariants}>
-                <StepIcon>👋</StepIcon>
+                <IconWrapper>{Icons.wave}</IconWrapper>
                 <StepTitle>No Problem!</StepTitle>
                 <StepDescription>
                   Feel free to come back whenever you're ready. We're here to help.
@@ -571,18 +640,12 @@ export default function LicenseExchangePage() {
                 </ButtonGroup>
               </StepContainer>
             )}
+
           </AnimatePresence>
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className="py-6 border-t border-gray-200 bg-white">
-        <div className={theme.spacing.container}>
-          <p className="text-center text-gray-500 text-sm">
-            © {new Date().getFullYear()} Foreigners.pl - All rights reserved
-          </p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
@@ -602,9 +665,9 @@ function StepContainer({ children, variants }: { children: React.ReactNode; vari
   );
 }
 
-function StepIcon({ children }: { children: React.ReactNode }) {
+function IconWrapper({ children }: { children: React.ReactNode }) {
   return (
-    <div className="text-5xl mb-6 text-center">{children}</div>
+    <div className="flex justify-center mb-6">{children}</div>
   );
 }
 
@@ -695,16 +758,13 @@ function InfoBox({ children, variant }: { children: React.ReactNode; variant: 'i
   );
 }
 
-function InfoNote({ children }: { children: React.ReactNode }) {
-  return children ? (
-    <p className="text-gray-500 text-sm text-center mt-4">{children}</p>
-  ) : null;
-}
-
 function SuccessBadge({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex justify-center mb-4">
-      <span className="bg-green-100 text-green-800 px-4 py-2 rounded-full text-sm font-semibold">
+      <span className="bg-green-100 text-green-800 px-4 py-2 rounded-full text-sm font-semibold flex items-center gap-2">
+        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+        </svg>
         {children}
       </span>
     </div>
@@ -735,7 +795,7 @@ function OptionButton({ children, onClick, variant }: { children: React.ReactNod
 }
 
 function OptionIcon({ children }: { children: React.ReactNode }) {
-  return <span className="text-2xl">{children}</span>;
+  return <span className="flex-shrink-0">{children}</span>;
 }
 
 function OptionText({ children }: { children: React.ReactNode }) {
@@ -768,7 +828,7 @@ function PricingTotal({ children }: { children: React.ReactNode }) {
 
 function PricingSubtext({ children }: { children: React.ReactNode }) {
   return (
-    <div className="text-gray-500 text-center text-sm mb-4">
+    <div className="text-gray-500 text-center text-sm">
       {children}
     </div>
   );
@@ -782,9 +842,9 @@ function PricingBreakdown({ children }: { children: React.ReactNode }) {
   );
 }
 
-function PricingItem({ children, className }: { children: React.ReactNode; className?: string }) {
+function PricingItem({ children }: { children: React.ReactNode }) {
   return (
-    <div className={`flex justify-between items-center ${className || ''}`}>
+    <div className="flex justify-between items-center">
       {children}
     </div>
   );
