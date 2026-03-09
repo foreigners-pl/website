@@ -14,6 +14,7 @@ type Step =
   | 'new-license-pricing'
   | 'new-license-not-available'
   | 'license-valid'
+  | 'license-origin'
   | 'document-type'
   | 'residency-check'
   | 'not-eligible-invalid'
@@ -29,6 +30,7 @@ interface StepData {
   hasMedicalCert?: boolean;
   hasTranslation?: boolean;
   documentType?: string;
+  isEU?: boolean;
 }
 
 // Analytics tracking types
@@ -170,6 +172,11 @@ const Icons = {
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a7.5 7.5 0 0015 0v-5a1.5 1.5 0 00-3 0m-6-3V11m0-5.5v-1a1.5 1.5 0 013 0v1m0 0V11m0-5.5a1.5 1.5 0 013 0v3m0 0V11" />
     </svg>
   ),
+  globe: (
+    <svg className={`${iconClass} text-primary`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
+  ),
   back: (
     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -297,7 +304,7 @@ export default function LicenseExchangePage() {
   };
 
   const calculatePrice = () => {
-    let base = 699;
+    let base = stepData.isEU ? 399 : 699;
     let translation = stepData.hasTranslation ? 0 : 249;
     
     return {
@@ -305,6 +312,7 @@ export default function LicenseExchangePage() {
       translation,
       total: base + translation,
       needsMedical: !stepData.hasMedicalCert,
+      isEU: stepData.isEU,
     };
   };
 
@@ -496,11 +504,39 @@ export default function LicenseExchangePage() {
                   Is your foreign driving license still valid?
                 </StepQuestion>
                 <ButtonGroup>
-                  <PrimaryButton onClick={() => goToStep('document-type')}>
+                  <PrimaryButton onClick={() => goToStep('license-origin')}>
                     Yes, it's valid
                   </PrimaryButton>
                   <SecondaryButton onClick={() => goToStep('not-eligible-invalid')}>
                     No, it has expired
+                  </SecondaryButton>
+                </ButtonGroup>
+              </StepContainer>
+            )}
+
+            {/* LICENSE ORIGIN - EU vs Non-EU */}
+            {currentStep === 'license-origin' && (
+              <StepContainer key="license-origin" variants={containerVariants}>
+                <IconWrapper>{Icons.globe}</IconWrapper>
+                <StepTitle>License Origin</StepTitle>
+                <StepDescription>
+                  The exchange process differs depending on where your license was issued.
+                </StepDescription>
+                <StepQuestion>
+                  Was your license issued in an EU country?
+                </StepQuestion>
+                <ButtonGroup>
+                  <PrimaryButton onClick={() => {
+                    setStepData(prev => ({ ...prev, isEU: true }));
+                    goToStep('document-type');
+                  }}>
+                    Yes, EU country
+                  </PrimaryButton>
+                  <SecondaryButton onClick={() => {
+                    setStepData(prev => ({ ...prev, isEU: false }));
+                    goToStep('document-type');
+                  }}>
+                    No, outside EU
                   </SecondaryButton>
                 </ButtonGroup>
               </StepContainer>
@@ -762,7 +798,7 @@ export default function LicenseExchangePage() {
                 <PricingBox>
                   <PricingBreakdown>
                     <PricingItem>
-                      <span>License exchange service</span>
+                      <span>License exchange {stepData.isEU ? '(EU)' : '(non-EU)'}</span>
                       <span className="font-semibold">{calculatePrice().base} PLN</span>
                     </PricingItem>
                     {!stepData.hasTranslation && (
@@ -791,6 +827,7 @@ export default function LicenseExchangePage() {
                   <WhatsAppButton onClick={trackWhatsAppClick} href={getWhatsAppLink(
                     `Hi! I completed the license exchange eligibility check and I'm ready to proceed.\n\n` +
                     `My details:\n` +
+                    `- License from: ${stepData.isEU ? 'EU country' : 'Non-EU country'}\n` +
                     `- Document type: ${stepData.documentType || 'Valid document'}\n` +
                     `- Medical certificate: ${stepData.hasMedicalCert ? 'Yes, I have it' : 'No, I need one'}\n` +
                     `- Sworn translation: ${stepData.hasTranslation ? 'Yes, I have it' : 'No, I need one'}\n\n` +
