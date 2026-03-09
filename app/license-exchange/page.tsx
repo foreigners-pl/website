@@ -892,7 +892,7 @@ function PrimaryButton({ children, onClick }: { children: React.ReactNode; onCli
   return (
     <button
       onClick={onClick}
-      className="w-full py-3 sm:py-4 px-4 sm:px-6 bg-primary text-white text-sm sm:text-base font-semibold rounded-lg sm:rounded-xl hover:bg-red-800 active:scale-[0.98] transition-all duration-200 shadow-md sm:shadow-lg hover:shadow-xl"
+      className="w-full py-3 sm:py-4 px-4 sm:px-6 bg-white text-gray-800 text-sm sm:text-base font-semibold rounded-lg sm:rounded-xl border-2 border-gray-200 hover:border-gray-300 hover:bg-gray-50 active:scale-[0.98] transition-all duration-200"
     >
       {children}
     </button>
@@ -900,7 +900,7 @@ function PrimaryButton({ children, onClick }: { children: React.ReactNode; onCli
 }
 
 function SecondaryButton({ children, onClick, as }: { children: React.ReactNode; onClick?: () => void; as?: string }) {
-  const className = "w-full py-3 sm:py-4 px-4 sm:px-6 bg-gray-100 text-gray-700 text-sm sm:text-base font-semibold rounded-lg sm:rounded-xl hover:bg-gray-200 active:scale-[0.98] transition-all duration-200 text-center";
+  const className = "w-full py-3 sm:py-4 px-4 sm:px-6 bg-white text-gray-800 text-sm sm:text-base font-semibold rounded-lg sm:rounded-xl border-2 border-gray-200 hover:border-gray-300 hover:bg-gray-50 active:scale-[0.98] transition-all duration-200 text-center";
   
   if (as === 'div') {
     return <div className={className}>{children}</div>;
