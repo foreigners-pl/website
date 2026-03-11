@@ -528,7 +528,7 @@ export default function LicenseExchangePage() {
                 <ButtonGroup>
                   <PrimaryButton onClick={() => {
                     setStepData(prev => ({ ...prev, isEU: true }));
-                    goToStep('document-type');
+                    goToStep('final-pricing');
                   }}>
                     Yes, EU country
                   </PrimaryButton>
@@ -801,7 +801,7 @@ export default function LicenseExchangePage() {
                       <span>License exchange {stepData.isEU ? '(EU)' : '(non-EU)'}</span>
                       <span className="font-semibold">{calculatePrice().base} PLN</span>
                     </PricingItem>
-                    {!stepData.hasTranslation && (
+                    {!stepData.isEU && !stepData.hasTranslation && (
                       <PricingItem>
                         <span>Sworn translation</span>
                         <span className="font-semibold">+{calculatePrice().translation} PLN</span>
@@ -809,10 +809,10 @@ export default function LicenseExchangePage() {
                     )}
                   </PricingBreakdown>
                   <PricingDivider />
-                  <PricingTotal>{calculatePrice().total} PLN</PricingTotal>
+                  <PricingTotal>{stepData.isEU ? calculatePrice().base : calculatePrice().total} PLN</PricingTotal>
                   <PricingSubtext>Our service fee</PricingSubtext>
                   
-                  {!stepData.hasMedicalCert && (
+                  {!stepData.isEU && !stepData.hasMedicalCert && (
                     <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-gray-200">
                       <p className="text-xs sm:text-sm text-gray-600 text-center">
                         You'll also need a medical certificate. We'll arrange the clinic visit for you - clinic fee is around 200 PLN (paid directly to clinic).
@@ -825,13 +825,18 @@ export default function LicenseExchangePage() {
                 </StepQuestion>
                 <ButtonGroup>
                   <WhatsAppButton onClick={trackWhatsAppClick} href={getWhatsAppLink(
-                    `Hi! I completed the license exchange eligibility check and I'm ready to proceed.\n\n` +
-                    `My details:\n` +
-                    `- License from: ${stepData.isEU ? 'EU country' : 'Non-EU country'}\n` +
-                    `- Document type: ${stepData.documentType || 'Valid document'}\n` +
-                    `- Medical certificate: ${stepData.hasMedicalCert ? 'Yes, I have it' : 'No, I need one'}\n` +
-                    `- Sworn translation: ${stepData.hasTranslation ? 'Yes, I have it' : 'No, I need one'}\n\n` +
-                    `Quote: ${calculatePrice().total} PLN`
+                    stepData.isEU 
+                      ? `Hi! I completed the license exchange eligibility check and I'm ready to proceed.\n\n` +
+                        `My details:\n` +
+                        `- License from: EU country\n\n` +
+                        `Quote: ${calculatePrice().base} PLN`
+                      : `Hi! I completed the license exchange eligibility check and I'm ready to proceed.\n\n` +
+                        `My details:\n` +
+                        `- License from: Non-EU country\n` +
+                        `- Document type: ${stepData.documentType || 'Valid document'}\n` +
+                        `- Medical certificate: ${stepData.hasMedicalCert ? 'Yes, I have it' : 'No, I need one'}\n` +
+                        `- Sworn translation: ${stepData.hasTranslation ? 'Yes, I have it' : 'No, I need one'}\n\n` +
+                        `Quote: ${calculatePrice().total} PLN`
                   )}>
                     Continue on WhatsApp
                   </WhatsAppButton>
