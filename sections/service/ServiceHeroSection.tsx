@@ -5,7 +5,7 @@ import Container from '@/components/layout/Container';
 import { Button } from '@/components/ui/buttons';
 import { FadeIn, SlideIn, GlassBlob } from '@/components/ui/animated';
 import { theme } from '@/lib/theme';
-import LeadForm from '@/components/forms/LeadForm';
+import ServiceSubserviceForm from '@/components/ui/ServiceSubserviceForm';
 
 interface ServiceHeroSectionProps {
   title: string;
@@ -14,6 +14,7 @@ interface ServiceHeroSectionProps {
   ctaButton: string;
   formTitle: string;
   formSource: string;
+  service: string;
 }
 
 export default function ServiceHeroSection({ 
@@ -22,12 +23,9 @@ export default function ServiceHeroSection({
   description, 
   ctaButton,
   formTitle,
-  formSource
+  formSource,
+  service
 }: ServiceHeroSectionProps) {
-  const scrollToServices = () => {
-    const element = document.getElementById('services-section');
-    element?.scrollIntoView({ behavior: 'smooth' });
-  };
 
   return (
     <Section className="relative overflow-hidden bg-gradient-to-br from-gray-50 via-white to-red-50/30">
@@ -65,20 +63,13 @@ export default function ServiceHeroSection({
                 {description}
               </p>
             </FadeIn>
-
-            <FadeIn direction="up" delay={0.4}>
-              <Button variant="secondary" size="lg" onClick={scrollToServices}>
-                {ctaButton}
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </Button>
-            </FadeIn>
           </div>
 
-          {/* Right Column - Lead Form */}
+          {/* Right Column - Service Subservice Form */}
           <SlideIn direction="left" delay={0.2}>
-            <LeadForm title={formTitle} source={formSource} />
+            <div className="w-full max-w-md mx-auto lg:mx-0 lg:ml-auto">
+              <ServiceSubserviceForm service={service} title={formTitle} />
+            </div>
           </SlideIn>
         </div>
       </Container>

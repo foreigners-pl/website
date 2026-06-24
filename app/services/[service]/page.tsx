@@ -67,6 +67,7 @@ export default async function ServicePage({ params }: { params: Promise<{ servic
           ctaButton={content.hero.ctaButton}
           formTitle={content.hero.formTitle}
           formSource={content.hero.formSource}
+          service={service}
         />
         
         <TrustSection

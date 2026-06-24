@@ -12,7 +12,7 @@ export default function SectionHeading({
   title,
   subtitle,
   description,
-  align = 'center',
+  align = 'left',
   className = '',
 }: SectionHeadingProps) {
   const alignClasses = {
@@ -24,17 +24,17 @@ export default function SectionHeading({
   return (
     <div className={`${alignClasses[align]} mb-12 md:mb-16 ${className}`}>
       {subtitle && (
-        <p className={`${theme.fontSize.sm} ${theme.fontWeight.semibold} text-primary mb-2 uppercase tracking-wide`}>
+        <p className={`text-eyebrow ${theme.fontWeight.semibold} text-primary mb-2`}>
           {subtitle}
         </p>
       )}
       {title && (
-        <h2 className={`${theme.fontSize['3xl']} md:${theme.fontSize['4xl']} ${theme.fontWeight.bold} text-gray-900 mb-4`}>
+        <h2 className={`font-display text-section-title font-semibold text-gray-900 mb-4`}>
           {title}
         </h2>
       )}
       {description && (
-        <p className={`${theme.fontSize.lg} md:${theme.fontSize.xl} text-gray-600 max-w-3xl ${align === 'center' ? 'mx-auto' : ''} leading-relaxed`}>
+        <p className={`text-body-large text-gray-600 max-w-3xl ${align === 'center' ? 'mx-auto' : ''}`}>
           {description}
         </p>
       )}

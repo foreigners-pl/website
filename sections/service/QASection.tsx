@@ -29,7 +29,7 @@ export default function QASection({ title, searchPlaceholder, items }: QASection
   return (
     <Section id="services-section">
       <Container>
-        <div className="max-w-4xl mx-auto">
+        <div>
           {/* Title */}
           <FadeIn direction="up" delay={0.1}>
             <h2 className={`${theme.fontSize['3xl']} md:${theme.fontSize['4xl']} ${theme.fontWeight.bold} text-gray-900 mb-8`}>

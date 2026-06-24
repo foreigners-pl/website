@@ -6,7 +6,7 @@ export const servicesContent = {
     {
       title: 'Immigration',
       subtitle: 'Make Poland your home - legally and smoothly',
-      description: 'Complete assistance with work permits, residence cards, visa applications, and citizenship processes. We handle all documentation and liaise with authorities on your behalf.',
+      description: 'Complete assistance with TRC/PRC, visa applications, and citizenship processes. We handle all documentation and liaise with authorities on your behalf.',
       link: '/services/immigration',
     },
     {

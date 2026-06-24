@@ -1,210 +1,143 @@
 ﻿'use client';
 
-import Section from '@/components/layout/Section';
 import Container from '@/components/layout/Container';
-import SectionHeading from '@/components/ui/SectionHeading';
 import { FadeIn, GlassBlob } from '@/components/ui/animated';
-import { theme } from '@/lib/theme';
+
+const reviews = [
+  {
+    name: 'Mustapha Alao',
+    date: '4 months ago',
+    text: "My experience with your company is top-notch after been refused entry in Spain and thought I won't be able to get Schengen visa again, your company gave me the ...",
+  },
+  {
+    name: 'Marina Marashdeh',
+    date: '7 months ago',
+    text: 'I have a very pleasant experience with Foreigners.pl. The customer service is excellent, and communication with the lawyers is outstanding. They are incredibly supportive, patient with inquiries, and always responsive. I highly recommend their services.',
+  },
+  {
+    name: 'Ashique Abuz',
+    date: '3 months ago',
+    text: "Fantastic experience! The communication was seamless from start to finish, and they handled everything perfectly. It's rare to find a company this reliable-highly recommended!",
+  },
+  {
+    name: 'Saurav',
+    date: '1 year ago',
+    text: 'Provides a truly exceptional experience. The speed of service is remarkable, ensuring a swift and efficient process. Transparency is clearly valued, making interactions straightforward and understandable. Their quality shines through in every aspect.',
+  },
+  {
+    name: 'Abhay Patil',
+    date: '10 months ago',
+    text: 'Really recommend this consulting firm for Migration services as do provide professional and tailored services, especially Damian is proactive and quick reply to each a every concern 😊',
+  },
+  {
+    name: 'DCStudioDev',
+    date: '1 year ago',
+    text: "very fast responses, helped me both with trc and driver's license conversion, didnt have to go to any other companies",
+  },
+  {
+    name: 'Sam OS',
+    date: '1 year ago',
+    text: '',
+  },
+];
+
+function getInitials(name: string): string {
+  const words = name.trim().split(/\s+/);
+  if (words.length === 1) return words[0].slice(0, 1).toUpperCase();
+  return `${words[0][0]}${words[words.length - 1][0]}`.toUpperCase();
+}
 
 export default function GoogleReviewsSection() {
   return (
-    <Section id="reviews-section" className="bg-white relative overflow-hidden">
-      {/* Glass Blobs - Much stronger with more blur to hide edges */}
-      <GlassBlob color="#fdeee7" size={550} top="12%" left="-12%" delay={0} duration={25} blur={80} opacity={1} />
-      <GlassBlob color="#fce4d6" size={450} top="3%" left="8%" delay={2} duration={30} blur={70} opacity={1} />
-      <GlassBlob color="#fdd5c4" size={380} top="30%" right="3%" delay={1} duration={28} blur={70} opacity={1} />
-      <GlassBlob color="#fdeee7" size={480} bottom="3%" right="-10%" delay={4} duration={22} blur={80} opacity={1} />
-      <GlassBlob color="#fcc9b3" size={320} bottom="22%" left="10%" delay={3} duration={26} blur={60} opacity={0.95} />
-      
-      {/* Additional accent blobs */}
-      <GlassBlob color="#fbd4c0" size={280} top="52%" left="32%" delay={5} duration={24} blur={60} opacity={0.95} />
-      <GlassBlob color="#fce4d6" size={350} top="10%" right="22%" delay={2.5} duration={27} blur={70} opacity={1} />
+    <>
+      {/* Decorative blobs */}
+      <GlassBlob color="#fdeee7" size={480} top="6%" left="-8%" delay={0} duration={24} blur={40} opacity={0.35} />
+      <GlassBlob color="#fce4d6" size={420} bottom="8%" right="-6%" delay={2} duration={28} blur={35} opacity={0.3} />
 
-      {/* Gradient fade to white at top */}
-      <div className="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-white via-white/80 to-transparent pointer-events-none z-[5]" />
-      
-      {/* Gradient fade to white at bottom */}
-      <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-white via-white/80 to-transparent pointer-events-none z-[5]" />
-      
-      <Container className="relative z-10 max-w-5xl">
+      <Container className="relative z-10">
         <FadeIn>
-          <div className="text-center mb-8">
-            <div className="flex items-center justify-center gap-2 mb-3">
-              <svg className="w-6 h-6" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20 20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z" fill="#FFC107"/>
-                <path d="m6.306 14.691 6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 16.318 4 9.656 8.337 6.306 14.691z" fill="#FF3D00"/>
-                <path d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238A11.91 11.91 0 0 1 24 36c-5.202 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44z" fill="#4CAF50"/>
-                <path d="M43.611 20.083H42V20H24v8h11.303a12.04 12.04 0 0 1-4.087 5.571l.003-.002 6.19 5.238C36.971 39.205 44 34 44 24c0-1.341-.138-2.65-.389-3.917z" fill="#1976D2"/>
-              </svg>
-              <div className="flex text-yellow-400">
-                {[...Array(5)].map((_, i) => (
-                  <svg key={i} className="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                    <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
-                  </svg>
-                ))}
+          <div className="mb-10 pt-8">
+            <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+              <div>
+                <h3 className="font-display text-2xl md:text-3xl font-semibold text-gray-900 mb-6">
+                  Verified by <span className="text-primary italic">Google.</span>
+                </h3>
+
+                <div className="flex items-center gap-4">
+                  <div>
+                    <p className="font-display text-4xl text-gray-900 leading-none mb-2">Excellent</p>
+                    <div className="flex text-amber-400 mb-2">
+                      {[...Array(5)].map((_, i) => (
+                        <svg key={i} className="w-6 h-6 fill-current" viewBox="0 0 20 20">
+                          <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <p className="text-gray-600">Based on <span className="font-semibold text-gray-900">7 reviews</span></p>
+                  </div>
+                  <p className="text-4xl tracking-wide" aria-label="Google wordmark">
+                    <span className="text-[#4285F4]">G</span>
+                    <span className="text-[#EA4335]">o</span>
+                    <span className="text-[#FBBC05]">o</span>
+                    <span className="text-[#4285F4]">g</span>
+                    <span className="text-[#34A853]">l</span>
+                    <span className="text-[#EA4335]">e</span>
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex flex-col items-start gap-4 lg:items-end">
+                <a
+                  href="https://www.google.com/search?sca_esv=8712aa7b0522de6e&sxsrf=ANbL-n4vqz9FwROWTbKKB_hFfhPRzM_qag:1781869379105&si=AL3DRZEsmMGCryMMFSHJ3StBhOdZ2-6yYkXd_doETEE1OR-qOR6Gj5R2VSMrnaJ-20RtCSYqe3OdvUh6gLA1nb3zAn-SwQrJHFChX-626o5uKCYKJbybMcDBPNwqz-h8ntPh6YF-dZmB&q=Foreigners.pl+Reviews&sa=X&ved=2ahUKEwjxsILbnJOVAxUb87sIHXgHKosQ0bkNegQIMhAF&biw=1745&bih=828&dpr=1.1"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full bg-[#4285F4] px-8 py-4 text-base font-semibold text-white shadow-md transition-all hover:brightness-95 hover:shadow-lg"
+                >
+                  See on Google
+                </a>
               </div>
             </div>
-            <h2 className="text-3xl font-bold text-gray-900 mb-2">
-              What Our Clients Say
-            </h2>
-            <p className="text-gray-700 text-lg">
-              <span className="font-semibold">4.9</span> based on <span className="font-semibold">1,704</span> reviews
-            </p>
-            <p className="text-gray-600 text-sm mt-1">Powered by Google</p>
           </div>
         </FadeIn>
 
         <FadeIn delay={0.2}>
-          {/* Complex Asymmetric Masonry Layout - Responsive */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-3 lg:auto-rows-[80px]">
-            
-            {/* Row 1-3, Col 1-3: Large card */}
-            <div className="sm:col-span-2 lg:col-span-3 lg:row-span-3 bg-gradient-to-br from-red-600 via-primary to-red-800 backdrop-blur-sm rounded-xl p-4 border border-red-700/50 hover:border-red-600/70 transition-all duration-300 hover:scale-[1.02]">
-              <div className="flex items-center gap-2 mb-2">
-                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center text-white font-semibold text-xs">MJ</div>
-                <div className="flex-1 min-w-0">
-                  <h3 className="text-white font-semibold text-sm truncate">Michael Johnson</h3>
-                  <div className="flex text-yellow-400">
-                    {[...Array(5)].map((_, i) => <svg key={i} className="w-3 h-3 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>)}
+          <div className="overflow-x-auto pb-4">
+            <div className="flex min-w-max gap-5">
+              {reviews.map((review) => (
+                <a
+                  key={`${review.name}-${review.date}`}
+                  href="https://www.google.com/search?sca_esv=8712aa7b0522de6e&sxsrf=ANbL-n4vqz9FwROWTbKKB_hFfhPRzM_qag:1781869379105&si=AL3DRZEsmMGCryMMFSHJ3StBhOdZ2-6yYkXd_doETEE1OR-qOR6Gj5R2VSMrnaJ-20RtCSYqe3OdvUh6gLA1nb3zAn-SwQrJHFChX-626o5uKCYKJbybMcDBPNwqz-h8ntPh6YF-dZmB&q=Foreigners.pl+Reviews&sa=X&ved=2ahUKEwjxsILbnJOVAxUb87sIHXgHKosQ0bkNegQIMhAF&biw=1745&bih=828&dpr=1.1"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-[330px] rounded-3xl border border-gray-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg cursor-pointer block no-underline"
+                >
+                  <div className="mb-4 flex items-start gap-3">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-base font-semibold text-primary">
+                      {getInitials(review.name)}
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-semibold text-gray-900 leading-tight">{review.name}</h3>
+                      <p className="text-sm text-gray-500">{review.date}</p>
+                    </div>
                   </div>
-                </div>
-              </div>
-              <p className="text-white text-sm leading-relaxed">
-                Great experience working with this team. They guided me through the work permit process step by step. Everything was clear and transparent. Got my documents much faster than expected! The attention to detail was outstanding. They really know Polish immigration law inside out and made the whole process stress-free.
-              </p>
-            </div>
 
-            {/* Row 1-2, Col 4-5: Medium card */}
-            <div className="lg:col-span-2 lg:row-span-2 bg-gradient-to-br from-red-600 via-primary to-red-800 backdrop-blur-sm rounded-xl p-4 border border-red-700/50 hover:border-red-600/70 transition-all duration-300 hover:scale-[1.02]">
-              <div className="flex items-center gap-2 mb-2">
-                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-pink-500 to-red-600 flex items-center justify-center text-white font-semibold text-xs">OS</div>
-                <div className="flex-1 min-w-0">
-                  <h3 className="text-white font-semibold text-sm truncate">Olena Shevchenko</h3>
-                  <div className="flex text-yellow-400">
-                    {[...Array(5)].map((_, i) => <svg key={i} className="w-3 h-3 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>)}
+                  <div className="mb-4 flex text-amber-400">
+                    {[...Array(5)].map((_, i) => (
+                      <svg key={i} className="h-5 w-5 fill-current" viewBox="0 0 20 20">
+                        <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+                      </svg>
+                    ))}
                   </div>
-                </div>
-              </div>
-              <p className="text-white text-sm leading-relaxed">
-                I was stressed about my visa application, but they made everything simple. Very knowledgeable about Polish immigration law. They speak English and Ukrainian which was very helpful!
-              </p>
+
+                  {review.text ? (
+                    <p className="text-base leading-relaxed text-gray-700">{review.text}</p>
+                  ) : null}
+                </a>
+              ))}
             </div>
-
-            {/* Row 1-3, Col 6: Tall narrow card */}
-            <div className="lg:col-span-1 lg:row-span-3 bg-gradient-to-br from-red-600 via-primary to-red-800 backdrop-blur-sm rounded-xl p-3 lg:p-3 border border-red-700/50 hover:border-red-600/70 transition-all duration-300 hover:scale-[1.02]">
-              <div className="flex flex-col items-center gap-2 mb-2">
-                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-red-500 to-red-700 flex items-center justify-center text-white font-semibold text-xs">AK</div>
-                <div className="text-center">
-                  <h3 className="text-white font-semibold text-xs">Anna K.</h3>
-                  <div className="flex text-yellow-400 justify-center mt-1">
-                    {[...Array(5)].map((_, i) => <svg key={i} className="w-2.5 h-2.5 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>)}
-                  </div>
-                </div>
-              </div>
-              <p className="text-white text-xs leading-relaxed text-center">
-                Excellent service! Very professional team, always responsive. Made my residence card process easy.
-              </p>
-            </div>
-
-            {/* Row 3, Col 4: Small card */}
-            <div className="lg:col-span-1 lg:row-span-1 bg-gradient-to-br from-red-600 via-primary to-red-800 backdrop-blur-sm rounded-xl p-3 border border-red-700/50 hover:border-red-600/70 transition-all duration-300 hover:scale-[1.02]">
-              <div className="flex items-center gap-2">
-                <div className="w-6 h-6 rounded-full bg-gradient-to-br from-rose-500 to-red-600 flex items-center justify-center text-white font-semibold text-xs">SS</div>
-                <div className="flex-1 min-w-0">
-                  <h3 className="text-white font-semibold text-xs truncate">Sofia</h3>
-                  <div className="flex text-yellow-400">
-                    {[...Array(4)].map((_, i) => <svg key={i} className="w-2 h-2 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>)}
-                    <svg className="w-2 h-2 fill-current text-slate-500" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Row 3, Col 5: Small card */}
-            <div className="lg:col-span-1 lg:row-span-1 bg-gradient-to-br from-red-600 via-primary to-red-800 backdrop-blur-sm rounded-xl p-3 border border-red-700/50 hover:border-red-600/70 transition-all duration-300 hover:scale-[1.02]">
-              <div className="flex flex-col items-center gap-1">
-                <div className="w-6 h-6 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-semibold text-xs">TM</div>
-                <div className="flex text-yellow-400">
-                  {[...Array(5)].map((_, i) => <svg key={i} className="w-2 h-2 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>)}
-                </div>
-                <p className="text-white text-[10px] text-center">Fast!</p>
-              </div>
-            </div>
-
-            {/* Row 4-5, Col 1-3: Medium horizontal card */}
-            <div className="sm:col-span-2 lg:col-span-3 lg:row-span-2 bg-gradient-to-br from-red-600 via-primary to-red-800 backdrop-blur-sm rounded-xl p-4 border border-red-700/50 hover:border-red-600/70 transition-all duration-300 hover:scale-[1.02]">
-              <div className="flex items-center gap-2 mb-2">
-                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-yellow-500 to-orange-600 flex items-center justify-center text-white font-semibold text-xs">LP</div>
-                <div className="flex-1 min-w-0">
-                  <h3 className="text-white font-semibold text-sm truncate">Luis Pereira</h3>
-                  <div className="flex text-yellow-400">
-                    {[...Array(5)].map((_, i) => <svg key={i} className="w-3 h-3 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>)}
-                  </div>
-                </div>
-              </div>
-              <p className="text-white text-sm leading-relaxed">
-                Amazing support from start to finish! The team was patient, explained every step clearly, and my work visa was approved without any issues. Highly recommend their services to anyone navigating Polish immigration.
-              </p>
-            </div>
-
-            {/* Row 4-5, Col 4-5: Medium card */}
-            <div className="lg:col-span-2 lg:row-span-2 bg-gradient-to-br from-red-600 via-primary to-red-800 backdrop-blur-sm rounded-xl p-4 border border-red-700/50 hover:border-red-600/70 transition-all duration-300 hover:scale-[1.02]">
-              <div className="flex items-center gap-2 mb-2">
-                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-white font-semibold text-xs">RK</div>
-                <div className="flex-1 min-w-0">
-                  <h3 className="text-white font-semibold text-sm truncate">Rajesh Kumar</h3>
-                  <div className="flex text-yellow-400">
-                    {[...Array(5)].map((_, i) => <svg key={i} className="w-3 h-3 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>)}
-                  </div>
-                </div>
-              </div>
-              <p className="text-white text-sm leading-relaxed">
-                Professional and reliable. They helped my entire family with residence permits. Fair pricing and great customer support throughout!
-              </p>
-            </div>
-
-            {/* Row 4-5, Col 6: Vertical card */}
-            <div className="lg:col-span-1 lg:row-span-2 bg-gradient-to-br from-red-600 via-primary to-red-800 backdrop-blur-sm rounded-xl p-3 border border-red-700/50 hover:border-red-600/70 transition-all duration-300 hover:scale-[1.02]">
-              <div className="flex flex-col items-center gap-2 mb-2">
-                <div className="w-7 h-7 rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-white font-semibold text-xs">NP</div>
-                <div className="text-center">
-                  <h3 className="text-white font-semibold text-xs">Nina P.</h3>
-                  <div className="flex text-yellow-400 justify-center mt-1">
-                    {[...Array(5)].map((_, i) => <svg key={i} className="w-2.5 h-2.5 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>)}
-                  </div>
-                </div>
-              </div>
-              <p className="text-white text-xs leading-relaxed text-center">
-                Helped with my Blue Card. Great communication!
-              </p>
-            </div>
-
-          </div>
-        </FadeIn>
-
-        {/* Bottom CTA */}
-        <FadeIn delay={0.4}>
-          <div className="text-center mt-8">
-            <a
-              href="https://g.page/r/YOUR_GOOGLE_PLACE_ID/review"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-primary to-red-700 text-white rounded-full font-semibold text-sm hover:from-red-700 hover:to-primary transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
-            >
-              <svg className="w-4 h-4" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20 20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z" fill="#FFC107"/>
-                <path d="m6.306 14.691 6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 16.318 4 9.656 8.337 6.306 14.691z" fill="#FF3D00"/>
-                <path d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238A11.91 11.91 0 0 1 24 36c-5.202 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44z" fill="#4CAF50"/>
-                <path d="M43.611 20.083H42V20H24v8h11.303a12.04 12.04 0 0 1-4.087 5.571l.003-.002 6.19 5.238C36.971 39.205 44 34 44 24c0-1.341-.138-2.65-.389-3.917z" fill="#1976D2"/>
-              </svg>
-              See all reviews on Google
-            </a>
-            <p className="text-gray-600 text-xs mt-3 italic">
-              (Mock reviews for preview - will be replaced with real Google reviews)
-            </p>
           </div>
         </FadeIn>
       </Container>
-    </Section>
+    </>
   );
 }

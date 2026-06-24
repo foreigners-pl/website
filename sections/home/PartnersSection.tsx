@@ -8,9 +8,9 @@ import PartnerLogo from '@/components/ui/PartnerLogo';
 
 const partners = [
   {
-    name: 'Consensus',
-    logo: '/PartnersLogos/consensus.png',
-    url: 'https://www.consensus.nieruchomosci.pl/'
+    name: 'Welcome Home',
+    logo: '/PartnersLogos/welcome-home.png',
+    url: 'https://wellcome-home.com/'
   },
   {
     name: 'CREATE',
@@ -31,14 +31,15 @@ const partners = [
 
 export default function PartnersSection() {
   return (
-    <Section className="bg-white">
+    <Section id="partners" className="bg-white">
       <Container>
         <FadeIn>
-          <div className="text-center mb-12">
-            <h2 className={`${theme.fontSize['3xl']} ${theme.fontWeight.bold} text-gray-900 mb-4`}>
-              Trusted by Leading Organizations
+          <div className="text-left mb-12">
+            <p className="text-xs font-semibold text-primary uppercase tracking-widest mb-2">Our Partners</p>
+            <h2 className={`font-display text-section-title font-semibold text-gray-900 mb-4`}>
+              Partnered with <span className="text-primary italic">Trusted</span> Organizations
             </h2>
-            <p className={`${theme.fontSize.lg} text-gray-600 max-w-2xl mx-auto`}>
+            <p className={`text-body-large text-gray-600 max-w-2xl`}>
               We are proud to partner with industry leaders who share our commitment to excellence
             </p>
           </div>

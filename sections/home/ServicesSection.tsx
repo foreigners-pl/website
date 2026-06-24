@@ -60,7 +60,7 @@ export default function ServicesSection() {
               key={index} 
               direction="up" 
               delay={0.2 + index * 0.1}
-              className={service.title === 'Studies' ? 'md:col-span-2 md:w-1/2 md:mx-auto' : ''}
+              className={`h-full ${service.title === 'Studies' ? 'md:col-span-2 md:w-1/2 md:mx-auto' : ''}`}
             >
               <ServiceCard
                 icon={serviceIcons[service.title]}

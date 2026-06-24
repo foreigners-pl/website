@@ -73,9 +73,9 @@ export default function Navbar() {
                   key={link.href}
                   href={link.href}
                   onClick={(e) => handleNavClick(e, link.href)}
-                  className={`text-gray-700 hover:text-primary px-3 py-2 ${theme.fontSize.sm} ${theme.fontWeight.medium} ${theme.transition.default}`}
+                  className={`text-gray-700 hover:text-primary px-3 py-2 ${theme.fontSize.sm} ${theme.fontWeight.medium} ${theme.transition.default} ${link.italic ? 'italic' : ''}`}
                 >
-                  {link.label}
+                  {link.italic ? link.label.replace(/_/g, '') : link.label}
                 </Link>
               ))}
             </div>
@@ -150,10 +150,10 @@ export default function Navbar() {
                     key={link.href}
                     href={link.href}
                     onClick={(e) => handleNavClick(e, link.href)}
-                    className="block px-5 py-4 text-lg font-medium text-gray-700 hover:bg-red-50 hover:text-primary rounded-xl transition-all duration-200 hover:translate-x-1"
+                    className={`block px-5 py-4 text-lg font-medium text-gray-700 hover:bg-red-50 hover:text-primary rounded-xl transition-all duration-200 hover:translate-x-1 ${link.italic ? 'italic' : ''}`}
                     style={{ animationDelay: `${index * 50}ms` }}
                   >
-                    {link.label}
+                    {link.italic ? link.label.replace(/_/g, '') : link.label}
                   </Link>
                 ))}
               </nav>

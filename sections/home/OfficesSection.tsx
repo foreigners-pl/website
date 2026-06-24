@@ -45,11 +45,11 @@ export default function OfficesSection() {
             {/* Left Column - Office Info */}
             <SlideIn direction="left" delay={0.2}>
               <div className="space-y-6" id={`${activeTab}-office-info`}>
-                <h2 className={`${theme.fontSize['3xl']} md:${theme.fontSize['4xl']} ${theme.fontWeight.bold} text-gray-900`}>
+                <h2 className={`font-display text-section-title font-semibold text-gray-900`}>
                   {currentOffice.heading}
                 </h2>
                 
-                <p className={`${theme.fontSize.lg} text-gray-600 leading-relaxed`}>
+                <p className={`text-body-large text-gray-600`}>
                   {currentOffice.description}
                 </p>
 

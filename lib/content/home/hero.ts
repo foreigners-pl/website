@@ -2,7 +2,7 @@
 
 export const heroContent = {
   title: {
-    line1: 'Your Trusted',
+    line1: 'Your trusted',
     line2: 'Partner in Poland',
   },
   subtitle: 'Solution for Foreigners',

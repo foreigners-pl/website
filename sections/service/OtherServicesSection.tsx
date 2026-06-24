@@ -16,7 +16,7 @@ export default function OtherServicesSection({ heading, ctaButton, alternativeTe
   return (
     <Section>
       <Container>
-        <div className="text-center space-y-8">
+        <div className="space-y-8">
           {/* Heading */}
           <FadeIn direction="up" delay={0.1}>
             <h2 className={`${theme.fontSize['2xl']} md:${theme.fontSize['3xl']} ${theme.fontWeight.bold} text-gray-900`}>
@@ -42,7 +42,7 @@ export default function OtherServicesSection({ heading, ctaButton, alternativeTe
 
           {/* Categories */}
           <FadeIn direction="up" delay={0.4}>
-            <div className="flex flex-wrap justify-center gap-6 pt-4">
+            <div className="flex flex-wrap gap-6 pt-4">
               {categories.map((category, index) => (
                 <Link
                   key={index}

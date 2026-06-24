@@ -17,7 +17,7 @@ export default function MidCtaSection() {
 
       <Container className="text-center">
         <FadeIn direction="up" delay={0.1}>
-          <h2 className={`${theme.fontSize['3xl']} md:${theme.fontSize['4xl']} ${theme.fontWeight.bold} text-gray-900 mb-8`}>
+          <h2 className={`font-display text-section-title font-semibold text-gray-900 mb-8`}>
             {midCtaContent.heading}
           </h2>
         </FadeIn>

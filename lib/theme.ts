@@ -26,7 +26,8 @@ export const theme = {
 
   // Typography
   fonts: {
-    primary: 'var(--font-geist-sans)',
+    primary: 'var(--font-dm-sans)',
+    display: "'Fraunces', Georgia, serif",
     secondary: 'var(--font-geist-mono)',
     mono: 'var(--font-geist-mono)',
   },

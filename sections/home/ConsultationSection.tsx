@@ -27,10 +27,10 @@ export default function ConsultationSection() {
             <div className="lg:pr-12">
               <div className="text-white py-12 lg:py-16">
                 <div>
-                  <h2 className={`${theme.fontSize['2xl']} md:${theme.fontSize['3xl']} lg:${theme.fontSize['4xl']} ${theme.fontWeight.bold} mb-4 md:mb-6`}>
+                  <h2 className={`font-display text-section-title font-semibold mb-4 md:mb-6`}>
                     {consultationContent.heading}
                   </h2>
-                  <p className={`${theme.fontSize.base} md:${theme.fontSize.lg} text-white/90 leading-relaxed`}>
+                  <p className={`text-body-large text-white/90`}>
                     {consultationContent.description}
                   </p>
                 </div>

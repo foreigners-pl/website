@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import Container from '@/components/layout/Container';
 import Section from '@/components/layout/Section';
-import LeadForm from '@/components/forms/LeadForm';
+import SimpleWhatsAppForm from '@/components/ui/SimpleWhatsAppForm';
 import { FadeIn } from '@/components/ui/animated';
 import { companiesContent } from '@/lib/content/companies';
 import { theme } from '@/lib/theme';
@@ -33,7 +33,7 @@ export default function CompaniesFormSection() {
   }, [visibleChecks.length]);
 
   return (
-    <Section id="consultation-form" className="bg-gradient-to-br from-primary to-red-700 text-white">
+    <Section id="consultation-form" className="bg-gradient-to-br from-primary to-red-700 text-white !py-10 md:!py-14">
       <Container>
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <FadeIn>
@@ -113,10 +113,13 @@ export default function CompaniesFormSection() {
           </FadeIn>
 
           <FadeIn delay={0.2}>
-            <LeadForm 
-              title="Get Started Today"
-              source="Companies Page"
-            />
+            <div className="w-full max-w-md mx-auto lg:mx-0 lg:ml-auto">
+              <SimpleWhatsAppForm
+                title="Get Started Today"
+                prefillMessage="I need legal support for foreign employees in my company — work permits, residence cards, and compliance. I'd like to discuss a tailored solution."
+                source="Companies Page"
+              />
+            </div>
           </FadeIn>
         </div>
       </Container>

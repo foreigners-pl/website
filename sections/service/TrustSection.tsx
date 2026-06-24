@@ -21,7 +21,7 @@ export default function TrustSection({ heading, subheading, description, stats }
         <div className="space-y-8">
           {/* Heading */}
           <FadeIn direction="up" delay={0.1}>
-            <h2 className={`${theme.fontSize['3xl']} md:${theme.fontSize['4xl']} ${theme.fontWeight.bold} text-gray-900 text-center max-w-3xl mx-auto`}>
+            <h2 className={`${theme.fontSize['3xl']} md:${theme.fontSize['4xl']} ${theme.fontWeight.bold} text-gray-900 max-w-3xl`}>
               {heading}
               <br />
               {subheading}
@@ -30,7 +30,7 @@ export default function TrustSection({ heading, subheading, description, stats }
 
           {/* Description */}
           <FadeIn direction="up" delay={0.2}>
-            <p className={`${theme.fontSize.lg} text-gray-600 leading-relaxed text-center max-w-4xl mx-auto`}>
+            <p className={`${theme.fontSize.lg} text-gray-600 leading-relaxed max-w-4xl`}>
               {description}
             </p>
           </FadeIn>
@@ -41,7 +41,7 @@ export default function TrustSection({ heading, subheading, description, stats }
       <div className="bg-primary mt-16">
         <Container>
           <FadeIn direction="up" delay={0.3}>
-            <div className="py-12 text-center">
+            <div className="py-12">
               <p className={`${theme.fontSize['2xl']} md:${theme.fontSize['3xl']} ${theme.fontWeight.bold} text-white`}>
                 In the past {stats.period}, <span className={`${theme.fontSize['3xl']} md:${theme.fontSize['4xl']}`}>{stats.count}</span> {stats.text}
               </p>

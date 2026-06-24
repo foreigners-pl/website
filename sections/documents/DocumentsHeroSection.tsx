@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import Container from '@/components/layout/Container';
 import Section from '@/components/layout/Section';
-import LeadForm from '@/components/forms/LeadForm';
+import HeroQuestionnaire from '@/components/ui/HeroQuestionnaire';
 import { SlideIn, FadeIn, GlassBlob } from '@/components/ui/animated';
 import { theme } from '@/lib/theme';
 
@@ -89,9 +89,11 @@ export default function DocumentsHeroSection() {
             </FadeIn>
           </div>
 
-          {/* Right Column - Lead Form */}
+          {/* Right Column - Full Questionnaire Flow */}
           <SlideIn direction="left" delay={0.2}>
-            <LeadForm title="Request a Free Consultation" source="documents" />
+            <div className="w-full max-w-md mx-auto lg:mx-0 lg:ml-auto">
+              <HeroQuestionnaire />
+            </div>
           </SlideIn>
         </div>
       </Container>

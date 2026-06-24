@@ -14,12 +14,12 @@ interface ServiceCardProps {
 export default function ServiceCard({ icon, title, subtitle, description, link }: ServiceCardProps) {
   return (
     <Tilt3D>
-      <Card glass>
+      <Card glass className="h-full flex flex-col">
         <IconWrapper variant="outline" size="md" className="mb-6">
           {icon}
         </IconWrapper>
 
-        <h3 className={`${theme.fontSize['2xl']} ${theme.fontWeight.bold} text-gray-900 mb-2`}>
+        <h3 className={`font-display text-service-title font-semibold text-gray-900 mb-2`}>
           {title}
         </h3>
 
@@ -33,7 +33,7 @@ export default function ServiceCard({ icon, title, subtitle, description, link }
 
         <a
           href={link}
-          className={`inline-flex items-center gap-2 text-primary ${theme.fontWeight.semibold} hover:gap-3 ${theme.transition.all}`}
+          className={`mt-auto inline-flex items-center gap-2 text-primary ${theme.fontWeight.semibold} hover:gap-3 ${theme.transition.all}`}
         >
           View Services
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
