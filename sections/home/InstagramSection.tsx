@@ -10,43 +10,41 @@ type InstagramPost = {
   postUrl: string;
 };
 
-// HARDCODED: Replace these with your real Instagram post URLs and image URLs.
-// To update: send me the post URL + image URL for each post you want shown.
 const POSTS: InstagramPost[] = [
   {
     id: '1',
-    caption: 'Your caption for post 1 here...',
-    mediaUrl: '/instagram/post1.jpg',
-    postUrl: 'https://www.instagram.com/foreigners.pl/',
+    caption: 'If your TRC feels stuck... it probably is. Delays are not random — they are warnings that something in your file needs attention.',
+    mediaUrl: '/instagram/post1.png',
+    postUrl: 'https://www.instagram.com/p/DRu_OmGAl__/',
   },
   {
     id: '2',
-    caption: 'Your caption for post 2 here...',
-    mediaUrl: '/instagram/post2.jpg',
+    caption: 'You do not have to move your life to move your company. Base your business in Poland and keep living exactly where you are.',
+    mediaUrl: '/instagram/post2.png',
     postUrl: 'https://www.instagram.com/foreigners.pl/',
   },
   {
     id: '3',
-    caption: 'Your caption for post 3 here...',
-    mediaUrl: '/instagram/post3.jpg',
+    caption: 'Your work permit can cover your whole family. Spouse and children can join you in Poland under your permit.',
+    mediaUrl: '/instagram/post3.png',
     postUrl: 'https://www.instagram.com/foreigners.pl/',
   },
   {
     id: '4',
-    caption: 'Your caption for post 4 here...',
-    mediaUrl: '/instagram/post4.jpg',
+    caption: 'Changed jobs in Poland? Many foreigners do not know that changing your employer can require notifying the immigration office.',
+    mediaUrl: '/instagram/post4.png',
     postUrl: 'https://www.instagram.com/foreigners.pl/',
   },
   {
     id: '5',
-    caption: 'Your caption for post 5 here...',
-    mediaUrl: '/instagram/post5.jpg',
+    caption: 'What happens after you apply for your TRC? Submit docs → Biometrics & stamp → Waiting period → Collect card.',
+    mediaUrl: '/instagram/post5.png',
     postUrl: 'https://www.instagram.com/foreigners.pl/',
   },
   {
     id: '6',
-    caption: 'Your caption for post 6 here...',
-    mediaUrl: '/instagram/post6.jpg',
+    caption: '3 reasons your TRC application in Poland gets rejected — and how to avoid them before you submit.',
+    mediaUrl: '/instagram/post6.png',
     postUrl: 'https://www.instagram.com/foreigners.pl/',
   },
 ];
