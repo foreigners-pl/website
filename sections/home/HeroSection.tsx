@@ -74,7 +74,7 @@ export default function HeroSection() {
                 </div>
               </div>
               <div className="text-gray-700">
-                <p className={`${theme.fontSize.sm} ${theme.fontWeight.semibold}`}>Trusted by 1500+ clients</p>
+                <p className={`${theme.fontSize.sm} ${theme.fontWeight.semibold}`}>Trusted by 3000+ clients</p>
               </div>
             </div>
           </FadeIn>
@@ -121,7 +121,7 @@ export default function HeroSection() {
                   </div>
                 </div>
                 <div className="text-gray-700">
-                  <p className={`${theme.fontSize.sm} ${theme.fontWeight.semibold}`}>Trusted by 1500+ clients</p>
+                  <p className={`${theme.fontSize.sm} ${theme.fontWeight.semibold}`}>Trusted by 3000+ clients</p>
                 </div>
               </div>
             </FadeIn>
