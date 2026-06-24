@@ -1,7 +1,5 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import Section from '@/components/layout/Section';
 import Container from '@/components/layout/Container';
 import { FadeIn, GlassBlob } from '@/components/ui/animated';
 
@@ -12,6 +10,47 @@ type InstagramPost = {
   postUrl: string;
 };
 
+// HARDCODED: Replace these with your real Instagram post URLs and image URLs.
+// To update: send me the post URL + image URL for each post you want shown.
+const POSTS: InstagramPost[] = [
+  {
+    id: '1',
+    caption: 'Your caption for post 1 here...',
+    mediaUrl: '/instagram/post1.jpg',
+    postUrl: 'https://www.instagram.com/foreigners.pl/',
+  },
+  {
+    id: '2',
+    caption: 'Your caption for post 2 here...',
+    mediaUrl: '/instagram/post2.jpg',
+    postUrl: 'https://www.instagram.com/foreigners.pl/',
+  },
+  {
+    id: '3',
+    caption: 'Your caption for post 3 here...',
+    mediaUrl: '/instagram/post3.jpg',
+    postUrl: 'https://www.instagram.com/foreigners.pl/',
+  },
+  {
+    id: '4',
+    caption: 'Your caption for post 4 here...',
+    mediaUrl: '/instagram/post4.jpg',
+    postUrl: 'https://www.instagram.com/foreigners.pl/',
+  },
+  {
+    id: '5',
+    caption: 'Your caption for post 5 here...',
+    mediaUrl: '/instagram/post5.jpg',
+    postUrl: 'https://www.instagram.com/foreigners.pl/',
+  },
+  {
+    id: '6',
+    caption: 'Your caption for post 6 here...',
+    mediaUrl: '/instagram/post6.jpg',
+    postUrl: 'https://www.instagram.com/foreigners.pl/',
+  },
+];
+
 function toCardTitle(caption: string): string {
   const withoutHashtags = caption.split('#')[0].trim();
   const short = withoutHashtags.slice(0, 90).trim();
@@ -20,39 +59,7 @@ function toCardTitle(caption: string): string {
 }
 
 export default function InstagramSection() {
-  const [posts, setPosts] = useState<InstagramPost[]>([]);
-  const visiblePosts = posts.slice(0, 6);
-
-  useEffect(() => {
-    let isMounted = true;
-
-    const loadPosts = async () => {
-      try {
-        const response = await fetch('/api/instagram-posts');
-        if (!response.ok) return;
-
-        const data = await response.json();
-        if (isMounted && Array.isArray(data?.posts) && data.posts.length > 0) {
-          setPosts(
-            data.posts.map((post: any) => ({
-              id: String(post.id),
-              caption: String(post.caption || ''),
-              mediaUrl: String(post.mediaUrl || ''),
-              postUrl: String(post.permalink || 'https://www.instagram.com/foreigners.pl/'),
-            }))
-          );
-        }
-      } catch {
-        // Silent fallback to empty state.
-      }
-    };
-
-    loadPosts();
-
-    return () => {
-      isMounted = false;
-    };
-  }, []);
+  const visiblePosts = POSTS.slice(0, 6);
 
   return (
     <>
@@ -93,65 +100,44 @@ export default function InstagramSection() {
         </FadeIn>
 
         <FadeIn delay={0.2}>
-          {visiblePosts.length > 0 ? (
-            <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
-              {visiblePosts.map((post) => {
-                // Use a server-side proxy because Instagram CDN often blocks direct hotlinking.
-                const proxiedImageSrc = `/api/instagram-image?url=${encodeURIComponent(post.mediaUrl)}`;
-
-                return (
-                <a
-                  key={post.id}
-                  href={post.postUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group relative rounded-2xl aspect-[4/5] overflow-hidden text-white shadow-sm transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg"
-                >
-                  <img
-                    src={proxiedImageSrc}
-                    alt={toCardTitle(post.caption)}
-                    loading="lazy"
-                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/15 to-black/5" />
-
-                  <div className="flex h-full flex-col justify-between p-5">
-                    <div className="relative z-10 text-xs font-semibold uppercase tracking-[0.16em] text-white/85">Instagram</div>
-
-                    <div className="relative z-10 -mx-5 -mb-5 mt-6 bg-black/55 px-5 py-4 backdrop-blur-[1px]">
-                      <h3 className="font-display leading-tight font-semibold text-[20px] sm:text-[24px] lg:text-[26px] text-left">
-                        <span
-                          style={{
-                            display: '-webkit-box',
-                            WebkitLineClamp: 3,
-                            WebkitBoxOrient: 'vertical',
-                            overflow: 'hidden',
-                          }}
-                        >
-                          {toCardTitle(post.caption)}
-                        </span>
-                      </h3>
-                    </div>
-                  </div>
-                </a>
-                );
-              })}
-            </div>
-          ) : (
-            <div className="rounded-2xl border border-gray-200 bg-white p-8 text-center">
-              <p className="text-body-large text-gray-700 mb-4">
-                Latest Instagram posts are loading or temporarily unavailable.
-              </p>
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
+            {visiblePosts.map((post) => (
               <a
-                href="https://www.instagram.com/foreigners.pl/"
+                key={post.id}
+                href={post.postUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center rounded-full border border-gray-200 bg-white px-5 py-2 text-sm font-semibold text-gray-800 shadow-sm transition-all hover:shadow-md"
+                className="group relative rounded-2xl aspect-[4/5] overflow-hidden text-white shadow-sm transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg"
               >
-                Open @foreigners.pl on Instagram
+                <img
+                  src={post.mediaUrl}
+                  alt={toCardTitle(post.caption)}
+                  loading="lazy"
+                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/15 to-black/5" />
+
+                <div className="flex h-full flex-col justify-between p-5">
+                  <div className="relative z-10 text-xs font-semibold uppercase tracking-[0.16em] text-white/85">Instagram</div>
+
+                  <div className="relative z-10 -mx-5 -mb-5 mt-6 bg-black/55 px-5 py-4 backdrop-blur-[1px]">
+                    <h3 className="font-display leading-tight font-semibold text-[20px] sm:text-[24px] lg:text-[26px] text-left">
+                      <span
+                        style={{
+                          display: '-webkit-box',
+                          WebkitLineClamp: 3,
+                          WebkitBoxOrient: 'vertical',
+                          overflow: 'hidden',
+                        }}
+                      >
+                        {toCardTitle(post.caption)}
+                      </span>
+                    </h3>
+                  </div>
+                </div>
               </a>
-            </div>
-          )}
+            ))}
+          </div>
         </FadeIn>
       </Container>
     </>
