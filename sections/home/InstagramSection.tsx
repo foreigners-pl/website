@@ -21,31 +21,31 @@ const POSTS: InstagramPost[] = [
     id: '2',
     caption: 'You do not have to move your life to move your company. Base your business in Poland and keep living exactly where you are.',
     mediaUrl: '/instagram/post2.png',
-    postUrl: 'https://www.instagram.com/foreigners.pl/',
+    postUrl: 'https://www.instagram.com/p/DRZ-1eYghjP/',
   },
   {
     id: '3',
     caption: 'Your work permit can cover your whole family. Spouse and children can join you in Poland under your permit.',
     mediaUrl: '/instagram/post3.png',
-    postUrl: 'https://www.instagram.com/foreigners.pl/',
+    postUrl: 'https://www.instagram.com/p/DW4HwhBgqbF/',
   },
   {
     id: '4',
     caption: 'Changed jobs in Poland? Many foreigners do not know that changing your employer can require notifying the immigration office.',
     mediaUrl: '/instagram/post4.png',
-    postUrl: 'https://www.instagram.com/foreigners.pl/',
+    postUrl: 'https://www.instagram.com/p/DZATW8GCgIV/',
   },
   {
     id: '5',
     caption: 'What happens after you apply for your TRC? Submit docs → Biometrics & stamp → Waiting period → Collect card.',
     mediaUrl: '/instagram/post5.png',
-    postUrl: 'https://www.instagram.com/foreigners.pl/',
+    postUrl: 'https://www.instagram.com/p/DXFQTsiAvfL/',
   },
   {
     id: '6',
     caption: '3 reasons your TRC application in Poland gets rejected — and how to avoid them before you submit.',
     mediaUrl: '/instagram/post6.png',
-    postUrl: 'https://www.instagram.com/foreigners.pl/',
+    postUrl: 'https://www.instagram.com/p/DY69GOkCehO/',
   },
 ];
 
