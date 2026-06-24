@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 const USERNAME = 'foreigners.pl';
 const PROFILE_URL = `https://www.instagram.com/${USERNAME}/`;
@@ -8,126 +8,128 @@ type InstagramPost = {
   permalink: string;
   caption: string;
   mediaUrl: string;
-  likeCount?: number;
-  commentCount?: number;
 };
-
-function toPermalink(shortcode: string): string {
-  return `https://www.instagram.com/p/${shortcode}/`;
-}
 
 function normalizeCaption(caption?: string): string {
   if (!caption) return 'Latest update from our Instagram.';
   return caption.replace(/\s+/g, ' ').trim();
 }
 
-function fromWebProfileInfo(payload: any): InstagramPost[] {
-  const edges = payload?.data?.user?.edge_owner_to_timeline_media?.edges;
-  if (!Array.isArray(edges)) return [];
-
-  return edges
-    .map((edge: any) => {
-      const node = edge?.node;
-      const captionNode = node?.edge_media_to_caption?.edges?.[0]?.node?.text;
-      const mediaUrl = node?.display_url || node?.thumbnail_src;
-      const shortcode = node?.shortcode;
-      const likeCount = node?.edge_media_preview_like?.count;
-      const commentCount = node?.edge_media_to_comment?.count;
-
-      if (!node?.id || !mediaUrl || !shortcode) return null;
-
-      return {
-        id: String(node.id),
-        permalink: toPermalink(shortcode),
-        caption: normalizeCaption(captionNode),
-        mediaUrl: String(mediaUrl),
-        likeCount: typeof likeCount === 'number' ? likeCount : undefined,
-        commentCount: typeof commentCount === 'number' ? commentCount : undefined,
-      } satisfies InstagramPost;
-    })
-    .filter(Boolean)
-    .slice(0, 8) as InstagramPost[];
+function fromApiResponse(data: any[]): InstagramPost[] {
+  return data
+    .filter((item) => item.media_type === 'IMAGE' || item.media_type === 'CAROUSEL_ALBUM')
+    .map((item) => ({
+      id: String(item.id),
+      permalink: String(item.permalink || ''),
+      caption: normalizeCaption(item.caption),
+      mediaUrl: String(item.media_url || ''),
+    }))
+    .slice(0, 8);
 }
 
-function fromEmbeddedJson(html: string): InstagramPost[] {
-  const match = html.match(/"edge_owner_to_timeline_media"\s*:\s*\{[\s\S]*?"page_info"\s*:\s*\{[\s\S]*?\}\s*\}/);
-  if (!match?.[0]) return [];
+const USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36';
 
+export async function GET(request: NextRequest) {
   try {
-    const mediaObject = JSON.parse(`{${match[0]}}`).edge_owner_to_timeline_media;
-    const edges = mediaObject?.edges;
-    if (!Array.isArray(edges)) return [];
-
-    return edges
-      .map((edge: any) => {
-        const node = edge?.node;
-        const captionNode = node?.edge_media_to_caption?.edges?.[0]?.node?.text;
-        const mediaUrl = node?.display_url || node?.thumbnail_src;
-        const shortcode = node?.shortcode;
-        const likeCount = node?.edge_media_preview_like?.count;
-        const commentCount = node?.edge_media_to_comment?.count;
-
-        if (!node?.id || !mediaUrl || !shortcode) return null;
-
-        return {
-          id: String(node.id),
-          permalink: toPermalink(shortcode),
-          caption: normalizeCaption(captionNode),
-          mediaUrl: String(mediaUrl),
-          likeCount: typeof likeCount === 'number' ? likeCount : undefined,
-          commentCount: typeof commentCount === 'number' ? commentCount : undefined,
-        } satisfies InstagramPost;
-      })
-      .filter(Boolean)
-      .slice(0, 8) as InstagramPost[];
-  } catch {
-    return [];
-  }
-}
-
-export async function GET() {
-  try {
-    // Primary source: Instagram web profile info endpoint.
-    const webInfoResponse = await fetch(
-      `https://www.instagram.com/api/v1/users/web_profile_info/?username=${encodeURIComponent(USERNAME)}`,
-      {
-        headers: {
-          'x-ig-app-id': '936619743392459',
-          'User-Agent':
-            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
-          Accept: 'application/json',
-          Referer: PROFILE_URL,
-        },
-        next: { revalidate: 3600 },
-      }
-    );
-
-    if (webInfoResponse.ok) {
-      const payload = await webInfoResponse.json();
-      const posts = fromWebProfileInfo(payload);
-      if (posts.length > 0) {
-        return NextResponse.json({ posts });
+    // Strategy 1: Try the official Instagram Basic Display API if token exists
+    const token = process.env.INSTAGRAM_TOKEN;
+    if (token) {
+      try {
+        const apiUrl = `https://graph.instagram.com/me/media?fields=id,caption,media_url,permalink,media_type&access_token=${encodeURIComponent(token)}`;
+        const response = await fetch(apiUrl, { next: { revalidate: 3600 } });
+        if (response.ok) {
+          const data = await response.json();
+          const posts = fromApiResponse(data.data || []);
+          if (posts.length > 0) return NextResponse.json({ posts });
+        }
+      } catch {
+        // fall through to scraping
       }
     }
 
-    // Fallback: parse profile HTML if endpoint is blocked.
-    const profileResponse = await fetch(PROFILE_URL, {
+    // Strategy 2: Scrape via __a=1 endpoint (sometimes works from cloud IPs)
+    const scrapeUrl = `https://www.instagram.com/${encodeURIComponent(USERNAME)}/?__a=1&__d=1`;
+    const scrapeRes = await fetch(scrapeUrl, {
       headers: {
-        'User-Agent':
-          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
-        Accept: 'text/html',
+        'User-Agent': USER_AGENT,
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+        'Accept-Language': 'en-US,en;q=0.9',
+        'Accept-Encoding': 'gzip, deflate, br',
+        'Referer': 'https://www.instagram.com/',
+        'Sec-Fetch-Dest': 'document',
+        'Sec-Fetch-Mode': 'navigate',
+        'Sec-Fetch-Site': 'same-origin',
+        'Upgrade-Insecure-Requests': '1',
+        'Cache-Control': 'max-age=0',
       },
-      next: { revalidate: 3600 },
+      next: { revalidate: 1800 },
     });
 
-    if (!profileResponse.ok) {
-      return NextResponse.json({ posts: [], error: 'Unable to fetch Instagram profile' }, { status: 200 });
+    if (scrapeRes.ok) {
+      try {
+        const payload = await scrapeRes.json();
+        const mediaItems = payload?.graphql?.user?.edge_owner_to_timeline_media?.edges || [];
+        if (Array.isArray(mediaItems) && mediaItems.length > 0) {
+          const posts = mediaItems
+            .map((edge: any) => {
+              const node = edge?.node;
+              if (!node?.id || !node?.display_url || !node?.shortcode) return null;
+              return {
+                id: String(node.id),
+                permalink: `https://www.instagram.com/p/${node.shortcode}/`,
+                caption: normalizeCaption(node?.edge_media_to_caption?.edges?.[0]?.node?.text),
+                mediaUrl: String(node.display_url),
+              };
+            })
+            .filter(Boolean)
+            .slice(0, 8) as InstagramPost[];
+          if (posts.length > 0) return NextResponse.json({ posts });
+        }
+      } catch {
+        // fall through
+      }
     }
 
-    const html = await profileResponse.text();
-    const posts = fromEmbeddedJson(html);
+    // Strategy 3: Parse profile HTML as final fallback
+    const htmlRes = await fetch(PROFILE_URL, {
+      headers: {
+        'User-Agent': USER_AGENT,
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+        'Accept-Language': 'en-US,en;q=0.5',
+        'Referer': 'https://www.google.com/',
+      },
+      next: { revalidate: 1800 },
+    });
 
-    return NextResponse.json({ posts });
+    if (htmlRes.ok) {
+      const html = await htmlRes.text();
+      const match = html.match(/"edge_owner_to_timeline_media"\s*:\s*\{[\s\S]*?"edges"\s*:\s*(\[[\s\S]*?\])\s*\}/);
+      if (match?.[1]) {
+        try {
+          const edges = JSON.parse(match[1]);
+          if (Array.isArray(edges) && edges.length > 0) {
+            const posts = edges
+              .map((edge: any) => {
+                const node = edge?.node;
+                if (!node?.id || !node?.display_url || !node?.shortcode) return null;
+                return {
+                  id: String(node.id),
+                  permalink: `https://www.instagram.com/p/${node.shortcode}/`,
+                  caption: normalizeCaption(node?.edge_media_to_caption?.edges?.[0]?.node?.text),
+                  mediaUrl: String(node.display_url),
+                };
+              })
+              .filter(Boolean)
+              .slice(0, 8) as InstagramPost[];
+            if (posts.length > 0) return NextResponse.json({ posts });
+          }
+        } catch {
+          // fall through
+        }
+      }
+    }
+
+    return NextResponse.json({ posts: [], error: 'Unable to fetch Instagram posts' }, { status: 200 });
   } catch (error) {
     console.error('Instagram posts fetch error:', error);
     return NextResponse.json({ posts: [] }, { status: 200 });
