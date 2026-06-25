@@ -5,7 +5,7 @@ export const heroContent = {
     line1: 'Your trusted',
     line2: 'Partner in Poland',
   },
-  subtitle: 'Solution for Foreigners',
+  subtitle: 'Work with professionals',
   description: 'Professional assistance for foreigners in Poland. Work permits, residence cards, and legal advice from certified experts.',
   buttons: {
     primary: 'Free Consultation',
