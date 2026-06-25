@@ -40,8 +40,9 @@ export default function HeroSection() {
           
           {/* Subtitle */}
           <FadeIn direction="up" delay={0.2}>
-            <h2 className={`text-left text-primary ${theme.fontSize.xl} ${theme.fontWeight.semibold}`}>
-              {heroContent.subtitle}
+            <h2 className={`text-left ${theme.fontSize.xl} ${theme.fontWeight.semibold}`}>
+              <span className="text-gray-900">Work with </span>
+              <span className="text-primary">professionals</span>
             </h2>
           </FadeIn>
           
@@ -95,8 +96,9 @@ export default function HeroSection() {
             </FadeIn>
             
             <FadeIn direction="up" delay={0.2}>
-              <h2 className={`text-left text-primary ${theme.fontSize.xl} md:${theme.fontSize['2xl']} ${theme.fontWeight.semibold}`}>
-                {heroContent.subtitle}
+              <h2 className={`text-left ${theme.fontSize.xl} md:${theme.fontSize['2xl']} ${theme.fontWeight.semibold}`}>
+                <span className="text-gray-900">Work with </span>
+                <span className="text-primary">professionals</span>
               </h2>
             </FadeIn>
             
