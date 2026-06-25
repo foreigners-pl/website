@@ -259,7 +259,7 @@ function OptionButton({
   return (
     <button
       onClick={onClick}
-      className="w-full flex items-center gap-3 px-4 py-3.5 rounded-xl border border-gray-200 bg-white shadow-sm hover:border-primary hover:bg-red-50/50 hover:shadow-md active:scale-[0.98] transition-all duration-150 text-left group"
+      className="w-full flex items-center gap-3 px-4 py-3.5 rounded-xl border border-gray-200 bg-white shadow-[0_2px_8px_rgba(0,0,0,0.08)] hover:border-primary hover:bg-red-50/50 hover:shadow-[0_4px_16px_rgba(171,22,4,0.12)] active:scale-[0.98] transition-all duration-150 text-left group"
     >
       <span className="flex-shrink-0 w-9 h-9 rounded-lg bg-red-50 flex items-center justify-center text-primary transition-colors duration-150">
         {option.icon}
@@ -376,7 +376,7 @@ export default function HeroQuestionnaire() {
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
-        className="bg-white rounded-2xl shadow-[0_8px_40px_rgba(0,0,0,0.12)] border border-gray-100 overflow-hidden"
+        className="bg-white rounded-2xl shadow-[0_12px_50px_rgba(0,0,0,0.18)] border border-gray-100 overflow-hidden"
       >
           <div className="h-1 w-full bg-primary" />
           <div className="p-8 text-center">
@@ -406,7 +406,7 @@ export default function HeroQuestionnaire() {
           duration: 0.5,
           ease: [0.25, 0.46, 0.45, 0.94]
         }}
-        className="bg-white rounded-2xl shadow-[0_8px_40px_rgba(0,0,0,0.12)] border border-gray-100 overflow-hidden"
+        className="bg-white rounded-2xl shadow-[0_12px_50px_rgba(0,0,0,0.18)] border border-gray-100 overflow-hidden"
       >
         <div className="h-1 w-full bg-primary" />
         <div className="p-6">
