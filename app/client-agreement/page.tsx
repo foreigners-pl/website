@@ -45,21 +45,19 @@ export default function ClientAgreementPage() {
     const pdf = new jsPDF('p', 'mm', 'a4');
     const pdfWidth = pdf.internal.pageSize.getWidth();
     const pdfHeight = pdf.internal.pageSize.getHeight();
-    const imgWidth = canvas.width;
-    const imgHeight = canvas.height;
-    const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
-    const imgX = (pdfWidth - imgWidth * ratio) / 2;
+    const imgProps = pdf.getImageProperties(imgData);
+    const imgHeightInMM = (imgProps.height * pdfWidth) / imgProps.width;
 
-    let heightLeft = imgHeight;
+    let heightLeft = imgHeightInMM;
     let position = 0;
 
-    pdf.addImage(imgData, 'PNG', imgX, 0, imgWidth * ratio, imgHeight * ratio);
+    pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, imgHeightInMM);
     heightLeft -= pdfHeight;
 
     while (heightLeft > 0) {
-      position = heightLeft - imgHeight;
+      position = heightLeft - imgHeightInMM;
       pdf.addPage();
-      pdf.addImage(imgData, 'PNG', imgX, position, imgWidth * ratio, imgHeight * ratio);
+      pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, imgHeightInMM);
       heightLeft -= pdfHeight;
     }
 
