@@ -1,7 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { jsPDF } from 'jspdf';
+import html2canvas from 'html2canvas';
 import Container from '@/components/layout/Container';
 import Section from '@/components/layout/Section';
 
@@ -17,6 +18,7 @@ export default function ClientAgreementPage() {
   });
   const [serverDate, setServerDate] = useState<string>('');
   const [isLoading, setIsLoading] = useState(true);
+  const documentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     fetch('/api/server-date')
@@ -31,117 +33,39 @@ export default function ClientAgreementPage() {
       });
   }, []);
 
-  const handleDownload = () => {
-    if (!formData.name || !serverDate) return;
+  const handleDownload = async () => {
+    if (!formData.name || !serverDate || !documentRef.current) return;
 
-    const doc = new jsPDF();
-    const pageWidth = doc.internal.pageSize.getWidth();
-    const margin = 20;
-    let y = margin;
+    const element = documentRef.current;
+    const canvas = await html2canvas(element, {
+      scale: 2,
+      useCORS: true,
+      backgroundColor: '#ffffff',
+    });
 
-    const addText = (text: string, fontSize: number = 10, isBold: boolean = false) => {
-      doc.setFontSize(fontSize);
-      if (isBold) doc.setFont('times', 'bold');
-      else doc.setFont('times', 'normal');
+    const imgData = canvas.toDataURL('image/png');
+    const pdf = new jsPDF('p', 'mm', 'a4');
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = pdf.internal.pageSize.getHeight();
+    const imgWidth = canvas.width;
+    const imgHeight = canvas.height;
+    const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
+    const imgX = (pdfWidth - imgWidth * ratio) / 2;
 
-      const lines = doc.splitTextToSize(text, pageWidth - margin * 2);
-      lines.forEach((line: string) => {
-        if (y > 280) {
-          doc.addPage();
-          y = margin;
-        }
-        doc.text(line, margin, y);
-        y += fontSize * 0.55;
-      });
-      y += 4;
-    };
+    let heightLeft = imgHeight;
+    let position = 0;
 
-    const addSectionTitle = (text: string) => {
-      y += 4;
-      doc.setFontSize(11);
-      doc.setFont('times', 'bold');
-      doc.text(text, margin, y);
-      y += 8;
-    };
+    pdf.addImage(imgData, 'PNG', imgX, 0, imgWidth * ratio, imgHeight * ratio);
+    heightLeft -= pdfHeight;
 
-    // Header
-    doc.setFontSize(18);
-    doc.setFont('times', 'bold');
-    doc.text('CLIENT SERVICE AGREEMENT', pageWidth / 2, y, { align: 'center' });
-    y += 7;
-    doc.setFontSize(11);
-    doc.setFont('times', 'italic');
-    doc.text('Umowa o świadczenie usług dla Klienta', pageWidth / 2, y, { align: 'center' });
-    y += 12;
+    while (heightLeft > 0) {
+      position = heightLeft - imgHeight;
+      pdf.addPage();
+      pdf.addImage(imgData, 'PNG', imgX, position, imgWidth * ratio, imgHeight * ratio);
+      heightLeft -= pdfHeight;
+    }
 
-    doc.setLineWidth(0.5);
-    doc.line(margin, y, pageWidth - margin, y);
-    y += 10;
-
-    // Parties
-    doc.setFontSize(10);
-    doc.setFont('times', 'bold');
-    doc.text('Provider / Usługodawca:', margin, y);
-    y += 6;
-    doc.setFont('times', 'normal');
-    addText('FOREIGNERS.PL Sp. z o.o.\nul. 3 Maja 31/4, 40-097 Katowice, Poland\nNIP: 6343044313 · KRS: 0001124675\nE-mail: connect@foreigners.pl');
-
-    doc.setFont('times', 'bold');
-    doc.text('Client / Klient:', margin, y);
-    y += 6;
-    doc.setFont('times', 'normal');
-    addText(`${formData.name}${formData.pesel ? '\nPESEL: ' + formData.pesel : ''}\nDate / Data: ${serverDate}`);
-
-    // Preamble
-    addSectionTitle('Preamble / Preambuła');
-    addText('By proceeding with the services of FOREIGNERS.PL Sp. z o.o. (the "Provider"), the undersigned Client confirms that they have read, understood, and agree to be bound by the terms set forth in this Agreement and the Provider\'s Terms of Service and Privacy Policy.');
-    addText('Podpisując niniejszy dokument, Klient potwierdza, że zapoznał się z treścią niniejszej Umowy oraz Regulaminu i Polityki Prywatności Usługodawcy i akceptuje ich postanowienia.');
-
-    // Article 1
-    addSectionTitle('Article 1 — Scope of Services and No Guarantee of Result / Zakres usług i brak gwarancji rezultatu');
-    addText('The Provider shall perform the specific legal and/or administrative work agreed upon with the Client. The agreed fee is remuneration solely for the work performed, not for any guaranteed outcome, approval, decision by an authority, or issuance of a document. Such outcomes depend on independent decisions made by public authorities, courts, and other third parties outside the Provider\'s control.');
-    addText('Usługodawca wykona konkretną pracę prawną i/lub administracyjną uzgodnioną z Klientem. Uzgodnione wynagrodzenie stanowi wyłącznie zapłatę za wykonaną pracę, a nie za gwarantowany rezultat, zatwierdzenie, decyzję organu lub wydanie dokumentu. Rezultaty te zależą od niezależnych decyzji podejmowanych przez organy publiczne, sądy i inne podmioty trzecie spoza kontroli Usługodawcy.');
-
-    // Article 2
-    addSectionTitle('Article 2 — Refund Policy / Polityka zwrotów');
-    addText('2.1 A full refund shall be granted only if the Client cancels the service within 24 hours of the Provider\'s receipt of payment, provided the Provider has not yet performed any substantial part of the service, such as drafting or submitting a crucial application, preparing official documents, or engaging with authorities on the Client\'s behalf.');
-    addText('Pełny zwrot przysługuje wyłącznie, gdy Klient anuluje usługę w ciągu 24 godzin od momentu otrzymania płatności przez Usługodawcę, pod warunkiem że Usługodawca nie wykonał jeszcze żadnej istotnej części usługi, takiej jak sporządzenie lub złożenie kluczowego wniosku, przygotowanie dokumentów urzędowych lub podjęcie kontaktu z organami w imieniu Klienta.');
-    addText('2.2 If cancellation occurs after the 24-hour period and the Provider approves the refund request, the Client shall be entitled to a refund of 80% (eighty percent) of the amount paid. The remaining 20% (twenty percent) shall be retained by the Provider as an administrative fee.');
-    addText('W przypadku anulowania po upływie 24 godzin i pod warunkiem zatwierdzenia wniosku o zwrot przez Usługodawcę, Klientowi przysługuje zwrot 80% zapłaconej kwoty. Pozostałe 20% zostaje zatrzymane przez Usługodawcę jako opłata administracyjna.');
-    addText('2.3 No refund shall be granted if the Client refuses to proceed with the agreed services due to a change in scope, price, or timeframe that results from: (a) the Client requesting additional services beyond the originally agreed scope; or (b) the Client failing to provide complete, accurate, or timely information that affects the scope, complexity, or cost of the agreed services.');
-    addText('Zwrot nie przysługuje, jeśli Klient odmawia kontynuowania uzgodnionych usług z powodu zmiany zakresu, ceny lub terminu wynikającej z: (a) żądania przez Klienta dodatkowych usług wykraczających poza pierwotnie uzgodniony zakres; lub (b) niepodania przez Klienta pełnych, dokładnych lub terminowych informacji wpływających na zakres, złożoność lub koszt uzgodnionych usług.');
-
-    // Article 3
-    addSectionTitle('Article 3 — Data Processing / Przetwarzanie danych');
-    addText('The Client consents to the processing of their personal data by the Provider for the purpose of performing the agreed services and communication related thereto, in accordance with the Provider\'s Privacy Policy available at foreigners.pl/privacy-policy.');
-    addText('Klient wyraża zgodę na przetwarzanie swoich danych osobowych przez Usługodawcę w celu wykonania uzgodnionych usług oraz prowadzenia związanej z tym komunikacji, zgodnie z Polityką Prywatności dostępną na foreigners.pl/privacy-policy.');
-
-    // Acknowledgment
-    y += 6;
-    doc.setLineWidth(0.3);
-    doc.line(margin, y, pageWidth - margin, y);
-    y += 10;
-    addSectionTitle('Acknowledgment / Oświadczenie');
-    addText(`I, ${formData.name}, confirm that I have read, understood, and accept the terms and conditions set forth above. I understand that my typed name below shall serve as my electronic signature.`);
-    addText(`Ja, ${formData.name}, potwierdzam, że przeczytałem/przeczytałam, zrozumiałem/zrozumiałam i akceptuję powyższe warunki. Rozumiem, że moje wpisane imię i nazwisko stanowi mój elektroniczny podpis.`);
-
-    y += 8;
-    doc.setFont('times', 'bold');
-    doc.text('Client Signature / Podpis Klienta:', margin, y);
-    y += 8;
-    doc.setFont('times', 'normal');
-    doc.text(formData.name, margin, y);
-    doc.line(margin, y + 2, pageWidth / 2 - 10, y + 2);
-
-    y += 16;
-    doc.setFont('times', 'bold');
-    doc.text('Date / Data:', margin, y);
-    y += 8;
-    doc.setFont('times', 'normal');
-    doc.text(serverDate, margin, y);
-    doc.line(margin, y + 2, pageWidth / 2 - 10, y + 2);
-
-    doc.save(`client-agreement-${formData.name.replace(/\s+/g, '-')}-${serverDate}.pdf`);
+    pdf.save(`client-agreement-${formData.name.replace(/\s+/g, '-')}-${serverDate}.pdf`);
   };
 
   return (
@@ -161,7 +85,7 @@ export default function ClientAgreementPage() {
           </div>
 
           {/* Document Preview */}
-          <div className="bg-white shadow-xl border border-gray-300 p-8 md:p-12 mb-8">
+          <div ref={documentRef} className="bg-white shadow-xl border border-gray-300 p-8 md:p-12 mb-8">
             <div className="text-center border-b-2 border-gray-800 pb-6 mb-8">
               <h2 className="font-display text-2xl font-semibold text-gray-900 uppercase tracking-wide">
                 Client Service Agreement
