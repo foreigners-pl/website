@@ -14,7 +14,6 @@
     "@supabase/supabase-js": "^2.86.2",
     "@vercel/analytics": "^1.6.1",
     "flag-icons": "^7.5.0",
-    "html2canvas": "^1.4.1",
     "jspdf": "^4.2.1",
     "motion": "^12.23.25",
     "next": "16.0.7",
