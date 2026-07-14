@@ -85,17 +85,17 @@ export default function ClientAgreementPage() {
           </div>
 
           {/* Document Preview */}
-          <div ref={documentRef} className="bg-white shadow-xl border border-gray-300 p-8 md:p-12 mb-8">
-            <div className="text-center border-b-2 border-gray-800 pb-6 mb-8">
-              <h2 className="font-display text-2xl font-semibold text-gray-900 uppercase tracking-wide">
+          <div ref={documentRef} className="p-8 md:p-12 mb-8" style={{ fontFamily: "'Times New Roman', Times, serif", backgroundColor: '#ffffff', border: '1px solid #d1d5db', color: '#111827', boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)' }}>
+            <div className="text-center pb-6 mb-8" style={{ borderBottom: '2px solid #1f2937' }}>
+              <h2 className="font-display text-2xl font-semibold uppercase tracking-wide" style={{ color: '#111827' }}>
                 Client Service Agreement
               </h2>
-              <p className="text-gray-600 text-sm mt-1 italic">
+              <p className="text-sm mt-1 italic" style={{ color: '#4b5563' }}>
                 Umowa o świadczenie usług dla Klienta
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 text-sm text-gray-900 leading-relaxed" style={{ fontFamily: "'Times New Roman', Times, serif" }}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 text-sm leading-relaxed" style={{ color: '#111827' }}>
               {/* Row: Provider / Usługodawca */}
               <div>
                 <p className="font-bold mb-1">Provider:</p>
@@ -136,13 +136,13 @@ export default function ClientAgreementPage() {
 
               {/* Row: Preamble / Preambuła */}
               <div>
-                <h3 className="font-bold uppercase tracking-wide text-xs border-b border-gray-800 pb-1 mb-2">Preamble</h3>
+                <h3 className="font-bold uppercase tracking-wide text-xs pb-1 mb-2" style={{ borderBottom: '1px solid #1f2937' }}>Preamble</h3>
                 <p>
                   By proceeding with the services of FOREIGNERS.PL Sp. z o.o. (the "Provider"), the undersigned Client confirms that they have read, understood, and agree to be bound by the terms set forth in this Agreement and the Provider's Terms of Service and Privacy Policy.
                 </p>
               </div>
               <div>
-                <h3 className="font-bold uppercase tracking-wide text-xs border-b border-gray-800 pb-1 mb-2">Preambuła</h3>
+                <h3 className="font-bold uppercase tracking-wide text-xs pb-1 mb-2" style={{ borderBottom: '1px solid #1f2937' }}>Preambuła</h3>
                 <p>
                   Podpisując niniejszy dokument, Klient potwierdza, że zapoznał się z treścią niniejszej Umowy oraz Regulaminu i Polityki Prywatności Usługodawcy i akceptuje ich postanowienia.
                 </p>
@@ -150,13 +150,13 @@ export default function ClientAgreementPage() {
 
               {/* Row: Article 1 — Scope and No Guarantee / Zakres i brak gwarancji */}
               <div>
-                <h3 className="font-bold uppercase tracking-wide text-xs border-b border-gray-800 pb-1 mb-2">Article 1 — Scope of Services and No Guarantee of Result</h3>
+                <h3 className="font-bold uppercase tracking-wide text-xs pb-1 mb-2" style={{ borderBottom: '1px solid #1f2937' }}>Article 1 — Scope of Services and No Guarantee of Result</h3>
                 <p>
                   The Provider shall perform the specific legal and/or administrative work agreed upon with the Client. The agreed fee is remuneration solely for the work performed, not for any guaranteed outcome, approval, decision by an authority, or issuance of a document. Such outcomes depend on independent decisions made by public authorities, courts, and other third parties outside the Provider's control.
                 </p>
               </div>
               <div>
-                <h3 className="font-bold uppercase tracking-wide text-xs border-b border-gray-800 pb-1 mb-2">Artykuł 1 — Zakres usług i brak gwarancji rezultatu</h3>
+                <h3 className="font-bold uppercase tracking-wide text-xs pb-1 mb-2" style={{ borderBottom: '1px solid #1f2937' }}>Artykuł 1 — Zakres usług i brak gwarancji rezultatu</h3>
                 <p>
                   Usługodawca wykona konkretną pracę prawną i/lub administracyjną uzgodnioną z Klientem. Uzgodnione wynagrodzenie stanowi wyłącznie zapłatę za wykonaną pracę, a nie za gwarantowany rezultat, zatwierdzenie, decyzję organu lub wydanie dokumentu. Rezultaty te zależą od niezależnych decyzji podejmowanych przez organy publiczne, sądy i inne podmioty trzecie spoza kontroli Usługodawcy.
                 </p>
@@ -164,7 +164,7 @@ export default function ClientAgreementPage() {
 
               {/* Row: Article 2 — Refund Policy / Polityka zwrotów */}
               <div>
-                <h3 className="font-bold uppercase tracking-wide text-xs border-b border-gray-800 pb-1 mb-2">Article 2 — Refund Policy</h3>
+                <h3 className="font-bold uppercase tracking-wide text-xs pb-1 mb-2" style={{ borderBottom: '1px solid #1f2937' }}>Article 2 — Refund Policy</h3>
                 <p className="space-y-2">
                   <span className="block">2.1 A full refund shall be granted only if the Client cancels the service within 24 hours of the Provider's receipt of payment, provided the Provider has not yet performed any substantial part of the service, such as drafting or submitting a crucial application, preparing official documents, or engaging with authorities on the Client's behalf.</span>
                   <span className="block">2.2 If cancellation occurs after the 24-hour period and the Provider approves the refund request, the Client shall be entitled to a refund of 80% (eighty percent) of the amount paid. The remaining 20% (twenty percent) shall be retained by the Provider as an administrative fee.</span>
@@ -172,7 +172,7 @@ export default function ClientAgreementPage() {
                 </p>
               </div>
               <div>
-                <h3 className="font-bold uppercase tracking-wide text-xs border-b border-gray-800 pb-1 mb-2">Artykuł 2 — Polityka zwrotów</h3>
+                <h3 className="font-bold uppercase tracking-wide text-xs pb-1 mb-2" style={{ borderBottom: '1px solid #1f2937' }}>Artykuł 2 — Polityka zwrotów</h3>
                 <p className="space-y-2">
                   <span className="block">2.1 Pełny zwrot przysługuje wyłącznie, gdy Klient anuluje usługę w ciągu 24 godzin od momentu otrzymania płatności przez Usługodawcę, pod warunkiem że Usługodawca nie wykonał jeszcze żadnej istotnej części usługi, takiej jak sporządzenie lub złożenie kluczowego wniosku, przygotowanie dokumentów urzędowych lub podjęcie kontaktu z organami w imieniu Klienta.</span>
                   <span className="block">2.2 W przypadku anulowania po upływie 24 godzin i pod warunkiem zatwierdzenia wniosku o zwrot przez Usługodawcę, Klientowi przysługuje zwrot 80% zapłaconej kwoty. Pozostałe 20% zostaje zatrzymane przez Usługodawcę jako opłata administracyjna.</span>
@@ -182,38 +182,38 @@ export default function ClientAgreementPage() {
 
               {/* Row: Article 3 — Data Processing / Przetwarzanie danych */}
               <div>
-                <h3 className="font-bold uppercase tracking-wide text-xs border-b border-gray-800 pb-1 mb-2">Article 3 — Data Processing</h3>
+                <h3 className="font-bold uppercase tracking-wide text-xs pb-1 mb-2" style={{ borderBottom: '1px solid #1f2937' }}>Article 3 — Data Processing</h3>
                 <p>
                   The Client consents to the processing of their personal data by the Provider for the purpose of performing the agreed services and communication related thereto, in accordance with the Provider's Privacy Policy available at foreigners.pl/privacy-policy.
                 </p>
               </div>
               <div>
-                <h3 className="font-bold uppercase tracking-wide text-xs border-b border-gray-800 pb-1 mb-2">Artykuł 3 — Przetwarzanie danych</h3>
+                <h3 className="font-bold uppercase tracking-wide text-xs pb-1 mb-2" style={{ borderBottom: '1px solid #1f2937' }}>Artykuł 3 — Przetwarzanie danych</h3>
                 <p>
                   Klient wyraża zgodę na przetwarzanie swoich danych osobowych przez Usługodawcę w celu wykonania uzgodnionych usług oraz prowadzenia związanej z tym komunikacji, zgodnie z Polityką Prywatności dostępną na foreigners.pl/privacy-policy.
                 </p>
               </div>
 
               {/* Row: Acknowledgment / Oświadczenie */}
-              <div className="border-t border-gray-300 pt-4">
-                <h3 className="font-bold uppercase tracking-wide text-xs mb-2">Acknowledgment</h3>
+              <div className="pt-4" style={{ borderTop: '1px solid #d1d5db' }}>
+                <h3 className="font-bold uppercase tracking-wide text-xs mb-2" style={{ color: '#111827' }}>Acknowledgment</h3>
                 <p className="mb-4">
                   I, {formData.name || '_________________________________'}, confirm that I have read, understood, and accept the terms and conditions set forth above. I understand that my typed name below shall serve as my electronic signature.
                 </p>
                 <p className="font-semibold text-xs mb-1">Client Signature</p>
-                <p className="border-b border-gray-800 py-1">{formData.name || ''}</p>
+                <p className="py-1" style={{ borderBottom: '1px solid #1f2937' }}>{formData.name || ''}</p>
                 <p className="font-semibold text-xs mt-3 mb-1">Date</p>
-                <p className="border-b border-gray-800 py-1">{isLoading ? '...' : serverDate}</p>
+                <p className="py-1" style={{ borderBottom: '1px solid #1f2937' }}>{isLoading ? '...' : serverDate}</p>
               </div>
-              <div className="border-t border-gray-300 pt-4">
-                <h3 className="font-bold uppercase tracking-wide text-xs mb-2">Oświadczenie</h3>
+              <div className="pt-4" style={{ borderTop: '1px solid #d1d5db' }}>
+                <h3 className="font-bold uppercase tracking-wide text-xs mb-2" style={{ color: '#111827' }}>Oświadczenie</h3>
                 <p className="mb-4">
                   Ja, {formData.name || '_________________________________'}, potwierdzam, że przeczytałem/przeczytałam, zrozumiałem/zrozumiałam i akceptuję powyższe warunki. Rozumiem, że moje wpisane imię i nazwisko stanowi mój elektroniczny podpis.
                 </p>
                 <p className="font-semibold text-xs mb-1">Podpis Klienta</p>
-                <p className="border-b border-gray-800 py-1">{formData.name || ''}</p>
+                <p className="py-1" style={{ borderBottom: '1px solid #1f2937' }}>{formData.name || ''}</p>
                 <p className="font-semibold text-xs mt-3 mb-1">Data</p>
-                <p className="border-b border-gray-800 py-1">{isLoading ? '...' : serverDate}</p>
+                <p className="py-1" style={{ borderBottom: '1px solid #1f2937' }}>{isLoading ? '...' : serverDate}</p>
               </div>
             </div>
           </div>
