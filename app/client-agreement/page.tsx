@@ -5,6 +5,23 @@ import { jsPDF } from 'jspdf';
 import Container from '@/components/layout/Container';
 import Section from '@/components/layout/Section';
 
+const fontCache = new Map<string, string>();
+
+const loadFont = async (path: string): Promise<string> => {
+  if (fontCache.has(path)) return fontCache.get(path)!;
+  const res = await fetch(path);
+  if (!res.ok) throw new Error(`Failed to load font ${path}`);
+  const blob = await res.blob();
+  const reader = new FileReader();
+  const dataUrl = await new Promise<string>((resolve) => {
+    reader.onloadend = () => resolve(reader.result as string);
+    reader.readAsDataURL(blob);
+  });
+  const base64 = dataUrl.split(',')[1];
+  fontCache.set(path, base64);
+  return base64;
+};
+
 type FormData = {
   name: string;
 };
@@ -29,10 +46,23 @@ export default function ClientAgreementPage() {
       });
   }, []);
 
-  const handleDownload = () => {
+  const handleDownload = async () => {
     if (!formData.name || !serverDate) return;
 
+    const [regular, bold, italic] = await Promise.all([
+      loadFont('/fonts/Fraunces_72pt-Regular.ttf'),
+      loadFont('/fonts/Fraunces_72pt-Bold.ttf'),
+      loadFont('/fonts/Fraunces_72pt-Italic.ttf'),
+    ]);
+
     const doc = new jsPDF('p', 'mm', 'a4');
+    doc.addFileToVFS('Fraunces-Regular.ttf', regular);
+    doc.addFileToVFS('Fraunces-Bold.ttf', bold);
+    doc.addFileToVFS('Fraunces-Italic.ttf', italic);
+    doc.addFont('Fraunces-Regular.ttf', 'Fraunces', 'normal');
+    doc.addFont('Fraunces-Bold.ttf', 'Fraunces', 'bold');
+    doc.addFont('Fraunces-Italic.ttf', 'Fraunces', 'italic');
+
     const pageWidth = doc.internal.pageSize.getWidth();
     const pageHeight = doc.internal.pageSize.getHeight();
     const margin = 15;
@@ -44,9 +74,7 @@ export default function ClientAgreementPage() {
 
     const setFont = (size: number, style: 'normal' | 'bold' | 'italic' = 'normal') => {
       doc.setFontSize(size);
-      if (style === 'bold') doc.setFont('times', 'bold');
-      else if (style === 'italic') doc.setFont('times', 'italic');
-      else doc.setFont('times', 'normal');
+      doc.setFont('Fraunces', style);
     };
 
     const addHeader = () => {
