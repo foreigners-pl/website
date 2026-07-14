@@ -45,20 +45,23 @@ export default function ClientAgreementPage() {
     const pdf = new jsPDF('p', 'mm', 'a4');
     const pdfWidth = pdf.internal.pageSize.getWidth();
     const pdfHeight = pdf.internal.pageSize.getHeight();
+    const margin = 15;
+    const printableWidth = pdfWidth - margin * 2;
+    const printableHeight = pdfHeight - margin * 2;
     const imgProps = pdf.getImageProperties(imgData);
-    const imgHeightInMM = (imgProps.height * pdfWidth) / imgProps.width;
+    const imgHeightInMM = (imgProps.height * printableWidth) / imgProps.width;
 
     let heightLeft = imgHeightInMM;
     let position = 0;
 
-    pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, imgHeightInMM);
-    heightLeft -= pdfHeight;
+    pdf.addImage(imgData, 'PNG', margin, margin + position, printableWidth, imgHeightInMM);
+    heightLeft -= printableHeight;
 
     while (heightLeft > 0) {
       position = heightLeft - imgHeightInMM;
       pdf.addPage();
-      pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, imgHeightInMM);
-      heightLeft -= pdfHeight;
+      pdf.addImage(imgData, 'PNG', margin, margin + position, printableWidth, imgHeightInMM);
+      heightLeft -= printableHeight;
     }
 
     pdf.save(`client-agreement-${formData.name.replace(/\s+/g, '-')}-${serverDate}.pdf`);
