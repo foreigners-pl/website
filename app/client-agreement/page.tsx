@@ -99,27 +99,22 @@ export default function ClientAgreementPage() {
 
     // Article 1
     addSectionTitle('Article 1 — Scope of Services and No Guarantee of Result / Zakres usług i brak gwarancji rezultatu');
-    addText('The Provider shall perform the specific legal and/or administrative work agreed upon with the Client. The agreed fee constitutes remuneration solely for the work to be performed, and not for any guaranteed outcome, result, decision by any authority, or issuance of any document. The Provider does not guarantee any particular outcome, approval, or favorable decision by any governmental authority, court, or third party. The Client understands that administrative and legal processes depend on independent decisions made by public authorities, courts, and other third parties outside the Provider\'s control.');
-    addText('Usługodawca zobowiązuje się do wykonania konkretnej pracy prawnej i/lub administracyjnej uzgodnionej z Klientem. Uzgodnione wynagrodzenie stanowi wyłącznie zapłatę za pracę do wykonania, a nie za jakikolwiek gwarantowany rezultat, decyzję organu lub wydanie dokumentu. Usługodawca nie gwarantuje konkretnego rezultatu, zatwierdzenia ani korzystnej decyzji żadnego organu państwowego, sądu lub podmiotu trzeciego. Klient rozumie, że procesy administracyjne i prawne zależą od niezależnych decyzji podejmowanych przez organy publiczne, sądy i inne podmioty trzecie spoza kontroli Usługodawcy.');
+    addText('The Provider shall perform the specific legal and/or administrative work agreed upon with the Client. The agreed fee is remuneration solely for the work performed, not for any guaranteed outcome, approval, decision by an authority, or issuance of a document. Such outcomes depend on independent decisions made by public authorities, courts, and other third parties outside the Provider\'s control.');
+    addText('Usługodawca wykona konkretną pracę prawną i/lub administracyjną uzgodnioną z Klientem. Uzgodnione wynagrodzenie stanowi wyłącznie zapłatę za wykonaną pracę, a nie za gwarantowany rezultat, zatwierdzenie, decyzję organu lub wydanie dokumentu. Rezultaty te zależą od niezależnych decyzji podejmowanych przez organy publiczne, sądy i inne podmioty trzecie spoza kontroli Usługodawcy.');
 
     // Article 2
     addSectionTitle('Article 2 — Refund Policy / Polityka zwrotów');
-    addText('2.1 A full refund shall be granted only if the Client cancels the service within 24 hours of the Provider\'s receipt of payment.');
-    addText('Pełny zwrot przysługuje wyłącznie, gdy Klient anuluje usługę w ciągu 24 godzin od momentu otrzymania płatności przez Usługodawcę.');
-    addText('2.2 If cancellation occurs after the 24-hour period has elapsed, the Client shall be entitled to a refund of 80% (eighty percent) of the amount paid. The remaining 20% (twenty percent) shall be retained by the Provider as an administrative fee.');
-    addText('W przypadku anulowania po upływie 24 godzin, Klientowi przysługuje zwrot 80% zapłaconej kwoty. Pozostałe 20% zostaje zatrzymane przez Usługodawcę jako opłata administracyjna.');
-    addText('2.3 No refund shall be granted if the change in scope results from: (a) the Client requesting additional services beyond the originally agreed scope, for which the Provider issues a new quote; or (b) the Client failing to provide complete, accurate, or timely information that affects the scope, complexity, or cost of the agreed services.');
-    addText('Zwrot nie przysługuje, jeśli zmiana zakresu wynika z: (a) żądania przez Klienta dodatkowych usług wykraczających poza pierwotnie uzgodniony zakres, za które Usługodawca przedstawia nową wycenę; lub (b) niepodania przez Klienta pełnych, dokładnych lub terminowych informacji wpływających na zakres, złożoność lub koszt uzgodnionych usług.');
+    addText('2.1 A full refund shall be granted only if the Client cancels the service within 24 hours of the Provider\'s receipt of payment, provided the Provider has not yet performed any substantial part of the service, such as drafting or submitting a crucial application, preparing official documents, or engaging with authorities on the Client\'s behalf.');
+    addText('Pełny zwrot przysługuje wyłącznie, gdy Klient anuluje usługę w ciągu 24 godzin od momentu otrzymania płatności przez Usługodawcę, pod warunkiem że Usługodawca nie wykonał jeszcze żadnej istotnej części usługi, takiej jak sporządzenie lub złożenie kluczowego wniosku, przygotowanie dokumentów urzędowych lub podjęcie kontaktu z organami w imieniu Klienta.');
+    addText('2.2 If cancellation occurs after the 24-hour period and the Provider approves the refund request, the Client shall be entitled to a refund of 80% (eighty percent) of the amount paid. The remaining 20% (twenty percent) shall be retained by the Provider as an administrative fee.');
+    addText('W przypadku anulowania po upływie 24 godzin i pod warunkiem zatwierdzenia wniosku o zwrot przez Usługodawcę, Klientowi przysługuje zwrot 80% zapłaconej kwoty. Pozostałe 20% zostaje zatrzymane przez Usługodawcę jako opłata administracyjna.');
+    addText('2.3 No refund shall be granted if the Client refuses to proceed with the agreed services due to a change in scope, price, or timeframe that results from: (a) the Client requesting additional services beyond the originally agreed scope; or (b) the Client failing to provide complete, accurate, or timely information that affects the scope, complexity, or cost of the agreed services.');
+    addText('Zwrot nie przysługuje, jeśli Klient odmawia kontynuowania uzgodnionych usług z powodu zmiany zakresu, ceny lub terminu wynikającej z: (a) żądania przez Klienta dodatkowych usług wykraczających poza pierwotnie uzgodniony zakres; lub (b) niepodania przez Klienta pełnych, dokładnych lub terminowych informacji wpływających na zakres, złożoność lub koszt uzgodnionych usług.');
 
     // Article 3
     addSectionTitle('Article 3 — Data Processing / Przetwarzanie danych');
     addText('The Client consents to the processing of their personal data by the Provider for the purpose of performing the agreed services and communication related thereto, in accordance with the Provider\'s Privacy Policy available at foreigners.pl/privacy-policy.');
     addText('Klient wyraża zgodę na przetwarzanie swoich danych osobowych przez Usługodawcę w celu wykonania uzgodnionych usług oraz prowadzenia związanej z tym komunikacji, zgodnie z Polityką Prywatności dostępną na foreigners.pl/privacy-policy.');
-
-    // Article 4
-    addSectionTitle('Article 4 — Governing Law / Prawo właściwe');
-    addText('This Agreement shall be governed by and construed in accordance with the laws of the Republic of Poland.');
-    addText('Niniejsza umowa podlega prawu Rzeczypospolitej Polskiej.');
 
     // Acknowledgment
     y += 6;
@@ -233,13 +228,13 @@ export default function ClientAgreementPage() {
               <div>
                 <h3 className="font-bold uppercase tracking-wide text-xs border-b border-gray-800 pb-1 mb-2">Article 1 — Scope of Services and No Guarantee of Result</h3>
                 <p>
-                  The Provider shall perform the specific legal and/or administrative work agreed upon with the Client. The agreed fee constitutes remuneration solely for the work to be performed, and not for any guaranteed outcome, result, decision by any authority, or issuance of any document. The Provider does not guarantee any particular outcome, approval, or favorable decision by any governmental authority, court, or third party. The Client understands that administrative and legal processes depend on independent decisions made by public authorities, courts, and other third parties outside the Provider's control.
+                  The Provider shall perform the specific legal and/or administrative work agreed upon with the Client. The agreed fee is remuneration solely for the work performed, not for any guaranteed outcome, approval, decision by an authority, or issuance of a document. Such outcomes depend on independent decisions made by public authorities, courts, and other third parties outside the Provider's control.
                 </p>
               </div>
               <div>
                 <h3 className="font-bold uppercase tracking-wide text-xs border-b border-gray-800 pb-1 mb-2">Artykuł 1 — Zakres usług i brak gwarancji rezultatu</h3>
                 <p>
-                  Usługodawca zobowiązuje się do wykonania konkretnej pracy prawnej i/lub administracyjnej uzgodnionej z Klientem. Uzgodnione wynagrodzenie stanowi wyłącznie zapłatę za pracę do wykonania, a nie za jakikolwiek gwarantowany rezultat, decyzję organu lub wydanie dokumentu. Usługodawca nie gwarantuje konkretnego rezultatu, zatwierdzenia ani korzystnej decyzji żadnego organu państwowego, sądu lub podmiotu trzeciego. Klient rozumie, że procesy administracyjne i prawne zależą od niezależnych decyzji podejmowanych przez organy publiczne, sądy i inne podmioty trzecie spoza kontroli Usługodawcy.
+                  Usługodawca wykona konkretną pracę prawną i/lub administracyjną uzgodnioną z Klientem. Uzgodnione wynagrodzenie stanowi wyłącznie zapłatę za wykonaną pracę, a nie za gwarantowany rezultat, zatwierdzenie, decyzję organu lub wydanie dokumentu. Rezultaty te zależą od niezależnych decyzji podejmowanych przez organy publiczne, sądy i inne podmioty trzecie spoza kontroli Usługodawcy.
                 </p>
               </div>
 
@@ -247,17 +242,17 @@ export default function ClientAgreementPage() {
               <div>
                 <h3 className="font-bold uppercase tracking-wide text-xs border-b border-gray-800 pb-1 mb-2">Article 2 — Refund Policy</h3>
                 <p className="space-y-2">
-                  <span className="block">2.1 A full refund shall be granted only if the Client cancels the service within 24 hours of the Provider's receipt of payment.</span>
-                  <span className="block">2.2 If cancellation occurs after the 24-hour period has elapsed, the Client shall be entitled to a refund of 80% (eighty percent) of the amount paid. The remaining 20% (twenty percent) shall be retained by the Provider as an administrative fee.</span>
-                  <span className="block">2.3 No refund shall be granted if the change in scope results from: (a) the Client requesting additional services beyond the originally agreed scope, for which the Provider issues a new quote; or (b) the Client failing to provide complete, accurate, or timely information that affects the scope, complexity, or cost of the agreed services.</span>
+                  <span className="block">2.1 A full refund shall be granted only if the Client cancels the service within 24 hours of the Provider's receipt of payment, provided the Provider has not yet performed any substantial part of the service, such as drafting or submitting a crucial application, preparing official documents, or engaging with authorities on the Client's behalf.</span>
+                  <span className="block">2.2 If cancellation occurs after the 24-hour period and the Provider approves the refund request, the Client shall be entitled to a refund of 80% (eighty percent) of the amount paid. The remaining 20% (twenty percent) shall be retained by the Provider as an administrative fee.</span>
+                  <span className="block">2.3 No refund shall be granted if the Client refuses to proceed with the agreed services due to a change in scope, price, or timeframe that results from: (a) the Client requesting additional services beyond the originally agreed scope; or (b) the Client failing to provide complete, accurate, or timely information that affects the scope, complexity, or cost of the agreed services.</span>
                 </p>
               </div>
               <div>
                 <h3 className="font-bold uppercase tracking-wide text-xs border-b border-gray-800 pb-1 mb-2">Artykuł 2 — Polityka zwrotów</h3>
                 <p className="space-y-2">
-                  <span className="block">2.1 Pełny zwrot przysługuje wyłącznie, gdy Klient anuluje usługę w ciągu 24 godzin od momentu otrzymania płatności przez Usługodawcę.</span>
-                  <span className="block">2.2 W przypadku anulowania po upływie 24 godzin, Klientowi przysługuje zwrot 80% zapłaconej kwoty. Pozostałe 20% zostaje zatrzymane przez Usługodawcę jako opłata administracyjna.</span>
-                  <span className="block">2.3 Zwrot nie przysługuje, jeśli zmiana zakresu wynika z: (a) żądania przez Klienta dodatkowych usług wykraczających poza pierwotnie uzgodniony zakres, za które Usługodawca przedstawia nową wycenę; lub (b) niepodania przez Klienta pełnych, dokładnych lub terminowych informacji wpływających na zakres, złożoność lub koszt uzgodnionych usług.</span>
+                  <span className="block">2.1 Pełny zwrot przysługuje wyłącznie, gdy Klient anuluje usługę w ciągu 24 godzin od momentu otrzymania płatności przez Usługodawcę, pod warunkiem że Usługodawca nie wykonał jeszcze żadnej istotnej części usługi, takiej jak sporządzenie lub złożenie kluczowego wniosku, przygotowanie dokumentów urzędowych lub podjęcie kontaktu z organami w imieniu Klienta.</span>
+                  <span className="block">2.2 W przypadku anulowania po upływie 24 godzin i pod warunkiem zatwierdzenia wniosku o zwrot przez Usługodawcę, Klientowi przysługuje zwrot 80% zapłaconej kwoty. Pozostałe 20% zostaje zatrzymane przez Usługodawcę jako opłata administracyjna.</span>
+                  <span className="block">2.3 Zwrot nie przysługuje, jeśli Klient odmawia kontynuowania uzgodnionych usług z powodu zmiany zakresu, ceny lub terminu wynikającej z: (a) żądania przez Klienta dodatkowych usług wykraczających poza pierwotnie uzgodniony zakres; lub (b) niepodania przez Klienta pełnych, dokładnych lub terminowych informacji wpływających na zakres, złożoność lub koszt uzgodnionych usług.</span>
                 </p>
               </div>
 
@@ -272,20 +267,6 @@ export default function ClientAgreementPage() {
                 <h3 className="font-bold uppercase tracking-wide text-xs border-b border-gray-800 pb-1 mb-2">Artykuł 3 — Przetwarzanie danych</h3>
                 <p>
                   Klient wyraża zgodę na przetwarzanie swoich danych osobowych przez Usługodawcę w celu wykonania uzgodnionych usług oraz prowadzenia związanej z tym komunikacji, zgodnie z Polityką Prywatności dostępną na foreigners.pl/privacy-policy.
-                </p>
-              </div>
-
-              {/* Row: Article 4 — Governing Law / Prawo właściwe */}
-              <div>
-                <h3 className="font-bold uppercase tracking-wide text-xs border-b border-gray-800 pb-1 mb-2">Article 4 — Governing Law</h3>
-                <p>
-                  This Agreement shall be governed by and construed in accordance with the laws of the Republic of Poland.
-                </p>
-              </div>
-              <div>
-                <h3 className="font-bold uppercase tracking-wide text-xs border-b border-gray-800 pb-1 mb-2">Artykuł 4 — Prawo właściwe</h3>
-                <p>
-                  Niniejsza umowa podlega prawu Rzeczypospolitej Polskiej.
                 </p>
               </div>
 
