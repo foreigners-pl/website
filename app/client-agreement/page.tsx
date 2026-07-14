@@ -181,107 +181,158 @@ export default function ClientAgreementPage() {
               </p>
             </div>
 
-            <div className="mb-8 text-sm">
-              <p className="mb-2"><strong>Provider / Usługodawca:</strong></p>
-              <p className="mb-4">
-                FOREIGNERS.PL Sp. z o.o.<br />
-                ul. 3 Maja 31/4, 40-097 Katowice, Poland<br />
-                NIP: 6343044313 · KRS: 0001124675<br />
-                E-mail: connect@foreigners.pl
-              </p>
-              <p className="mb-2"><strong>Client / Klient:</strong></p>
-              <p className="mb-1">{formData.name || '_________________________________'}</p>
-              {formData.pesel && <p className="text-gray-600">PESEL: {formData.pesel}</p>}
-              <p className="text-gray-600">Date / Data: {isLoading ? '...' : serverDate}</p>
-            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-sm text-gray-800 leading-relaxed">
+              {/* English Column */}
+              <div className="space-y-6">
+                <div>
+                  <p className="font-bold text-gray-900 mb-1">Provider:</p>
+                  <p className="text-gray-700">
+                    FOREIGNERS.PL Sp. z o.o.<br />
+                    ul. 3 Maja 31/4, 40-097 Katowice, Poland<br />
+                    NIP: 6343044313 · KRS: 0001124675<br />
+                    E-mail: connect@foreigners.pl
+                  </p>
+                </div>
 
-            <div className="space-y-6 text-sm text-gray-800 leading-relaxed">
-              <div>
-                <h3 className="font-bold text-gray-900 mb-2 uppercase tracking-wide text-xs">Preamble / Preambuła</h3>
-                <p className="mb-2">
-                  By proceeding with the services of FOREIGNERS.PL Sp. z o.o. (the "Provider"), the undersigned Client confirms that they have read, understood, and agree to be bound by the terms set forth in this Agreement and the Provider's Terms of Service and Privacy Policy.
-                </p>
-                <p className="text-gray-600 italic text-xs">
-                  Podpisując niniejszy dokument, Klient potwierdza, że zapoznał się z treścią niniejszej Umowy oraz Regulaminu i Polityki Prywatności Usługodawcy i akceptuje ich postanowienia.
-                </p>
+                <div>
+                  <p className="font-bold text-gray-900 mb-1">Client:</p>
+                  <p className="text-gray-700">
+                    {formData.name || '_________________________________'}<br />
+                    {formData.pesel && <>PESEL: {formData.pesel}<br /></>}
+                    Date: {isLoading ? '...' : serverDate}
+                  </p>
+                </div>
+
+                <div>
+                  <h3 className="font-bold text-gray-900 mb-2 uppercase tracking-wide text-xs border-b border-gray-200 pb-1">Preamble</h3>
+                  <p>
+                    By proceeding with the services of FOREIGNERS.PL Sp. z o.o. (the "Provider"), the undersigned Client confirms that they have read, understood, and agree to be bound by the terms set forth in this Agreement and the Provider's Terms of Service and Privacy Policy.
+                  </p>
+                </div>
+
+                <div>
+                  <h3 className="font-bold text-gray-900 mb-2 uppercase tracking-wide text-xs border-b border-gray-200 pb-1">Article 1 — Scope of Services</h3>
+                  <p>
+                    The Provider shall perform the specific legal and/or administrative work agreed upon with the Client. The agreed fee constitutes remuneration solely for the work to be performed, and not for any guaranteed outcome, result, decision by any authority, or issuance of any document.
+                  </p>
+                </div>
+
+                <div>
+                  <h3 className="font-bold text-gray-900 mb-2 uppercase tracking-wide text-xs border-b border-gray-200 pb-1">Article 2 — No Guarantee of Result</h3>
+                  <p>
+                    The Provider does not guarantee any particular outcome, approval, or favorable decision by any governmental authority, court, or third party. The Client understands that administrative and legal processes depend on independent decisions made by public authorities, courts, and other third parties outside the Provider's control.
+                  </p>
+                </div>
+
+                <div>
+                  <h3 className="font-bold text-gray-900 mb-2 uppercase tracking-wide text-xs border-b border-gray-200 pb-1">Article 3 — Refund Policy</h3>
+                  <p className="space-y-2">
+                    <span className="block">3.1 A full refund shall be granted only if the Client cancels the service within 24 hours of the Provider's receipt of payment.</span>
+                    <span className="block">3.2 If cancellation occurs after the 24-hour period has elapsed, the Client shall be entitled to a refund of 80% (eighty percent) of the amount paid. The remaining 20% (twenty percent) shall be retained by the Provider as an administrative fee.</span>
+                    <span className="block">3.3 No refund shall be granted if the change in scope results from: (a) the Client requesting additional services beyond the originally agreed scope, for which the Provider issues a new quote; or (b) the Client failing to provide complete, accurate, or timely information that affects the scope, complexity, or cost of the agreed services.</span>
+                  </p>
+                </div>
+
+                <div>
+                  <h3 className="font-bold text-gray-900 mb-2 uppercase tracking-wide text-xs border-b border-gray-200 pb-1">Article 4 — Data Processing</h3>
+                  <p>
+                    The Client consents to the processing of their personal data by the Provider for the purpose of performing the agreed services and communication related thereto, in accordance with the Provider's Privacy Policy available at foreigners.pl/privacy-policy.
+                  </p>
+                </div>
+
+                <div>
+                  <h3 className="font-bold text-gray-900 mb-2 uppercase tracking-wide text-xs border-b border-gray-200 pb-1">Article 5 — Governing Law</h3>
+                  <p>
+                    This Agreement shall be governed by and construed in accordance with the laws of the Republic of Poland.
+                  </p>
+                </div>
+
+                <div className="border-t border-gray-300 pt-4">
+                  <h3 className="font-bold text-gray-900 mb-2 uppercase tracking-wide text-xs">Acknowledgment</h3>
+                  <p className="mb-4">
+                    I, {formData.name || '_________________________________'}, confirm that I have read, understood, and accept the terms and conditions set forth above. I understand that my typed name below shall serve as my electronic signature.
+                  </p>
+                  <p className="font-semibold text-xs text-gray-700 mb-1">Client Signature</p>
+                  <p className="border-b border-gray-800 py-1">{formData.name || ''}</p>
+                  <p className="font-semibold text-xs text-gray-700 mt-3 mb-1">Date</p>
+                  <p className="border-b border-gray-800 py-1">{isLoading ? '...' : serverDate}</p>
+                </div>
               </div>
 
-              <div>
-                <h3 className="font-bold text-gray-900 mb-2 uppercase tracking-wide text-xs">Article 1 — Scope of Services / Zakres usług</h3>
-                <p className="mb-2">
-                  The Provider shall perform the specific legal and/or administrative work agreed upon with the Client. The agreed fee constitutes remuneration solely for the work to be performed, and not for any guaranteed outcome, result, decision by any authority, or issuance of any document.
-                </p>
-                <p className="text-gray-600 italic text-xs">
-                  Usługodawca zobowiązuje się do wykonania konkretnej pracy prawnej i/lub administracyjnej uzgodnionej z Klientem. Uzgodnione wynagrodzenie stanowi wyłącznie zapłatę za pracę do wykonania, a nie za jakikolwiek gwarantowany rezultat, decyzję organu lub wydanie dokumentu.
-                </p>
-              </div>
+              {/* Polish Column */}
+              <div className="space-y-6">
+                <div>
+                  <p className="font-bold text-gray-900 mb-1">Usługodawca:</p>
+                  <p className="text-gray-700">
+                    FOREIGNERS.PL Sp. z o.o.<br />
+                    ul. 3 Maja 31/4, 40-097 Katowice<br />
+                    NIP: 6343044313 · KRS: 0001124675<br />
+                    E-mail: connect@foreigners.pl
+                  </p>
+                </div>
 
-              <div>
-                <h3 className="font-bold text-gray-900 mb-2 uppercase tracking-wide text-xs">Article 2 — No Guarantee of Result / Brak gwarancji rezultatu</h3>
-                <p className="mb-2">
-                  The Provider does not guarantee any particular outcome, approval, or favorable decision by any governmental authority, court, or third party. The Client understands that administrative and legal processes depend on independent decisions made by public authorities, courts, and other third parties outside the Provider's control.
-                </p>
-                <p className="text-gray-600 italic text-xs">
-                  Usługodawca nie gwarantuje konkretnego rezultatu, zatwierdzenia ani korzystnej decyzji żadnego organu państwowego, sądu lub podmiotu trzeciego. Klient rozumie, że procesy administracyjne i prawne zależą od niezależnych decyzji podejmowanych przez organy publiczne, sądy i inne podmioty trzecie spoza kontroli Usługodawcy.
-                </p>
-              </div>
+                <div>
+                  <p className="font-bold text-gray-900 mb-1">Klient:</p>
+                  <p className="text-gray-700">
+                    {formData.name || '_________________________________'}<br />
+                    {formData.pesel && <>PESEL: {formData.pesel}<br /></>}
+                    Data: {isLoading ? '...' : serverDate}
+                  </p>
+                </div>
 
-              <div>
-                <h3 className="font-bold text-gray-900 mb-2 uppercase tracking-wide text-xs">Article 3 — Refund Policy / Polityka zwrotów</h3>
-                <p className="mb-2">
-                  3.1 A full refund shall be granted only if the Client cancels the service within 24 hours of the Provider's receipt of payment.
-                </p>
-                <p className="mb-2">
-                  3.2 If cancellation occurs after the 24-hour period has elapsed, the Client shall be entitled to a refund of 80% (eighty percent) of the amount paid. The remaining 20% (twenty percent) shall be retained by the Provider as an administrative fee.
-                </p>
-                <p className="mb-2">
-                  3.3 No refund shall be granted if the change in scope results from: (a) the Client requesting additional services beyond the originally agreed scope, for which the Provider issues a new quote; or (b) the Client failing to provide complete, accurate, or timely information that affects the scope, complexity, or cost of the agreed services.
-                </p>
-                <p className="text-gray-600 italic text-xs">
-                  3.1 Pełny zwrot przysługuje wyłącznie, gdy Klient anuluje usługę w ciągu 24 godzin od momentu otrzymania płatności przez Usługodawcę.<br />
-                  3.2 W przypadku anulowania po upływie 24 godzin, Klientowi przysługuje zwrot 80% zapłaconej kwoty. Pozostałe 20% zostaje zatrzymane przez Usługodawcę jako opłata administracyjna.<br />
-                  3.3 Zwrot nie przysługuje, jeśli zmiana zakresu wynika z: (a) żądania przez Klienta dodatkowych usług wykraczających poza pierwotnie uzgodniony zakres, za które Usługodawca przedstawia nową wycenę; lub (b) niepodania przez Klienta pełnych, dokładnych lub terminowych informacji wpływających na zakres, złożoność lub koszt uzgodnionych usług.
-                </p>
-              </div>
+                <div>
+                  <h3 className="font-bold text-gray-900 mb-2 uppercase tracking-wide text-xs border-b border-gray-200 pb-1">Preambuła</h3>
+                  <p>
+                    Podpisując niniejszy dokument, Klient potwierdza, że zapoznał się z treścią niniejszej Umowy oraz Regulaminu i Polityki Prywatności Usługodawcy i akceptuje ich postanowienia.
+                  </p>
+                </div>
 
-              <div>
-                <h3 className="font-bold text-gray-900 mb-2 uppercase tracking-wide text-xs">Article 4 — Data Processing / Przetwarzanie danych</h3>
-                <p className="mb-2">
-                  The Client consents to the processing of their personal data by the Provider for the purpose of performing the agreed services and communication related thereto, in accordance with the Provider's Privacy Policy available at foreigners.pl/privacy-policy.
-                </p>
-                <p className="text-gray-600 italic text-xs">
-                  Klient wyraża zgodę na przetwarzanie swoich danych osobowych przez Usługodawcę w celu wykonania uzgodnionych usług oraz prowadzenia związanej z tym komunikacji, zgodnie z Polityką Prywatności dostępną na foreigners.pl/privacy-policy.
-                </p>
-              </div>
+                <div>
+                  <h3 className="font-bold text-gray-900 mb-2 uppercase tracking-wide text-xs border-b border-gray-200 pb-1">Artykuł 1 — Zakres usług</h3>
+                  <p>
+                    Usługodawca zobowiązuje się do wykonania konkretnej pracy prawnej i/lub administracyjnej uzgodnionej z Klientem. Uzgodnione wynagrodzenie stanowi wyłącznie zapłatę za pracę do wykonania, a nie za jakikolwiek gwarantowany rezultat, decyzję organu lub wydanie dokumentu.
+                  </p>
+                </div>
 
-              <div>
-                <h3 className="font-bold text-gray-900 mb-2 uppercase tracking-wide text-xs">Article 5 — Governing Law / Prawo właściwe</h3>
-                <p className="mb-2">
-                  This Agreement shall be governed by and construed in accordance with the laws of the Republic of Poland.
-                </p>
-                <p className="text-gray-600 italic text-xs">
-                  Niniejsza umowa podlega prawu Rzeczypospolitej Polskiej.
-                </p>
-              </div>
+                <div>
+                  <h3 className="font-bold text-gray-900 mb-2 uppercase tracking-wide text-xs border-b border-gray-200 pb-1">Artykuł 2 — Brak gwarancji rezultatu</h3>
+                  <p>
+                    Usługodawca nie gwarantuje konkretnego rezultatu, zatwierdzenia ani korzystnej decyzji żadnego organu państwowego, sądu lub podmiotu trzeciego. Klient rozumie, że procesy administracyjne i prawne zależą od niezależnych decyzji podejmowanych przez organy publiczne, sądy i inne podmioty trzecie spoza kontroli Usługodawcy.
+                  </p>
+                </div>
 
-              <div className="border-t border-gray-300 pt-6 mt-8">
-                <h3 className="font-bold text-gray-900 mb-4 uppercase tracking-wide text-xs">Acknowledgment / Oświadczenie</h3>
-                <p className="mb-4">
-                  I, {formData.name || '_________________________________'}, confirm that I have read, understood, and accept the terms and conditions set forth above. I understand that my typed name below shall serve as my electronic signature.
-                </p>
-                <p className="text-gray-600 italic text-xs mb-8">
-                  Ja, {formData.name || '_________________________________'}, potwierdzam, że przeczytałem, zrozumiałem i akceptuję powyższe warunki. Rozumiem, że moje wpisane imię i nazwisko stanowi mój elektroniczny podpis.
-                </p>
+                <div>
+                  <h3 className="font-bold text-gray-900 mb-2 uppercase tracking-wide text-xs border-b border-gray-200 pb-1">Artykuł 3 — Polityka zwrotów</h3>
+                  <p className="space-y-2">
+                    <span className="block">3.1 Pełny zwrot przysługuje wyłącznie, gdy Klient anuluje usługę w ciągu 24 godzin od momentu otrzymania płatności przez Usługodawcę.</span>
+                    <span className="block">3.2 W przypadku anulowania po upływie 24 godzin, Klientowi przysługuje zwrot 80% zapłaconej kwoty. Pozostałe 20% zostaje zatrzymane przez Usługodawcę jako opłata administracyjna.</span>
+                    <span className="block">3.3 Zwrot nie przysługuje, jeśli zmiana zakresu wynika z: (a) żądania przez Klienta dodatkowych usług wykraczających poza pierwotnie uzgodniony zakres, za które Usługodawca przedstawia nową wycenę; lub (b) niepodania przez Klienta pełnych, dokładnych lub terminowych informacji wpływających na zakres, złożoność lub koszt uzgodnionych usług.</span>
+                  </p>
+                </div>
 
-                <div className="grid grid-cols-2 gap-8 mt-8">
-                  <div>
-                    <p className="text-sm font-semibold mb-1">Client Signature / Podpis Klienta</p>
-                    <p className="border-b border-gray-800 py-2 text-sm">{formData.name || ''}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm font-semibold mb-1">Date / Data</p>
-                    <p className="border-b border-gray-800 py-2 text-sm">{isLoading ? '...' : serverDate}</p>
-                  </div>
+                <div>
+                  <h3 className="font-bold text-gray-900 mb-2 uppercase tracking-wide text-xs border-b border-gray-200 pb-1">Artykuł 4 — Przetwarzanie danych</h3>
+                  <p>
+                    Klient wyraża zgodę na przetwarzanie swoich danych osobowych przez Usługodawcę w celu wykonania uzgodnionych usług oraz prowadzenia związanej z tym komunikacji, zgodnie z Polityką Prywatności dostępną na foreigners.pl/privacy-policy.
+                  </p>
+                </div>
+
+                <div>
+                  <h3 className="font-bold text-gray-900 mb-2 uppercase tracking-wide text-xs border-b border-gray-200 pb-1">Artykuł 5 — Prawo właściwe</h3>
+                  <p>
+                    Niniejsza umowa podlega prawu Rzeczypospolitej Polskiej.
+                  </p>
+                </div>
+
+                <div className="border-t border-gray-300 pt-4">
+                  <h3 className="font-bold text-gray-900 mb-2 uppercase tracking-wide text-xs">Oświadczenie</h3>
+                  <p className="mb-4">
+                    Ja, {formData.name || '_________________________________'}, potwierdzam, że przeczytałem/przeczytałam, zrozumiałem/zrozumiałam i akceptuję powyższe warunki. Rozumiem, że moje wpisane imię i nazwisko stanowi mój elektroniczny podpis.
+                  </p>
+                  <p className="font-semibold text-xs text-gray-700 mb-1">Podpis Klienta</p>
+                  <p className="border-b border-gray-800 py-1">{formData.name || ''}</p>
+                  <p className="font-semibold text-xs text-gray-700 mt-3 mb-1">Data</p>
+                  <p className="border-b border-gray-800 py-1">{isLoading ? '...' : serverDate}</p>
                 </div>
               </div>
             </div>
