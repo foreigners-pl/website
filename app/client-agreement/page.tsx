@@ -8,13 +8,11 @@ import Section from '@/components/layout/Section';
 
 type FormData = {
   name: string;
-  pesel: string;
 };
 
 export default function ClientAgreementPage() {
   const [formData, setFormData] = useState<FormData>({
     name: '',
-    pesel: '',
   });
   const [serverDate, setServerDate] = useState<string>('');
   const [isLoading, setIsLoading] = useState(true);
@@ -121,7 +119,6 @@ export default function ClientAgreementPage() {
                 <p className="font-bold mb-1">Client:</p>
                 <p>
                   {formData.name || '_________________________________'}<br />
-                  {formData.pesel && <>PESEL: {formData.pesel}<br /></>}
                   Date: {isLoading ? '...' : serverDate}
                 </p>
               </div>
@@ -129,7 +126,6 @@ export default function ClientAgreementPage() {
                 <p className="font-bold mb-1">Klient:</p>
                 <p>
                   {formData.name || '_________________________________'}<br />
-                  {formData.pesel && <>PESEL: {formData.pesel}<br /></>}
                   Data: {isLoading ? '...' : serverDate}
                 </p>
               </div>
@@ -238,38 +234,6 @@ export default function ClientAgreementPage() {
                 />
                 <p className="text-xs text-gray-500 mt-1">
                   Your typed name will serve as your electronic signature. / Wpisane imię i nazwisko posłuży jako elektroniczny podpis.
-                </p>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  PESEL Number / Numer PESEL (optional / opcjonalnie)
-                </label>
-                <input
-                  type="text"
-                  value={formData.pesel}
-                  onChange={(e) => setFormData({ ...formData, pesel: e.target.value })}
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
-                  placeholder="12345678901"
-                  maxLength={11}
-                />
-                <p className="text-xs text-gray-500 mt-1">
-                  Only provide if required for your specific service. / Podaj tylko jeśli jest wymagany do Twojej usługi.
-                </p>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Date / Data
-                </label>
-                <input
-                  type="text"
-                  value={isLoading ? 'Loading...' : serverDate}
-                  disabled
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-100 text-gray-600 cursor-not-allowed"
-                />
-                <p className="text-xs text-gray-500 mt-1">
-                  Date is set by our server and cannot be changed. / Data jest ustawiana przez nasz serwer i nie można jej zmienić.
                 </p>
               </div>
 
