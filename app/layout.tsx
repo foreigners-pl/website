@@ -23,9 +23,8 @@ export const metadata: Metadata = {
   title: "FOREIGNERS.pl - Your Trusted Partner in Poland",
   description: "Professional immigration and legal services for foreigners in Poland. Work permits, residence cards, business setup, and more.",
   icons: [
-    { rel: "icon", url: "/logofavicon32x32.ico", sizes: "32x32" },
-    { rel: "icon", url: "/logofavicon16x16.ico", sizes: "16x16" },
-    { rel: "shortcut icon", url: "/logofavicon32x32.ico" },
+    { rel: "icon", url: "/branding/icon.png", type: "image/png" },
+    { rel: "shortcut icon", url: "/branding/icon.png" },
   ],
   openGraph: {
     title: "FOREIGNERS.pl - Your Trusted Partner in Poland",
@@ -34,7 +33,7 @@ export const metadata: Metadata = {
     siteName: "FOREIGNERS.pl",
     images: [
       {
-        url: "/fulllogo.png",
+        url: "/branding/logo.png",
         width: 1200,
         height: 630,
         alt: "FOREIGNERS.pl - Your Trusted Partner in Poland",
@@ -47,7 +46,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "FOREIGNERS.pl - Your Trusted Partner in Poland",
     description: "Professional immigration and legal services for foreigners in Poland. Work permits, residence cards, business setup, and more.",
-    images: ["/fulllogo.png"],
+    images: ["/branding/logo.png"],
   },
 };
 
@@ -59,7 +58,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body
-        className={`${dmSans.variable} ${geistMono.variable} font-sans antialiased bg-white`}
+        className={`${dmSans.variable} ${geistMono.variable} font-sans antialiased bg-[#f7f7f7]`}
       >
         {/* <CustomCursor /> */}
         <SessionTracker />

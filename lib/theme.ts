@@ -6,6 +6,9 @@ export const theme = {
     primary: '#AB1604',
     primaryHover: '#8B1203',
     primaryLight: 'rgba(171, 22, 4, 0.1)',
+    navy: '#0B1E36',
+    navyHover: '#163050',
+    navyLight: 'rgba(11, 30, 54, 0.1)',
     secondary: '#FFFFFF',
     background: '#FFFFFF',
     backgroundAlt: '#F9FAFB',
@@ -79,7 +82,7 @@ export const theme = {
 
   // Glass/Frosted effects
   glass: {
-    light: 'bg-white/80 backdrop-blur-md border border-white/20',
+    light: 'bg-[#f7f7f7]/80 backdrop-blur-md border border-gray-200/60',
     medium: 'bg-white/60 backdrop-blur-lg border border-white/30',
     card: 'bg-white/95 backdrop-blur-sm border border-gray-100/50',
     overlay: 'bg-gray-900/10 backdrop-blur-sm',

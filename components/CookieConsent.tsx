@@ -56,7 +56,7 @@ export default function CookieConsent() {
               Reject
             </Button>
             <Button
-              variant="primary"
+              variant="navy"
               size="md"
               onClick={acceptCookies}
             >

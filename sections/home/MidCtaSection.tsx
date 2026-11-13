@@ -22,7 +22,7 @@ export default function MidCtaSection() {
           </h2>
         </FadeIn>
         <ScaleIn delay={0.3}>
-          <Button href={midCtaContent.buttonLink} variant="primary" size="lg">
+          <Button href={midCtaContent.buttonLink} variant="navy" size="lg">
             {midCtaContent.buttonText}
           </Button>
         </ScaleIn>

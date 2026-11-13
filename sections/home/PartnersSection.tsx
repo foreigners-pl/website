@@ -31,7 +31,7 @@ const partners = [
 
 export default function PartnersSection() {
   return (
-    <Section id="partners" className="bg-white">
+    <Section id="partners" className="bg-[#f7f7f7]">
       <Container>
         <FadeIn>
           <div className="text-left mb-12">

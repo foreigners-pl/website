@@ -7,6 +7,9 @@
   --color-primary: #AB1604;
   --color-primary-hover: #8B1203;
   --color-primary-light: rgba(171, 22, 4, 0.1);
+  --color-navy: #0B1E36;
+  --color-navy-hover: #163050;
+  --color-navy-light: rgba(11, 30, 54, 0.1);
   
   /* Text Colors - from theme.ts */
   --color-text-primary: #111827;
@@ -16,7 +19,7 @@
 
 @layer base {
   body {
-    background-color: #ffffff;
+    background-color: #f7f7f7;
     color: var(--color-text-primary);
     font-size: 15px;
     line-height: 1.5;

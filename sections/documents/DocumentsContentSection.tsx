@@ -3,7 +3,7 @@ import Section from '@/components/layout/Section';
 
 export default function DocumentsContentSection() {
   return (
-    <Section className="pt-4 pb-16 bg-white">
+    <Section className="pt-4 pb-16 bg-[#f7f7f7]">
       <Container>
         <div className="max-w-4xl mx-auto">
           

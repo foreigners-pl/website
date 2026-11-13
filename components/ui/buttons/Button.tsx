@@ -6,7 +6,7 @@ import { useState, MouseEvent } from 'react';
 
 interface ButtonProps {
   children: React.ReactNode;
-  variant?: 'primary' | 'secondary' | 'outline';
+  variant?: 'primary' | 'secondary' | 'outline' | 'navy';
   size?: 'sm' | 'md' | 'lg';
   className?: string;
   href?: string;
@@ -39,6 +39,7 @@ export default function Button({
   
   const variantClasses = {
     primary: `bg-primary text-white hover:bg-primary-hover ${theme.shadow.lg}`,
+    navy: `bg-navy text-white hover:bg-navy-hover ${theme.shadow.lg}`,
     secondary: `bg-white text-primary border-2 border-gray-300 hover:border-primary`,
     outline: `bg-transparent border-2 border-dashed border-primary text-primary hover:bg-primary-light`,
   };
@@ -86,9 +87,9 @@ export default function Button({
             width: 0,
             height: 0,
             transform: 'translate(-50%, -50%)',
-            opacity: variant === 'primary' ? 0.3 : 0.2,
+            opacity: variant === 'primary' || variant === 'navy' ? 0.3 : 0.2,
           }}
-          initial={{ width: 0, height: 0, opacity: variant === 'primary' ? 0.3 : 0.2 }}
+          initial={{ width: 0, height: 0, opacity: variant === 'primary' || variant === 'navy' ? 0.3 : 0.2 }}
           animate={{ width: 300, height: 300, opacity: 0 }}
           transition={{ duration: 0.6, ease: 'easeOut' }}
         />

@@ -13,7 +13,7 @@ export default function TermsOfServicePage() {
   return (
     <>
       <Navbar />
-      <main className="bg-white">
+      <main className="bg-[#f7f7f7]">
         <Section className="pt-20 pb-16">
           <Container>
             <div className="max-w-4xl mx-auto">
